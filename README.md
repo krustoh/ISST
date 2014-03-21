@@ -1,4 +1,4 @@
-ISST-Admin
+ISST
 ==========
 
-Admin for isst
+Web and Admin for isst.
