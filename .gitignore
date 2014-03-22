@@ -1,1 +1,11 @@
-target/
+.classpath
+.myeclipse/
+.mymetadata
+.project
+.settings/
+/target/
+/bin/
+/src/main/webapp/WEB-INF/classes/
+Thumbs.db
+.DS_Store
+/src/main/webapp/WEB-INF/lib/
