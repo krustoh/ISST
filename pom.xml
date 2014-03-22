@@ -165,7 +165,7 @@
           <url>http://localhost:8080/manager/text</url>
           <username>admin</username>
           <password>isst</password>
-          <path>/party</path>
+          <path>/isst</path>
         </configuration>  
        </plugin>  
     </plugins>
