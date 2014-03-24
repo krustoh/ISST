@@ -10,6 +10,6 @@ import cn.edu.zju.isst.form.UserLoginForm;
 
 public interface UserService {
     public User login(HttpServletRequest request, HttpServletResponse response, UserLoginForm form, BindingResult result);
-    public void logout(HttpServletRequest request, HttpServletResponse response);
+    public User logout(HttpServletRequest request, HttpServletResponse response);
     public void synchronizeUsers();
 }

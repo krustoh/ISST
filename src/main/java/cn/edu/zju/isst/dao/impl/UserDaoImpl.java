@@ -9,16 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import cn.edu.zju.isst.dao.CityDao;
 import cn.edu.zju.isst.dao.UserDao;
+import cn.edu.zju.isst.entity.City;
 import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.entity.UserSummary;
 
 @Repository
 public class UserDaoImpl implements UserDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
+    @Autowired
+    private CityDao cityDao;
+    
     @Override
     public User find(int id) {
         String sql = "SELECT * FROM users WHERE id=?";
@@ -26,7 +32,11 @@ public class UserDaoImpl implements UserDao {
         if (list.isEmpty()) {
             return null;
         }
-        return list.get(0);
+        
+        User user = list.get(0);
+        isCityPrincipal(user);
+        
+        return user;
     }
 
     @Override
@@ -36,7 +46,11 @@ public class UserDaoImpl implements UserDao {
         if (list.isEmpty()) {
             return null;
         }
-        return list.get(0);
+        
+        User user = list.get(0);
+        isCityPrincipal(user);
+        
+        return user;
     }
 
     @Override
@@ -74,8 +88,38 @@ public class UserDaoImpl implements UserDao {
             offset += count;
         }
     }
-    
-    public static void main(String[] args) {
-        System.out.println(Integer.valueOf("2014年"));
+
+    private void isCityPrincipal(User user) {
+        if (user.getCityId() > 0) {
+            City city = cityDao.find(user.getCityId());
+            if (null != city && city.getUserId() == user.getId()) {
+                user.setCityPrincipal(true);
+            }
+        }
+    }
+
+    @Override
+    public UserSummary findUserSummary(int id) {
+        String sql = "SELECT * FROM users WHERE id=?";
+        List<UserSummary> list = jdbcTemplate.query(sql, new Integer[] { id }, new RowMapper<UserSummary>() {
+            @Override
+            public UserSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+                UserSummary summary = new UserSummary();
+                summary.setId(rs.getInt("id"));
+                summary.setName(rs.getString("name"));
+                summary.setEmail(rs.getBoolean("private_email") ? "" : rs.getString("email"));
+                summary.setPhone(rs.getBoolean("private_phone") ? "" : rs.getString("phone"));
+                summary.setQq(rs.getBoolean("private_qq") ? "" : rs.getString("qq"));
+                summary.setCompany(rs.getBoolean("private_company") ? "" : rs.getString("company"));
+                summary.setPosition(rs.getBoolean("private_position") ? "" : rs.getString("position"));
+                return summary;
+            }
+        });
+        
+        if (list.isEmpty()) {
+            return null;
+        }
+        
+        return list.get(0);
     }
 }

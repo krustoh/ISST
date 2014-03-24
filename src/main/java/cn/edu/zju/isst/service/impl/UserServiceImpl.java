@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
-        UserIdentity.logout(request, response);
+    public User logout(HttpServletRequest request, HttpServletResponse response) {
+        return UserIdentity.logout(request, response);
     }
 
     @Override

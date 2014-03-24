@@ -69,10 +69,13 @@ public class UserIdentity {
             );
     }
     
-    public static void logout(HttpServletRequest request, HttpServletResponse response) {
+    public static User logout(HttpServletRequest request, HttpServletResponse response) {
+        User user = (User) request.getSession().getAttribute("user");
         request.getSession().removeAttribute("user");
         Cookie cookie = new Cookie("user_token", "");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        
+        return user;
     }
 }

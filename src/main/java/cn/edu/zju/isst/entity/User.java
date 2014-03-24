@@ -8,6 +8,7 @@ public class User {
     private String password;
     private int grade;
     private int class_id;
+    private int city_id;
     private int major_id;
     private int gender;
     private String name;
@@ -17,7 +18,13 @@ public class User {
     private String signature;
     private String company;
     private String position;
-
+    private boolean city_principal;
+    private boolean private_phone;
+    private boolean private_email;
+    private boolean private_qq;
+    private boolean private_company;
+    private boolean private_position;
+    
     public int getId() {
         return id;
     }
@@ -53,6 +60,14 @@ public class User {
         return this.password.equals(Md5Crypt.md5Crypt(password.getBytes(), this.password));
     }
 
+    public int getCityId() {
+        return city_id;
+    }
+
+    public void setCityId(int city_id) {
+        this.city_id = city_id;
+    }
+
     public int getGrade() {
         return grade;
     }
@@ -61,19 +76,19 @@ public class User {
         this.grade = grade;
     }
 
-    public int getClass_id() {
+    public int getClassId() {
         return class_id;
     }
 
-    public void setClass_id(int class_id) {
+    public void setClassId(int class_id) {
         this.class_id = class_id;
     }
 
-    public int getMajor_id() {
+    public int getMajorId() {
         return major_id;
     }
 
-    public void setMajor_id(int major_id) {
+    public void setMajorId(int major_id) {
         this.major_id = major_id;
     }
 
@@ -139,5 +154,53 @@ public class User {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+    
+    public void setCityPrincipal(boolean city_principal) {
+        this.city_principal = city_principal;
+    }
+    
+    public boolean isCityPrincipal() {
+        return city_principal;
+    }
+
+    public boolean isPrivatePhone() {
+        return private_phone;
+    }
+
+    public void setPrivatePhone(boolean private_phone) {
+        this.private_phone = private_phone;
+    }
+
+    public boolean isPrivateEmail() {
+        return private_email;
+    }
+
+    public void setPrivateEmail(boolean private_email) {
+        this.private_email = private_email;
+    }
+
+    public boolean isPrivateQQ() {
+        return private_qq;
+    }
+
+    public void setPrivateQQ(boolean private_qq) {
+        this.private_qq = private_qq;
+    }
+
+    public boolean isPrivateCompany() {
+        return private_company;
+    }
+
+    public void setPrivateCompany(boolean private_company) {
+        this.private_company = private_company;
+    }
+
+    public boolean isPrivatePosition() {
+        return private_position;
+    }
+
+    public void setPrivatePosition(boolean private_position) {
+        this.private_position = private_position;
     }
 }

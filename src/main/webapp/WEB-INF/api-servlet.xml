@@ -25,6 +25,6 @@
   </bean>
   
   <mvc:interceptors>
-    <bean class="cn.edu.zju.isst.identity.UserAuthenticationInterceptor"/>
+    <bean class="cn.edu.zju.isst.identity.ApiAuthenticationInterceptor"/>
   </mvc:interceptors>
 </beans>
