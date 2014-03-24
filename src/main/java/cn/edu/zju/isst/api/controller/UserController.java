@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login")
     public @ResponseBody ApiResponse login(@Valid UserLoginForm form, BindingResult result, HttpServletRequest request, HttpServletResponse response) {
         User user = null;
         if (!result.hasErrors() && (null != (user = userService.login(request, response, form, result)))) {
