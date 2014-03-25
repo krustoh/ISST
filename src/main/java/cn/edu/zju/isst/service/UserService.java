@@ -11,5 +11,4 @@ import cn.edu.zju.isst.form.UserLoginForm;
 public interface UserService {
     public User login(HttpServletRequest request, HttpServletResponse response, UserLoginForm form, BindingResult result);
     public User logout(HttpServletRequest request, HttpServletResponse response);
-    public void synchronizeUsers();
 }

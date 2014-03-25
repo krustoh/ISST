@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.edu.zju.isst.api.service.ApiJobService;
 import cn.edu.zju.isst.common.ApiResponse;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.JobService;
@@ -17,13 +18,15 @@ import cn.edu.zju.isst.service.JobService;
 public class JobController {
     @Autowired
     private JobService jobService;
+    @Autowired
+    private ApiJobService apiJobService;
     
     @RequestMapping(value = "/jobs/categories/{categoryAlias}", method = RequestMethod.GET)
     public @ResponseBody ApiResponse findAll(
             @PathVariable("categoryAlias") String categoryAlias, 
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        return new ApiResponse(jobService.findAll(categoryAlias, pageSize, page));
+        return new ApiResponse(apiJobService.findAll(categoryAlias, pageSize, page));
     }
     
     @RequestMapping(value = "/jobs/{id}", method = RequestMethod.GET)
