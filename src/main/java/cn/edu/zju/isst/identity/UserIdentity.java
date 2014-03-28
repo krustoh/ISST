@@ -12,6 +12,16 @@ import cn.edu.zju.isst.dao.UserDao;
 import cn.edu.zju.isst.entity.User;
 
 public class UserIdentity {
+    private static final String secret = "vq8ukG8MKrNC7XqsbIbd7PxvX81ufNz9";
+    
+    public static String encryptToken(long timestamp, Object...params) {
+        StringBuilder sb = new StringBuilder(secret);
+        for (Object value : params) {
+            sb.append(value);
+        }
+        sb.append(timestamp);
+        return DigestUtils.md5Hex(sb.toString());
+    }
     
     public static User read(HttpServletRequest request, UserDao userDao) {
         User user = (User) request.getSession().getAttribute("user");

@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
     public User logout(HttpServletRequest request, HttpServletResponse response) {
         return UserIdentity.logout(request, response);
     }
+
+    @Override
+    public User find(int id) {
+        return userDao.find(id);
+    }
 }
