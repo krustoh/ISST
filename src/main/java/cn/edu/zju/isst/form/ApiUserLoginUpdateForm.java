@@ -4,8 +4,8 @@ public class ApiUserLoginUpdateForm {
     private int userId;
     private String token;
     private long timestamp;
-    private double logitude;
-    private double tatitude;
+    private double longitude;
+    private double latitude;
     
     public String getToken() {
         return token;
@@ -23,20 +23,20 @@ public class ApiUserLoginUpdateForm {
         this.timestamp = timestamp;
     }
     
-    public double getLogitude() {
-        return logitude;
+    public double getLongitude() {
+        return longitude;
     }
     
-    public void setLogitude(double logitude) {
-        this.logitude = logitude;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
     
-    public double getTatitude() {
-        return tatitude;
+    public double getLatitude() {
+        return latitude;
     }
     
-    public void setTatitude(double tatitude) {
-        this.tatitude = tatitude;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public int getUserId() {

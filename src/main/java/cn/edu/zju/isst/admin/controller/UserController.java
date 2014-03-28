@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.edu.zju.isst.admin.service.AdminUserService;
+import cn.edu.zju.isst.service.UserService;
 import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 
@@ -12,11 +12,11 @@ import cn.edu.zju.isst.identity.RequireAdministrator;
 @Controller("adminUserController")
 public class UserController {
     @Autowired
-    private AdminUserService adminUserService;
+    private UserService userService;
     
     @RequestMapping("/synchronizeUsers")
     public String synchronizeUsers() {
-        adminUserService.synchronizeUsers();
+        userService.synchronizeUsers();
         return "redirect:index.html";
     }
 }

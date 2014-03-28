@@ -11,10 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import cn.edu.zju.isst.admin.service.AdministratorService;
 import cn.edu.zju.isst.common.FlashMessage;
 import cn.edu.zju.isst.form.AdministratorLoginForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
+import cn.edu.zju.isst.service.AdministratorService;
 
 @Controller
 public class AdministratorController {

@@ -1,4 +1,4 @@
-package cn.edu.zju.isst.admin.service;
+package cn.edu.zju.isst.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

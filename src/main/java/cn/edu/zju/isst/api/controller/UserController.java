@@ -18,7 +18,7 @@ import cn.edu.zju.isst.form.ApiUserLoginUpdateForm;
 import cn.edu.zju.isst.identity.UserIdentity;
 import cn.edu.zju.isst.service.UserService;
 
-@Controller
+@Controller("apiUserController")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -35,6 +35,7 @@ public class UserController {
         
         User user = null;
         if (!result.hasErrors() && (null != (user = userService.login(request, response, form, result)))) {
+            userService.updateLoginLocation(user, form.getLongitude(), form.getLatitude());
             return new ApiResponse(user);
         } else {
             return new ApiResponse(result);
@@ -56,6 +57,8 @@ public class UserController {
             return new ApiResponse(13, "认证失败");
         }
         
+        userService.updateLoginLocation(user, form.getLongitude(), form.getLatitude());
+        
         return new ApiResponse(user);
     }
     
@@ -63,5 +66,9 @@ public class UserController {
     public @ResponseBody ApiResponse logout(HttpServletRequest request, HttpServletResponse response) {
         User user = userService.logout(request, response);
         return new ApiResponse(user);
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(System.currentTimeMillis());
     }
 }

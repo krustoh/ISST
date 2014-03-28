@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
             result.rejectValue("password", "11", "密码错误！");
         } else {
             UserIdentity.login(request, response, user, form.isRememberMe());
-            userDao.updateLoginLocation(user, form.getLongitude(), form.getLatitude());
             return user;
         }
         return null;
@@ -40,5 +39,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User find(int id) {
         return userDao.find(id);
+    }
+
+    @Override
+    public void updateLoginLocation(User user, double longitude, double latitude) {
+        userDao.updateLoginLocation(user, longitude, latitude);
+    }
+    
+    @Override
+    public void synchronizeUsers() {
+        userDao.synchronizeUsers();
     }
 }

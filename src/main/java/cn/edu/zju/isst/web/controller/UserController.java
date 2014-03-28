@@ -16,7 +16,7 @@ import cn.edu.zju.isst.form.UserLoginForm;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.UserService;
 
-@Controller("apiUserController")
+@Controller
 public class UserController {
     @Autowired
     private UserService userService;
