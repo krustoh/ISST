@@ -156,7 +156,7 @@ public abstract class AbstractDao<T> implements Dao<T> {
     }
     
     public T find(int id) {
-        return findBySql(String.format("SELECT * FROM %s WHERE %s=?", table, primaryKey), new Object[] { id });
+        return findBySql(String.format("SELECT * FROM %s WHERE %s=?", table, primaryKey), id);
     }
     
     public T findBySql(String sql) {
@@ -164,7 +164,7 @@ public abstract class AbstractDao<T> implements Dao<T> {
     }
     
     public T findBySql(String sql, Object...params) {
-        List<T> list = findAllBySql(sql);
+        List<T> list = findAllBySql(sql, params);
         
         if (list.isEmpty()) {
             return null;
