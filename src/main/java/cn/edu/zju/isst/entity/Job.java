@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cn.edu.zju.isst.admin.controller.AppConfig;
+
 public class Job {
     public static final int STATUS_HIDDEN = 0;
     public static final int STATUS_PUBLISHED = 1;
@@ -85,9 +87,9 @@ public class Job {
     
     public void setUpdatedAt(String updated_at) {
         try {
-            this.updated_at = new SimpleDateFormat().parse(updated_at);
+            this.updated_at = new SimpleDateFormat(AppConfig.dateTimeFormatter).parse(updated_at);
         } catch (ParseException e) {
-            this.updated_at = new Date(System.currentTimeMillis());
+            e.printStackTrace();
         }
     }
     

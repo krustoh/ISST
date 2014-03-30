@@ -4,7 +4,6 @@ import java.util.List;
 
 import cn.edu.zju.isst.entity.Archive;
 
-public interface ArchiveDao {
-    public Archive find(int id);
+public interface ArchiveDao extends Dao<Archive> {
     public List<Archive> findAll(int categoryId, int status, int pageSize, int page);
 }

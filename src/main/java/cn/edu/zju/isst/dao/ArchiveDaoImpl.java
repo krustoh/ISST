@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,9 +15,7 @@ import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.UserSummary;
 
 @Repository
-public class ArchiveDaoImpl implements ArchiveDao {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
     @Autowired
     private UserDao userDao;
 
@@ -69,25 +65,15 @@ public class ArchiveDaoImpl implements ArchiveDao {
             }
         });
     }
-
-    @Override
-    public Archive find(int id) {
-        String sql = "SELECT * FROM archives WHERE id=?";
-        
-        List<Archive> list = jdbcTemplate.query(sql, new Object[] { id}, BeanPropertyRowMapper.newInstance(Archive.class));
-        if (list.isEmpty()) {
-            return null;
-        }
-        
-        Archive archive = list.get(0);
-        if (archive.getUserId() > 0) {
-            archive.setUser(userDao.findUserSummary(archive.getUserId()));
-        }
-        
-        return archive;
-    }
     
     public ArchiveSelectSQLBuilder select(String fields) {
         return new ArchiveSelectSQLBuilder(fields);
+    }
+    
+    @Override
+    protected void onFind(Archive entity) {
+        if (entity.getUserId() > 0) {
+            entity.setUser(userDao.findUserSummary(entity.getUserId()));
+        }
     }
 }
