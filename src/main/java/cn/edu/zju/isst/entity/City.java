@@ -6,6 +6,9 @@ import cn.edu.zju.isst.dao.annotation.ID;
 
 @Entity("cities")
 public class City {
+    public static final int STATUS_HIDDEN = 0;
+    public static final int STATUS_PUBLISHED = 1;
+    
     @ID
     @Column
     private int id;
@@ -18,6 +21,8 @@ public class City {
     
     @Column
     private int status;
+    
+    private UserSummary user;
     
     public int getId() {
         return id;
@@ -49,5 +54,13 @@ public class City {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public UserSummary getUser() {
+        return user;
+    }
+
+    public void setUser(UserSummary user) {
+        this.user = user;
     }
 }

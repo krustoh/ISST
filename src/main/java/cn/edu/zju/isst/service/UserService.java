@@ -1,10 +1,14 @@
 package cn.edu.zju.isst.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.validation.BindingResult;
 
+import cn.edu.zju.isst.entity.Klass;
+import cn.edu.zju.isst.entity.Major;
 import cn.edu.zju.isst.entity.User;
 import cn.edu.zju.isst.form.UserLoginForm;
 
@@ -14,4 +18,6 @@ public interface UserService {
     public void updateLoginLocation(User user, double longitude, double latitude);
     public User logout(HttpServletRequest request, HttpServletResponse response);
     public void synchronizeUsers();
+    public List<Klass> findAllClasses();
+    public List<Major> findAllMajors();
 }

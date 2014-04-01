@@ -69,6 +69,16 @@ public class UserController {
         return new ApiResponse(user);
     }
     
+    @RequestMapping("/classes")
+    public @ResponseBody ApiResponse findAllClasses() {
+        return new ApiResponse(userService.findAllClasses());
+    }
+    
+    @RequestMapping("/majors")
+    public @ResponseBody ApiResponse findAllMajors() {
+        return new ApiResponse(userService.findAllMajors());
+    }
+    
     public static void main(String[] args) {
         long timestamp = System.currentTimeMillis() / 1000;
         System.out.println(timestamp);

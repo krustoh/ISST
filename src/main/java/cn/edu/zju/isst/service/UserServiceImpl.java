@@ -1,5 +1,7 @@
 package cn.edu.zju.isst.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import cn.edu.zju.isst.dao.UserDao;
+import cn.edu.zju.isst.entity.Klass;
+import cn.edu.zju.isst.entity.Major;
 import cn.edu.zju.isst.entity.User;
 import cn.edu.zju.isst.form.UserLoginForm;
 import cn.edu.zju.isst.identity.UserIdentity;
@@ -49,5 +53,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void synchronizeUsers() {
         userDao.synchronizeUsers();
+    }
+
+    @Override
+    public List<Klass> findAllClasses() {
+        return userDao.findAllClasses();
+    }
+
+    @Override
+    public List<Major> findAllMajors() {
+        return userDao.findAllMajors();
     }
 }

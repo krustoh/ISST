@@ -8,9 +8,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.zju.isst.entity.City;
+import cn.edu.zju.isst.entity.Klass;
+import cn.edu.zju.isst.entity.Major;
 import cn.edu.zju.isst.entity.User;
 import cn.edu.zju.isst.entity.UserSummary;
 
@@ -97,5 +100,15 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
         
         return list.get(0);
+    }
+
+    @Override
+    public List<Klass> findAllClasses() {
+        return queryAll("SELECT id, name FROM classes ORDER BY name ASC", ParameterizedBeanPropertyRowMapper.newInstance(Klass.class));
+    }
+
+    @Override
+    public List<Major> findAllMajors() {
+        return queryAll("SELECT id, name FROM class_major_fields ORDER BY name ASC", ParameterizedBeanPropertyRowMapper.newInstance(Major.class));
     }
 }

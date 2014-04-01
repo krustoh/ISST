@@ -168,6 +168,26 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return list.get(0);
     }
     
+    public <E>E query(String sql, RowMapper<E> rowMapper) {
+        List<E> list = queryAll(sql, rowMapper, new Object[] {});
+        
+        if (list.isEmpty()) {
+            return null;
+        }
+        
+        return list.get(0);
+    }
+    
+    public <E>E query(String sql, RowMapper<E> rowMapper, Object...params) {
+        List<E> list = queryAll(sql, rowMapper, params);
+        
+        if (list.isEmpty()) {
+            return null;
+        }
+        
+        return list.get(0);
+    }
+    
     public T query(String sql, Map<String, Object> params) {
         List<T> list = queryAll(sql, params);
         
@@ -194,6 +214,14 @@ public abstract class AbstractDao<T> implements Dao<T> {
     
     public List<T> queryAll(String sql, Object...params) {
         return jdbcTemplate.getJdbcOperations().query(sql, params, getRowMapper());
+    }
+    
+    public <E>List<E> queryAll(String sql, RowMapper<E> rowMapper) {
+        return jdbcTemplate.getJdbcOperations().query(sql, new Object[] {}, rowMapper);
+    }
+    
+    public <E>List<E> queryAll(String sql, RowMapper<E> rowMapper, Object...params) {
+        return jdbcTemplate.getJdbcOperations().query(sql, params, rowMapper);
     }
     
     public List<T> queryAll(String sql, Map<String, Object> params) {
