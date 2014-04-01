@@ -1,12 +1,15 @@
 package cn.edu.zju.isst.common;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class SelectSQLBuilder<T extends SelectSQLBuilder<T>> {
+public class SelectSQLBuilder {
     private String table;
     private StringBuilder fields = new StringBuilder();
     private StringBuilder where = new StringBuilder();
+    private Map<String, Object> params; 
     private List<Joint> joints;
     private String orderBy;
     private int count;
@@ -47,33 +50,29 @@ public class SelectSQLBuilder<T extends SelectSQLBuilder<T>> {
         this.from(table, fields);
     }
     
-    @SuppressWarnings("unchecked")
-    public T from(String table, String fields) {
+    public SelectSQLBuilder from(String table, String fields) {
         this.table = table;
         select(fields);
         
-        return (T) this;
+        return this;
     }
     
-    @SuppressWarnings("unchecked")
-    public T leftJoin(String table, String condition) {
+    public SelectSQLBuilder leftJoin(String table, String condition) {
         join(JointType.LEFT_JOIN, table, condition);
         
-        return (T) this;
+        return this;
     }
     
-    @SuppressWarnings("unchecked")
-    public T rigntJoin(String table, String condition) {
+    public SelectSQLBuilder rigntJoin(String table, String condition) {
         join(JointType.RIGHT_JOIN, table, condition);
         
-        return (T) this;
+        return this;
     }
     
-    @SuppressWarnings("unchecked")
-    public T innerJoin(String table, String condition) {
+    public SelectSQLBuilder innerJoin(String table, String condition) {
         join(JointType.INNER_JOIN, table, condition);
         
-        return (T) this;
+        return this;
     }
     
     private void join(JointType jointType, String table, String condition) {
@@ -84,62 +83,81 @@ public class SelectSQLBuilder<T extends SelectSQLBuilder<T>> {
         joints.add(new Joint(jointType, table, condition));
     }
     
-    @SuppressWarnings("unchecked")
-    public T select(String fields) {
+    public SelectSQLBuilder select(String fields) {
         if (this.fields.length() > 0) {
             this.fields.append(", ");
         }
 
         this.fields.append(fields);
         
-        return (T) this;
+        return this;
     }
     
-    @SuppressWarnings("unchecked")
-    public T where(String condition) {
+    public SelectSQLBuilder where(String condition) {
         if (where.length() > 0) {
             where.append(" AND ");
         }
         
         where.append(condition);
         
-        return (T) this;
+        return this;
     }
     
-    @SuppressWarnings("unchecked")
-    public T orderBy(String orderBy) {
+    public SelectSQLBuilder like(String column, String value) {
+        where(String.format("%s LIKE :%s", column, column));
+        
+        value = value.replaceAll("\\\\","\\\\\\\\")
+                .replaceAll("_","\\\\_")
+                .replaceAll("%", "\\\\%");
+        addParam(column, "%" + value + "%");
+        
+        return this;
+    }
+    
+    public SelectSQLBuilder addParam(String column, Object value) {
+        if (null == params) {
+            params = new HashMap<String, Object>();
+        }
+        
+        params.put(column, value);
+        
+        return this;
+    }
+    
+    public Map<String, Object> getParams() {
+        return params;
+    }
+    
+    public SelectSQLBuilder orderBy(String orderBy) {
         this.orderBy = orderBy;
         
-        return (T) this;
+        return this;
     }
     
-    @SuppressWarnings("unchecked")
-    public T limit(int count, int offset) {
+    public SelectSQLBuilder limit(int count, int offset) {
         this.count = count;
         this.offset = offset;
         
-        return (T) this;
+        return this;
     }
     
-    @SuppressWarnings("unchecked")
-    public T limit(int count) {
+    public SelectSQLBuilder limit(int count) {
         this.count = count;
         
-        return (T) this;
+        return this;
     }
     
-    @SuppressWarnings("unchecked")
-    public T paging(int page, int pageSize) {
+    public SelectSQLBuilder paging(int page, int pageSize) {
         limit(pageSize, (page - 1) * pageSize);
         
-        return (T) this;
+        return this;
     }
     
     public String toSQL() {
         return parseSQL(false);
     }
     
-    public String toCOUNTSQL() {
+    public String toCountSQL() {
         return parseSQL(true);
     }
     
@@ -174,7 +192,6 @@ public class SelectSQLBuilder<T extends SelectSQLBuilder<T>> {
         return toSQL();
     }
     
-    @SuppressWarnings("rawtypes")
     public static SelectSQLBuilder selectTable(String table, String fields) {
         return new SelectSQLBuilder(table, fields);
     }

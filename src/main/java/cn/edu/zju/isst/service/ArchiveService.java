@@ -6,5 +6,5 @@ import cn.edu.zju.isst.entity.Archive;
 
 public interface ArchiveService {
     public Archive find(int id);
-    public List<Archive> findAll(String categoryAlias, int pageSize, int page);
+    public List<Archive> findAll(String categoryAlias, String keywords, int pageSize, int page);
 }

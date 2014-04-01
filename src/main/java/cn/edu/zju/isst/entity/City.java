@@ -1,9 +1,22 @@
 package cn.edu.zju.isst.entity;
 
+import cn.edu.zju.isst.dao.annotation.Column;
+import cn.edu.zju.isst.dao.annotation.Entity;
+import cn.edu.zju.isst.dao.annotation.ID;
+
+@Entity("cities")
 public class City {
+    @ID
+    @Column
     private int id;
+    
+    @Column
     private String name;
-    private int user_id;
+    
+    @Column("user_id")
+    private int userId;
+    
+    @Column
     private int status;
     
     public int getId() {
@@ -23,11 +36,11 @@ public class City {
     }
     
     public int getUserId() {
-        return user_id;
+        return userId;
     }
     
     public void setUserId(int userId) {
-        this.user_id = userId;
+        this.userId = userId;
     }
 
     public int getStatus() {

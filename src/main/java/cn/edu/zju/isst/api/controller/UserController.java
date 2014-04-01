@@ -43,7 +43,7 @@ public class UserController {
     }
     
     @RequestMapping(value = "/login/update")
-    public @ResponseBody ApiResponse updateLogin(ApiUserLoginUpdateForm form) {
+    public @ResponseBody ApiResponse updateLogin(ApiUserLoginUpdateForm form, HttpServletRequest request, HttpServletResponse response) {
         if (Math.abs(System.currentTimeMillis()/1000 - form.getTimestamp()) > 3600) {
             return new ApiResponse(12, "认证失效");
         }
@@ -57,6 +57,7 @@ public class UserController {
             return new ApiResponse(13, "认证失败");
         }
         
+        UserIdentity.login(request, response, user, false);
         userService.updateLoginLocation(user, form.getLongitude(), form.getLatitude());
         
         return new ApiResponse(user);
@@ -72,5 +73,6 @@ public class UserController {
         long timestamp = System.currentTimeMillis() / 1000;
         System.out.println(timestamp);
         System.out.println(UserIdentity.encryptToken(timestamp, "21351075", "111111"));
+        System.out.println(UserIdentity.encryptToken(timestamp, "679", "$1$AI2oKqG9$Kv8CCo.UzSXQsBPRbKfVq/"));
     }
 }

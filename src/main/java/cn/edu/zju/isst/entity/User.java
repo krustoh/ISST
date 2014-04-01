@@ -2,28 +2,75 @@ package cn.edu.zju.isst.entity;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 
+import cn.edu.zju.isst.dao.annotation.Column;
+import cn.edu.zju.isst.dao.annotation.Entity;
+import cn.edu.zju.isst.dao.annotation.ID;
+
+@Entity("users")
 public class User {
+    @ID
+    @Column
     private int id;
+    
+    @Column
     private String username;
+    
+    @Column
     private String password;
+    
+    @Column
     private int grade;
-    private int class_id;
-    private int city_id;
-    private int major_id;
+    
+    @Column("class_id")
+    private int classId;
+    
+    @Column("city_id")
+    private int cityId;
+    
+    @Column("major_id")
+    private int majorId;
+    
+    @Column
     private int gender;
+    
+    @Column
     private String name;
+    
+    @Column
     private String email;
+    
+    @Column
     private String phone;
+    
+    @Column
     private String qq;
+    
+    @Column
     private String signature;
+    
+    @Column
     private String company;
+    
+    @Column
     private String position;
-    private boolean city_principal;
-    private boolean private_phone;
-    private boolean private_email;
-    private boolean private_qq;
-    private boolean private_company;
-    private boolean private_position;
+    
+    @Column("city_principal")
+    private boolean cityPrincipal;
+    
+    @Column("private_phone")
+    private boolean privatePhone;
+    
+    @Column("private_email")
+    private boolean privateEmail;
+    
+    @Column("private_qq")
+    private boolean privateQQ;
+    
+    @Column("private_company")
+    private boolean privateCompany;
+    
+    @Column("private_position")
+    private boolean privatePosition;
     
     public int getId() {
         return id;
@@ -61,11 +108,11 @@ public class User {
     }
 
     public int getCityId() {
-        return city_id;
+        return cityId;
     }
 
-    public void setCityId(int city_id) {
-        this.city_id = city_id;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     public int getGrade() {
@@ -77,19 +124,19 @@ public class User {
     }
 
     public int getClassId() {
-        return class_id;
+        return classId;
     }
 
-    public void setClassId(int class_id) {
-        this.class_id = class_id;
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     public int getMajorId() {
-        return major_id;
+        return majorId;
     }
 
-    public void setMajorId(int major_id) {
-        this.major_id = major_id;
+    public void setMajorId(int majorId) {
+        this.majorId = majorId;
     }
 
     public int getGender() {
@@ -156,51 +203,51 @@ public class User {
         this.position = position;
     }
     
-    public void setCityPrincipal(boolean city_principal) {
-        this.city_principal = city_principal;
+    public void setCityPrincipal(boolean cityPrincipal) {
+        this.cityPrincipal = cityPrincipal;
     }
     
     public boolean isCityPrincipal() {
-        return city_principal;
+        return cityPrincipal;
     }
 
     public boolean isPrivatePhone() {
-        return private_phone;
+        return privatePhone;
     }
 
-    public void setPrivatePhone(boolean private_phone) {
-        this.private_phone = private_phone;
+    public void setPrivatePhone(boolean privatePhone) {
+        this.privatePhone = privatePhone;
     }
 
     public boolean isPrivateEmail() {
-        return private_email;
+        return privateEmail;
     }
 
-    public void setPrivateEmail(boolean private_email) {
-        this.private_email = private_email;
+    public void setPrivateEmail(boolean privateEmail) {
+        this.privateEmail = privateEmail;
     }
 
     public boolean isPrivateQQ() {
-        return private_qq;
+        return privateQQ;
     }
 
-    public void setPrivateQQ(boolean private_qq) {
-        this.private_qq = private_qq;
+    public void setPrivateQQ(boolean privateQQ) {
+        this.privateQQ = privateQQ;
     }
 
     public boolean isPrivateCompany() {
-        return private_company;
+        return privateCompany;
     }
 
-    public void setPrivateCompany(boolean private_company) {
-        this.private_company = private_company;
+    public void setPrivateCompany(boolean privateCompany) {
+        this.privateCompany = privateCompany;
     }
 
     public boolean isPrivatePosition() {
-        return private_position;
+        return privatePosition;
     }
 
-    public void setPrivatePosition(boolean private_position) {
-        this.private_position = private_position;
+    public void setPrivatePosition(boolean privatePosition) {
+        this.privatePosition = privatePosition;
     }
 }

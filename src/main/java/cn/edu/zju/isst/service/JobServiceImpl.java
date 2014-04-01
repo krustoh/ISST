@@ -24,10 +24,10 @@ public class JobServiceImpl implements JobService {
     }
     
     @Override
-    public List<Job> findAll(String categoryAlias, int pageSize, int page) {
+    public List<Job> findAll(String categoryAlias, String keywords, int pageSize, int page) {
         Category category = categoryDao.find(categoryAlias);
         if (null != category) {
-            return jobDao.findAll(category.getId(), Job.STATUS_PUBLISHED, pageSize, page);
+            return jobDao.findAll(category.getId(), keywords, Job.STATUS_PUBLISHED, pageSize, page);
         } else {
             return new ArrayList<Job>();
         }

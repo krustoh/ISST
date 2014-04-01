@@ -6,5 +6,5 @@ import cn.edu.zju.isst.entity.Job;
 
 public interface JobService {
     public Job find(int id);
-    public List<Job> findAll(String categoryAlias, int pageSize, int page);
+    public List<Job> findAll(String categoryAlias, String keywords, int pageSize, int page);
 }

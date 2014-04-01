@@ -5,19 +5,41 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cn.edu.zju.isst.admin.controller.AppConfig;
+import cn.edu.zju.isst.dao.annotation.Column;
+import cn.edu.zju.isst.dao.annotation.Entity;
+import cn.edu.zju.isst.dao.annotation.ID;
 
+@Entity("jobs")
 public class Job {
     public static final int STATUS_HIDDEN = 0;
     public static final int STATUS_PUBLISHED = 1;
     
+    @ID
+    @Column
     private int id;
-    private int category_id;
-    private int city_id;
-    private int user_id;
+    
+    @Column("category_id")
+    private int categoryId;
+    
+    @Column("city_id")
+    private int cityId;
+    
+    @Column("user_id")
+    private int userId;
+    
+    @Column
     private String title;
+    
+    @Column
     private String company;
+    
+    @Column
     private String position;
-    private Date updated_at;
+    
+    @Column("updated_at")
+    private Date updatedAt;
+    
+    @Column
     private int status;
     private UserSummary user;
     
@@ -30,27 +52,27 @@ public class Job {
     }
     
     public int getCategoryId() {
-        return category_id;
+        return categoryId;
     }
     
-    public void setCategoryId(int category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
     
     public int getCityId() {
-        return city_id;
+        return cityId;
     }
     
-    public void setCityId(int city_id) {
-        this.city_id = city_id;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
     
     public int getUserId() {
-        return user_id;
+        return userId;
     }
     
-    public void setUserId(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
     
     public String getTitle() {
@@ -78,16 +100,16 @@ public class Job {
     }
     
     public Date getUpdatedAt() {
-        return updated_at;
+        return updatedAt;
     }
     
-    public void setUpdatedAt(Date updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
     
-    public void setUpdatedAt(String updated_at) {
+    public void setUpdatedAt(String updatedAt) {
         try {
-            this.updated_at = new SimpleDateFormat(AppConfig.dateTimeFormatter).parse(updated_at);
+            this.updatedAt = new SimpleDateFormat(AppConfig.dateTimeFormatter).parse(updatedAt);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,28 @@
 package cn.edu.zju.isst.entity;
 
+import cn.edu.zju.isst.dao.annotation.Column;
+import cn.edu.zju.isst.dao.annotation.Entity;
+import cn.edu.zju.isst.dao.annotation.ID;
+
+@Entity("categories")
 public class Category {
+    @ID
+    @Column
     private int id;
+    
+    @Column
     private String alias;
+    
+    @Column
     private String name;
-    private int parent_id;
-    private int root_id;
+    
+    @Column("parent_id")
+    private int parentId;
+    
+    @Column("root_id")
+    private int rootId;
+    
+    @Column
     private int priority;
     
     public int getId() {
@@ -33,19 +50,19 @@ public class Category {
     }
     
     public int getParentId() {
-        return parent_id;
+        return parentId;
     }
     
-    public void setParentId(int parent_id) {
-        this.parent_id = parent_id;
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
     
     public int getRootId() {
-        return root_id;
+        return rootId;
     }
     
-    public void setRootId(int root_id) {
-        this.root_id = root_id;
+    public void setRootId(int rootId) {
+        this.rootId = rootId;
     }
     
     public int getPriority() {

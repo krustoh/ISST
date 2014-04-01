@@ -24,10 +24,10 @@ public class ArchiveServiceImpl implements ArchiveService {
     }
     
     @Override
-    public List<Archive> findAll(String categoryAlias, int pageSize, int page) {
+    public List<Archive> findAll(String categoryAlias, String keywords, int pageSize, int page) {
         Category category = categoryDao.find(categoryAlias);
         if (null != category) {
-            return archiveDao.findAll(category.getId(), Archive.STATUS_PUBLISHED, pageSize, page);
+            return archiveDao.findAll(category.getId(), keywords, Archive.STATUS_PUBLISHED, pageSize, page);
         } else {
             return new ArrayList<Archive>();
         }

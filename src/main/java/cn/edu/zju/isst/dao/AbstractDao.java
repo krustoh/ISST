@@ -5,12 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,19 +15,20 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import cn.edu.zju.isst.common.SelectSQLBuilder;
 import cn.edu.zju.isst.dao.annotation.Column;
 import cn.edu.zju.isst.dao.annotation.Entity;
 import cn.edu.zju.isst.dao.annotation.ID;
 
 public abstract class AbstractDao<T> implements Dao<T> {
     @Autowired
-    protected JdbcTemplate jdbcTemplate;
+    protected NamedParameterJdbcTemplate jdbcTemplate;
     
     protected final Class<T> entityClass;
     protected final String table;
@@ -63,7 +61,7 @@ public abstract class AbstractDao<T> implements Dao<T> {
                 
                 char[] cs = field.getName().toCharArray();
                 cs[0] = Character.toUpperCase(cs[0]);
-                String getter = "get" + String.valueOf(cs);
+                String getter = (field.getType() == boolean.class || field.getType() == Boolean.class ? "is" : "get") + String.valueOf(cs);
                 try {
                     fieldGetters.put(columnName, entityClass.getMethod(getter, new Class<?>[] {}));
                 } catch (SecurityException e) {
@@ -98,35 +96,27 @@ public abstract class AbstractDao<T> implements Dao<T> {
     
     public void insert(final T entity) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(new PreparedStatementCreator() {
-            public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
-                StringBuilder sql = new StringBuilder("INSERT INTO ");
-                sql.append(table).append(" (");
-                int i = 0;
-                for (String column : fields.keySet()) {
-                    if (i > 0) {
-                        sql.append(", ");
-                    }
-                    sql.append(column);
-                    i++;
-                }
-                sql.append(") VALUES (");
-                while ((i--) > 0) {
-                    sql.append("?");
-                    if (i > 0) {
-                        sql.append(", ");
-                    }
-                }
-                sql.append(")");
-                PreparedStatement ps = conn.prepareStatement(sql.toString(), new String[] { primaryKey });
-                i = 1;
-                for (String column : fields.keySet()) {
-                    ps.setObject(i++, getFieldValue(entity, column));
-                }
-                
-                return ps;
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        for (String column : fields.keySet()) {
+            paramSource.addValue(column, getFieldValue(entity, column));
+        }
+        
+        StringBuilder sql = new StringBuilder("INSERT INTO ");
+        StringBuilder values = new StringBuilder();
+        sql.append(table).append(" (");
+        int i = 0;
+        for (String column : fields.keySet()) {
+            if (i > 0) {
+                sql.append(", ");
+                values.append(", ");
             }
-        }, keyHolder);
+            sql.append(column);
+            values.append(":").append(column);
+            i++;
+        }
+        
+        sql.append(") VALUES (").append(values).append(")");
+        jdbcTemplate.update(sql.toString(), paramSource, keyHolder, new String[] { primaryKey });
         
         setFieldValue(entity, primaryKey, keyHolder.getKey().intValue());
     }
@@ -134,37 +124,42 @@ public abstract class AbstractDao<T> implements Dao<T> {
     public int update(T entity) {
         StringBuilder sql = new StringBuilder("UPDATE ");
         sql.append(table).append(" SET ");
-        List<Object> values = new ArrayList<Object>();
+
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        for (String column : fields.keySet()) {
+            paramSource.addValue(column, getFieldValue(entity, column));
+        }
+        
         int i = 0;
         for (String column : fields.keySet()) {
             if (i > 0) {
                 sql.append(", ");
             }
-            sql.append(column).append("=?");
-            values.add(getFieldValue(entity, column));
+            sql.append(column).append("=:").append(column);
+            paramSource.addValue(column, getFieldValue(entity, column));
             i++;
         }
-        sql.append(" WHERE ").append(primaryKey).append("=?");
-        values.add(getFieldValue(entity, primaryKey));
+        sql.append(" WHERE ").append(primaryKey).append("=:__primaryKey__");
+        paramSource.addValue("__primaryKey__", getFieldValue(entity, primaryKey));
         
-        return jdbcTemplate.update(sql.toString(), values.toArray());
+        return jdbcTemplate.update(sql.toString(), paramSource);
     }
     
     public int delete(T entity) {
         String sql = String.format("DELETE FROM %s WHERE %s=?", table, primaryKey);
-        return jdbcTemplate.update(sql, new Object[] { getFieldValue(entity, primaryKey)});
+        return jdbcTemplate.getJdbcOperations().update(sql, new Object[] { getFieldValue(entity, primaryKey)});
     }
     
     public T find(int id) {
-        return findBySql(String.format("SELECT * FROM %s WHERE %s=?", table, primaryKey), id);
+        return query(String.format("SELECT * FROM %s WHERE %s=?", table, primaryKey), id);
     }
     
-    public T findBySql(String sql) {
-        return findBySql(sql, new Object[] {});
+    public T query(String sql) {
+        return query(sql, new Object[] {});
     }
     
-    public T findBySql(String sql, Object...params) {
-        List<T> list = findAllBySql(sql, params);
+    public T query(String sql, Object...params) {
+        List<T> list = queryAll(sql, params);
         
         if (list.isEmpty()) {
             return null;
@@ -173,17 +168,45 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return list.get(0);
     }
     
-    public List<T> findAllBySql(String sql) {
-        return findAllBySql(sql, new Object[] {});
+    public T query(String sql, Map<String, Object> params) {
+        List<T> list = queryAll(sql, params);
+        
+        if (list.isEmpty()) {
+            return null;
+        }
+        
+        return list.get(0);
     }
     
-    public List<T> findAllBySql(String sql, Object...params) {
+    public T query(SelectSQLBuilder select) {
+        List<T> list = queryAll(select);
+        
+        if (list.isEmpty()) {
+            return null;
+        }
+        
+        return list.get(0);
+    }
+    
+    public List<T> queryAll(String sql) {
+        return queryAll(sql, new Object[] {});
+    }
+    
+    public List<T> queryAll(String sql, Object...params) {
+        return jdbcTemplate.getJdbcOperations().query(sql, params, getRowMapper());
+    }
+    
+    public List<T> queryAll(String sql, Map<String, Object> params) {
         return jdbcTemplate.query(sql, params, getRowMapper());
+    }
+    
+    public List<T> queryAll(SelectSQLBuilder select) {
+        return jdbcTemplate.query(select.toSQL(), select.getParams(), getRowMapper());
     }
     
     public boolean exists(int id) {
         String sql = String.format("SELECT COUNT(%s) FROM %s WHERE %s=?", primaryKey, table, primaryKey);
-        return jdbcTemplate.queryForObject(sql, new Object[] { id }, Integer.class) > 0 ? true : false;
+        return jdbcTemplate.getJdbcOperations().queryForObject(sql, new Object[] { id }, Integer.class) > 0 ? true : false;
     }
     
     protected Object getFieldValue(T entity, String column) {
@@ -225,23 +248,25 @@ public abstract class AbstractDao<T> implements Dao<T> {
                         int n = metaData.getColumnCount();
                         for (int i = 1; i <= n; i++) {
                             String columnName = metaData.getColumnName(i);
-                            Class<?> type = fields.get(columnName).getType();
-                            if (type == int.class || type == Integer.class) {
-                                setFieldValue(entity, columnName, rs.getInt(columnName));
-                            } else if (type == short.class) {
-                                setFieldValue(entity, columnName, rs.getShort(columnName));
-                            } else if (type == long.class || type == Long.class) {
-                                setFieldValue(entity, columnName, rs.getLong(columnName));
-                            } else if (type == double.class || type == Double.class) {
-                                setFieldValue(entity, columnName, rs.getDouble(columnName));
-                            } else if (type == float.class || type == Float.class) {
-                                setFieldValue(entity, columnName, rs.getFloat(columnName));
-                            } else if (type == boolean.class || type == Boolean.class) {
-                                setFieldValue(entity, columnName, rs.getBoolean(columnName));
-                            } else if (type == Date.class) {
-                                setFieldValue(entity, columnName, new Date(rs.getTimestamp(columnName).getTime()));
-                            } else {
-                                setFieldValue(entity, columnName, rs.getString(columnName));
+                            if (null != fields.get(columnName)) {
+                                Class<?> type = fields.get(columnName).getType();
+                                if (type == int.class || type == Integer.class) {
+                                    setFieldValue(entity, columnName, rs.getInt(columnName));
+                                } else if (type == short.class) {
+                                    setFieldValue(entity, columnName, rs.getShort(columnName));
+                                } else if (type == long.class || type == Long.class) {
+                                    setFieldValue(entity, columnName, rs.getLong(columnName));
+                                } else if (type == double.class || type == Double.class) {
+                                    setFieldValue(entity, columnName, rs.getDouble(columnName));
+                                } else if (type == float.class || type == Float.class) {
+                                    setFieldValue(entity, columnName, rs.getFloat(columnName));
+                                } else if (type == boolean.class || type == Boolean.class) {
+                                    setFieldValue(entity, columnName, rs.getBoolean(columnName));
+                                } else if (type == Date.class) {
+                                    setFieldValue(entity, columnName, new Date(rs.getTimestamp(columnName).getTime()));
+                                } else {
+                                    setFieldValue(entity, columnName, rs.getString(columnName));
+                                }
                             }
                         }
                         onFind(entity);
@@ -259,5 +284,13 @@ public abstract class AbstractDao<T> implements Dao<T> {
     }
     
     protected void onFind(T entity) {
+    }
+    
+    public SelectSQLBuilder select() {
+        return select("*");
+    }
+    
+    public SelectSQLBuilder select(String field) {
+        return SelectSQLBuilder.selectTable(table, field);
     }
 }
