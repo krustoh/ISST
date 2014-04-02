@@ -23,6 +23,9 @@ public class Restaurant {
     private String businessHours;
 
     @Column
+    private String picture;
+    
+    @Column
     private String description;
 
     @Column
@@ -44,6 +47,14 @@ public class Restaurant {
         this.name = name;
     }
     
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     public String getAddress() {
         return address;
     }
