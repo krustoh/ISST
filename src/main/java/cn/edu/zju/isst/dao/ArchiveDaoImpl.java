@@ -1,10 +1,9 @@
 package cn.edu.zju.isst.dao;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import cn.edu.zju.isst.common.PaginationList;
 import cn.edu.zju.isst.common.SelectSQLBuilder;
 import cn.edu.zju.isst.entity.Archive;
 
@@ -14,7 +13,7 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
     private UserDao userDao;
     
     @Override
-    public List<Archive> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
+    public PaginationList<Archive> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
         SelectSQLBuilder select = select("id, category_id, user_id, title, description, updated_at")
                 .where("category_id=:category_id AND status=:status")
                 .addParam("category_id", categoryId).addParam("status", status)
@@ -31,7 +30,7 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
             select.paging(page, pageSize);
         }
         
-        return queryAll(select);
+        return new PaginationList<Archive>(page, pageSize, this, select);
     }
     
     @Override

@@ -24,7 +24,7 @@ public class ArchiveController {
             @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords, 
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        return new ApiResponse(archiveService.findAll(categoryAlias, keywords, pageSize, page));
+        return new ApiResponse(archiveService.findAll(categoryAlias, keywords, pageSize, page).getItems());
     }
     
     @RequestMapping(value = "/archives/{id}", method = RequestMethod.GET)

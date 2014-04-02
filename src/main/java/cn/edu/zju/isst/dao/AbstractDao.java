@@ -321,4 +321,8 @@ public abstract class AbstractDao<T> implements Dao<T> {
     public SelectSQLBuilder select(String field) {
         return SelectSQLBuilder.selectTable(table, field);
     }
+    
+    public int count(SelectSQLBuilder select) {
+        return jdbcTemplate.queryForObject(select.toCountSQL(), select.getParams(), Integer.class);
+    }
 }

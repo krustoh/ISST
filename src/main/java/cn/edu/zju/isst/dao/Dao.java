@@ -9,6 +9,7 @@ public interface Dao<T> {
     public void insert(final T entity);
     public int update(T entity);
     public int delete(T entity);
+    public int count(SelectSQLBuilder select);
     public T find(int id);
     public T query(String sql);
     public T query(String sql, Object...params);
