@@ -71,5 +71,9 @@
       <taglib-uri>/pagination</taglib-uri>
       <taglib-location>/WEB-INF/tld/pagination.tld</taglib-location>
     </taglib>
+    <taglib>
+      <taglib-uri>/navigation</taglib-uri>
+      <taglib-location>/WEB-INF/tld//navigation.tld</taglib-location>
+    </taglib>
   </jsp-config>
 </web-app>

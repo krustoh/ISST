@@ -96,6 +96,8 @@ public class PaginationTag extends TagSupport  {
             }
         }
 
+        urlGenerator = null;
+        
         return EVAL_PAGE;
     }
 

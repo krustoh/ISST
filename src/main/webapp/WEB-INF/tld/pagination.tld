@@ -6,7 +6,7 @@
 
 	<description>Pagination</description>
 	<tlib-version>1.0</tlib-version>
-	<short-name>my</short-name>
+	<short-name>pagination</short-name>
 	<uri>pagination.tld</uri>
 
 	<tag>
@@ -23,7 +23,7 @@
 		<attribute>
 			<description>page size</description>
 			<name>size</name>
-			<required>false</required>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
