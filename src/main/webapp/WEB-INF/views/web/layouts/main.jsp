@@ -111,8 +111,8 @@
 				<ul class="nav nav-list">
 					<li class="active"><a href="#" class="dropdown-toggle">软院生活</a>
 						<ul class="submenu">
-							<li class="active"><a href="web/archives/list.html">快讯</a></li>
-							<li><a href="web/archives/list.html">百科</a></li>
+							<li class="active"><a href="web/archives/categories/campus.html">快讯</a></li>
+							<li><a href="web/archives/categories/encyclopedia.html">百科</a></li>
 							<li><a href="web/archives/list.html">在校活动</a></li>
 							<li><a href="web/archives/list.html">便捷服务</a></li>
 						</ul>
@@ -122,7 +122,7 @@
 							<li><a href="web/archives/list.html">实习</a></li>
 							<li><a href="web/archives/list.html">就业</a></li>
 							<li><a href="web/archives/list.html">内推</a></li>
-							<li><a href="web/archives/list.html">经验交流</a></li>
+							<li><a href="web/archives/categories/experience.html">经验交流</a></li>
 						</ul>
 					</li>
 					<li><a href="#" class="dropdown-toggle">通讯录</a>
