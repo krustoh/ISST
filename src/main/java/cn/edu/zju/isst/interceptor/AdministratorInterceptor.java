@@ -5,7 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.dao.AdministratorDao;
 import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.identity.AdministratorIdentity;
@@ -42,9 +44,10 @@ public class AdministratorInterceptor extends AuthenticationInterceptor {
             HttpServletRequest request, 
             HttpServletResponse response, 
             Object handler, ModelAndView modelAndView) throws Exception {
-        String resourceUrl = request.getContextPath()+"/resources/admin/";
-        String baseUrl = request.getContextPath()+"/admin/";
-        modelAndView.addObject("resourceUrl", resourceUrl);
-        modelAndView.addObject("baseUrl", baseUrl);
+        if (modelAndView.getView() instanceof RedirectView || modelAndView.getViewName().startsWith("redirect:")) {  
+        } else {
+            modelAndView.addObject("resourceUrl", WebUtils.createResourceUrl(request, ""));
+            modelAndView.addObject("baseUrl", WebUtils.createAdminUrl(request, ""));
+        }
     }
 }

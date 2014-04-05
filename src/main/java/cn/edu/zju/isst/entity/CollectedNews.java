@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.edu.zju.isst.admin.controller.AppConfig;
 import cn.edu.zju.isst.collection.CollectionEntity;
+import cn.edu.zju.isst.common.AppConfig;
 import cn.edu.zju.isst.dao.annotation.Column;
 import cn.edu.zju.isst.dao.annotation.Entity;
 import cn.edu.zju.isst.dao.annotation.ID;

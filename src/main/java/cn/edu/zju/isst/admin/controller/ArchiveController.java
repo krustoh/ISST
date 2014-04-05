@@ -1,5 +1,6 @@
 package cn.edu.zju.isst.admin.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.zju.isst.common.FlashMessage;
+import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.Category;
 import cn.edu.zju.isst.form.ArchiveForm;
@@ -31,13 +33,13 @@ public class ArchiveController {
     public String list(Model model,
             @PathVariable("categoryAlias") String categoryAlias, 
             @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords, 
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         Category category = categoryService.find(categoryAlias);
-        if (null == category) {
+        if (null != category) {
             model.addAttribute("category", category);
-            model.addAttribute("archives", archiveService.findAll(category, keywords, pageSize, page));
+            model.addAttribute("archives", archiveService.findAll(category, keywords, 20, page));
         } else {
+            throw new RuntimeException("Category does not exist.");
         }
         
         return "archives/list";
@@ -50,7 +52,7 @@ public class ArchiveController {
     }
     
     @RequestMapping(value = "/archives/{id}.html", method = RequestMethod.POST)
-    public String saveEdit(@Valid ArchiveForm form, BindingResult result, Model model) {
+    public String saveEdit(@Valid ArchiveForm form, BindingResult result, HttpServletRequest request, Model model) {
         Category category = categoryService.find(form.getCategoryId());
         if (result.hasErrors()) {
             model.addAttribute("category", category);
@@ -59,7 +61,7 @@ public class ArchiveController {
         } else {
             Archive archive = archiveService.save(form);
             model.addAttribute("flash_message", FlashMessage.success(String.format("成功保存：<i>%s</i>", archive.getTitle())));
-            return "redirect:/admin/archives/categories/" + category.getAlias() + ".html";
+            return WebUtils.redirectAdminUrl(request, "archives/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -72,7 +74,12 @@ public class ArchiveController {
     }
     
     @RequestMapping(value = "/archives/categories/{categoryAlias}/add.html", method = RequestMethod.POST)
-    public String saveAdd(@Valid ArchiveForm form, BindingResult result, @PathVariable("categoryAlias") String categoryAlias, Model model) {
+    public String saveAdd(
+            @Valid ArchiveForm form, 
+            BindingResult result, 
+            @PathVariable("categoryAlias") String categoryAlias,
+            HttpServletRequest request,
+            Model model) {
         Category category = categoryService.find(categoryAlias);
         if (result.hasErrors()) {
             model.addAttribute("category", category);
@@ -81,7 +88,7 @@ public class ArchiveController {
         } else {
             Archive archive = archiveService.save(form);
             model.addAttribute("flash_message", FlashMessage.success(String.format("成功保存：<i>%s</i>", archive.getTitle())));
-            return "redirect:/admin/archives/categories/" + category.getAlias() + ".html";
+            return WebUtils.redirectAdminUrl(request, "archives/categories/" + category.getAlias() + ".html");
         }
     }
 }

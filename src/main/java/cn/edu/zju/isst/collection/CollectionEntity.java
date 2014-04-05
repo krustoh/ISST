@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.edu.zju.isst.admin.controller.AppConfig;
+import cn.edu.zju.isst.common.AppConfig;
 
 public class CollectionEntity {
     private int id;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.edu.zju.isst.common.FlashMessage;
+import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.form.AdministratorLoginForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.AdministratorService;
@@ -30,7 +31,7 @@ public class AdministratorController {
     @RequestMapping(value = "/login.html", method = RequestMethod.POST)
     public String loginSubmit(@Valid AdministratorLoginForm form, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         if (!result.hasErrors() && administratorService.login(request, response, form, result)) {
-            return "redirect:admin/archives/campus.html";
+            return WebUtils.redirectAdminUrl(request, "archives/categories/campus.html");
         } else {
             model.addAttribute("administratorLoginForm", form);
             model.addAttribute("flash_message", FlashMessage.error(result));
