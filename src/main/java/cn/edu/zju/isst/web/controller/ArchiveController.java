@@ -28,8 +28,9 @@ public class ArchiveController {
     }
 	
 	@RequestMapping(value = "/archives/{id}.html", method = RequestMethod.GET)
-	public String content(@PathVariable("id") long id,
+	public String find(@PathVariable("id") int id,
 	        Model model) {
-        return "archives/content";
+	    model.addAttribute("archives", archiveService.find(id));
+        return "archives/{id}";
     }
 }

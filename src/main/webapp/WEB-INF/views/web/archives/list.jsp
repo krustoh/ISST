@@ -25,7 +25,7 @@
 							</tr>
 							<c:forEach items="${archives.items }" var="archive">
 							<tr>
-								<td><a href="web/archives/categories/content.html">${archive.title}</a></td>
+								<td><a href="web/archives/content.html">${archive.title}</a></td>
 								<td>${archive.updatedAt}</td>
 							</tr>
 							</c:forEach>

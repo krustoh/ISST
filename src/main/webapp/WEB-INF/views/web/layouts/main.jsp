@@ -113,8 +113,8 @@
 						<ul class="submenu">
 							<li class="active"><a href="web/archives/categories/campus.html">快讯</a></li>
 							<li><a href="web/archives/categories/encyclopedia.html">百科</a></li>
-							<li><a href="web/archives/list.html">在校活动</a></li>
-							<li><a href="web/archives/list.html">便捷服务</a></li>
+							<li><a href="web/campus/activities.html">在校活动</a></li>
+							<li><a href="web/restaurants.html">便捷服务</a></li>
 						</ul>
 					</li>
 					<li><a href="#" class="dropdown-toggle">职场生活</a>
@@ -167,7 +167,7 @@
 
 					<ul class="breadcrumb">
 						<li><i class="icon-home home-icon"></i> <a
-							href="web/archives/list.html">首页</a></li>
+							href="web/archives/categories/campus.html">首页</a></li>
 					</ul>
 					<!-- .breadcrumb -->
 
