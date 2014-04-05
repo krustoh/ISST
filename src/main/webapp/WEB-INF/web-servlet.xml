@@ -39,6 +39,6 @@
   </bean>
   
   <mvc:interceptors>
-    <bean class="cn.edu.zju.isst.identity.UserAuthenticationInterceptor"/>
+    <bean class="cn.edu.zju.isst.interceptor.UserInterceptor"/>
   </mvc:interceptors>
 </beans>

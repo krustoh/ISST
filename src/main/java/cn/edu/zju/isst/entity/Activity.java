@@ -23,7 +23,10 @@ public class Activity {
 
     @Column
     private String title;
-
+    
+    @Column
+    private String location;
+    
     @Column
     private String picture;
 
@@ -131,5 +134,13 @@ public class Activity {
     
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

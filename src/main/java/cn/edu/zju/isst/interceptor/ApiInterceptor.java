@@ -1,14 +1,18 @@
-package cn.edu.zju.isst.identity;
+package cn.edu.zju.isst.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.edu.zju.isst.common.ApiResponse;
 import cn.edu.zju.isst.dao.UserDao;
 import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.identity.RequireUser;
+import cn.edu.zju.isst.identity.UserIdentity;
 
-public class UserAuthenticationInterceptor extends AuthenticationInterceptor {
+public class ApiInterceptor extends AuthenticationInterceptor {
     @Autowired
     private UserDao userDao;
     
@@ -27,7 +31,9 @@ public class UserAuthenticationInterceptor extends AuthenticationInterceptor {
             return true;
         }
         
-        response.sendRedirect(request.getContextPath() + "/login.html");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().print(new JSONObject(new ApiResponse(1, "未登录")));
         
         return false;
     }

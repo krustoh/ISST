@@ -30,7 +30,7 @@ public class AdministratorController {
     @RequestMapping(value = "/login.html", method = RequestMethod.POST)
     public String loginSubmit(@Valid AdministratorLoginForm form, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         if (!result.hasErrors() && administratorService.login(request, response, form, result)) {
-            return "redirect:index.html";
+            return "redirect:admin/archives/campus.html";
         } else {
             model.addAttribute("administratorLoginForm", form);
             model.addAttribute("flash_message", FlashMessage.error(result));

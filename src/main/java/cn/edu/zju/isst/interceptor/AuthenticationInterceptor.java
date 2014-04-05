@@ -1,4 +1,4 @@
-package cn.edu.zju.isst.identity;
+package cn.edu.zju.isst.interceptor;
 
 import java.lang.annotation.Annotation;
 

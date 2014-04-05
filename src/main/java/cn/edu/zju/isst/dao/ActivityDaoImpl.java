@@ -11,7 +11,7 @@ import cn.edu.zju.isst.entity.Activity;
 public class ActivityDaoImpl extends AbstractDao<Activity> implements ActivityDao {
     @Override
     public List<Activity> findAllOfCampus(String keywords, int pageSize, int page) {
-        SelectSQLBuilder select = select("id, title, picture, description, start_time, expire_time, updated_at")
+        SelectSQLBuilder select = select("id, title, location, picture, description, start_time, expire_time, updated_at")
                 .where("city_id=0 AND user_id=0 AND status=:status").addParam("status", Activity.STATUS_PUBLISHED)
                 .orderBy("updated_at DESC");
         

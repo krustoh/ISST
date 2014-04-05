@@ -145,6 +145,15 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return jdbcTemplate.update(sql.toString(), paramSource);
     }
     
+    public void save(T entity) {
+        Integer id = (Integer) getFieldValue(entity, primaryKey);
+        if (null != id && id > 0) {
+            update(entity);
+        } else {
+            insert(entity);
+        }
+    }
+    
     public int delete(T entity) {
         String sql = String.format("DELETE FROM %s WHERE %s=?", table, primaryKey);
         return jdbcTemplate.getJdbcOperations().update(sql, new Object[] { getFieldValue(entity, primaryKey)});

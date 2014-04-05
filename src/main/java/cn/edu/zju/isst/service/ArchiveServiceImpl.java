@@ -8,6 +8,7 @@ import cn.edu.zju.isst.dao.ArchiveDao;
 import cn.edu.zju.isst.dao.CategoryDao;
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.Category;
+import cn.edu.zju.isst.form.ArchiveForm;
 
 @Service
 public class ArchiveServiceImpl implements ArchiveService {
@@ -24,10 +25,22 @@ public class ArchiveServiceImpl implements ArchiveService {
     @Override
     public PaginationList<Archive> findAll(String categoryAlias, String keywords, int pageSize, int page) {
         Category category = categoryDao.find(categoryAlias);
+        return findAll(category, keywords, pageSize, page);
+    }
+
+    @Override
+    public PaginationList<Archive> findAll(Category category, String keywords, int pageSize, int page) {
         if (null != category) {
             return archiveDao.findAll(category.getId(), keywords, Archive.STATUS_PUBLISHED, pageSize, page);
         } else {
             return new PaginationList<Archive>(page, pageSize);
         }
+    }
+
+    @Override
+    public Archive save(ArchiveForm form) {
+        Archive archive = form.buildArchive();
+        archiveDao.save(archive);
+        return archive;
     }
 }

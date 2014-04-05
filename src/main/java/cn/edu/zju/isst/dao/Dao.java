@@ -8,6 +8,7 @@ import cn.edu.zju.isst.common.SelectSQLBuilder;
 public interface Dao<T> {
     public void insert(final T entity);
     public int update(T entity);
+    public void save(final T entity);
     public int delete(T entity);
     public int count(SelectSQLBuilder select);
     public T find(int id);
