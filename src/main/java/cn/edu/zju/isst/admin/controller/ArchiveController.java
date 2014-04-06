@@ -51,7 +51,7 @@ public class ArchiveController {
     }
     
     @RequestMapping(value = "/archives/{id}.html", method = RequestMethod.GET)
-    public String edit(Model model, @RequestParam(value = "id", required = true) int id) {
+    public String edit(Model model, @PathVariable("id") int id) {
         Archive archive = archiveService.find(id);
         model.addAttribute("archiveForm", new ArchiveForm(archive));
         
@@ -65,6 +65,7 @@ public class ArchiveController {
     public String saveEdit(
             @Valid ArchiveForm form, 
             BindingResult result, 
+            @PathVariable("id") int id,
             HttpServletRequest request, 
             HttpServletResponse response,
             HttpSession session,
@@ -75,8 +76,12 @@ public class ArchiveController {
             model.addAttribute("archiveForm", form);
             return "archives/form";
         } else {
-            Archive archive = archiveService.save(form.buildArchive());
-            WebUtils.addSuccessFlashMessage(session, String.format("成功删除：<i>%s</i>", archive.getTitle()));
+            Archive archive = archiveService.find(id);
+            if (null != archive) {
+                form.bindArchive(archive);
+                archiveService.save(archive);
+            }
+            WebUtils.addSuccessFlashMessage(session, String.format("成功保存：<i>%s</i>", archive.getTitle()));
             return WebUtils.redirectAdminUrl(request, response, "archives/categories/" + category.getAlias() + ".html");
         }
     }
@@ -111,7 +116,7 @@ public class ArchiveController {
             return "archives/form";
         } else {
             Archive archive = archiveService.save(form.buildArchive());
-            WebUtils.addSuccessFlashMessage(session, String.format("成功删除：<i>%s</i>", archive.getTitle()));
+            WebUtils.addSuccessFlashMessage(session, String.format("成功保存：<i>%s</i>", archive.getTitle()));
             return WebUtils.redirectAdminUrl(request, response, "archives/categories/" + category.getAlias() + ".html");
         }
     }

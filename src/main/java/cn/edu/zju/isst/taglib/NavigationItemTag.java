@@ -53,7 +53,7 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
             }
             
             if (null != navigationTag) {
-                navigationTag.addBreadcrumb(navigationTag.getMenu(key));
+                Navigation.addFirstBreadcrumb(pageContext, navigationTag.getMenu(key));
             }
         }
         
