@@ -10,7 +10,6 @@ public class ArchiveForm {
     @NotEmpty(message = "标题不能为空")
     private String title;
     
-    @NotEmpty(message = "分类不能为空")
     private int categoryId;
     
     private int userId;

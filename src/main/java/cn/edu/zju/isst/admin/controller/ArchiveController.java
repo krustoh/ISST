@@ -78,7 +78,11 @@ public class ArchiveController {
     public String add(Model model, @PathVariable("categoryAlias") String categoryAlias) {
         Category category = categoryService.find(categoryAlias);
         model.addAttribute("category", category);
-        model.addAttribute("archiveForm", new ArchiveForm());
+        
+        ArchiveForm form = new ArchiveForm();
+        form.setCategoryId(category.getId());
+        model.addAttribute("archiveForm", form);
+        
         return "archives/form";
     }
     
@@ -91,6 +95,8 @@ public class ArchiveController {
             HttpServletResponse response,
             Model model) {
         Category category = categoryService.find(categoryAlias);
+        form.setCategoryId(category.getId());
+        
         if (result.hasErrors()) {
             model.addAttribute("category", category);
             model.addAttribute("archiveForm", form);
