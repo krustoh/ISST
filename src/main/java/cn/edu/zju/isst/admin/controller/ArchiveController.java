@@ -1,6 +1,10 @@
 package cn.edu.zju.isst.admin.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +41,7 @@ public class ArchiveController {
         Category category = categoryService.find(categoryAlias);
         if (null != category) {
             model.addAttribute("category", category);
-            model.addAttribute("archives", archiveService.findAll(category, keywords, 20, page));
+            model.addAttribute("archives", archiveService.findAll(category, keywords, 10, page));
         } else {
             throw new RuntimeException("Category does not exist.");
         }
@@ -52,16 +56,21 @@ public class ArchiveController {
     }
     
     @RequestMapping(value = "/archives/{id}.html", method = RequestMethod.POST)
-    public String saveEdit(@Valid ArchiveForm form, BindingResult result, HttpServletRequest request, Model model) {
+    public String saveEdit(
+            @Valid ArchiveForm form, 
+            BindingResult result, 
+            HttpServletRequest request, 
+            HttpServletResponse response,
+            Model model) {
         Category category = categoryService.find(form.getCategoryId());
         if (result.hasErrors()) {
             model.addAttribute("category", category);
             model.addAttribute("archiveForm", form);
             return "archives/form";
         } else {
-            Archive archive = archiveService.save(form);
+            Archive archive = archiveService.save(form.buildArchive());
             model.addAttribute("flash_message", FlashMessage.success(String.format("成功保存：<i>%s</i>", archive.getTitle())));
-            return WebUtils.redirectAdminUrl(request, "archives/categories/" + category.getAlias() + ".html");
+            return WebUtils.redirectAdminUrl(request, response, "archives/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -79,6 +88,7 @@ public class ArchiveController {
             BindingResult result, 
             @PathVariable("categoryAlias") String categoryAlias,
             HttpServletRequest request,
+            HttpServletResponse response,
             Model model) {
         Category category = categoryService.find(categoryAlias);
         if (result.hasErrors()) {
@@ -86,9 +96,46 @@ public class ArchiveController {
             model.addAttribute("archiveForm", form);
             return "archives/form";
         } else {
-            Archive archive = archiveService.save(form);
+            Archive archive = archiveService.save(form.buildArchive());
             model.addAttribute("flash_message", FlashMessage.success(String.format("成功保存：<i>%s</i>", archive.getTitle())));
-            return WebUtils.redirectAdminUrl(request, "archives/categories/" + category.getAlias() + ".html");
+            return WebUtils.redirectAdminUrl(request, response, "archives/categories/" + category.getAlias() + ".html");
+        }
+    }
+    
+    @RequestMapping(value = "/archives/categories/{categoryAlias}/delete")
+    public String delete(
+            @RequestParam("id[]") String[] ids,
+            @RequestParam(value = "confirm", required = false, defaultValue = "0") int confirm,
+            @PathVariable("categoryAlias") String categoryAlias, 
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Model model) {
+        Set<Integer> idset = new HashSet<Integer>();
+        for (String id : ids) {
+            idset.add(Integer.valueOf(id));
+        }
+        
+        Category category = categoryService.find(categoryAlias);
+        
+        if (confirm == 0) {
+            model.addAttribute("entities", archiveService.findAll(idset));
+            model.addAttribute("category", category);
+            return "confirm/delete";
+        } else {
+            if (ids.length == 1) {
+                Archive archive = archiveService.find(Integer.valueOf(ids[0]).intValue());
+                if (null != archive) {
+                    archiveService.delete(archive);
+                    model.addAttribute("flash_message", FlashMessage.success(String.format("成功删除：<i>%s</i>", archive.getTitle())));
+                } else {
+                    model.addAttribute("flash_message", FlashMessage.error(String.format("记录不存在或已被删除")));
+                }
+            } else {
+                int count = archiveService.delete(idset);
+                model.addAttribute("flash_message", FlashMessage.success(String.format("成功删除<i>%d</i>条记录", count)));
+            }
+            
+            return WebUtils.redirectAdminUrl(request, response, "archives/categories/"+category.getAlias()+".html");
         }
     }
 }

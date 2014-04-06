@@ -3,45 +3,67 @@ package cn.edu.zju.isst.taglib;
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
+import javax.servlet.jsp.tagext.BodyContent;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 
-public class BlockTag extends TagSupport{
+public class BlockTag extends BodyTagSupport {
     private static final long serialVersionUID = 8246166191638588615L;
     
+    public static String BLOCK = "__jsp_override__";
+    
     private String name;
+    private boolean prevOverride = false;
     
     public void setName(String name) {
         this.name = name;
     }
-
-    /**
-     * @return EVAL_BODY_INCLUDE or EVAL_BODY_BUFFERED or SKIP_BODY
-     */
+    
     @Override
     public int doStartTag() throws JspException {
-        return getOverriedContent() == null ? EVAL_BODY_INCLUDE : SKIP_BODY;
-    }
-
-    /**
-     * @return EVAL_PAGE or SKIP_PAGE
-     */
-    @Override
-    public int doEndTag() throws JspException {
-        String overriedContent = getOverriedContent();
-        if(overriedContent == null) {
-            return EVAL_PAGE;
+        Boolean isPrevOverride = (Boolean) pageContext.getRequest().getAttribute(getAttributeOverrideTypeName(name));
+        prevOverride = null == isPrevOverride ? false : isPrevOverride.booleanValue();
+        
+        if (prevOverride) {
+            return SKIP_BODY;
         }
         
-        try {
-            pageContext.getOut().write(overriedContent);
-        } catch (IOException e) {
-            throw new JspException("write overridedContent occer IOException,block name:"+name,e);
-        }
-        return EVAL_PAGE;
+        return EVAL_BODY_BUFFERED ;
     }
     
-    private String getOverriedContent() {
-        String varName = Utils.getOverrideVariableName(name);
-        return (String)pageContext.getRequest().getAttribute(varName);
+    @Override
+    public int doEndTag() throws JspException {
+        String content = (String) pageContext.getRequest().getAttribute(getAttributeName(name));
+        
+        if (!prevOverride) {
+            Boolean isAppend = (Boolean) pageContext.getRequest().getAttribute(getAttributeAppendTypeName(name));
+            boolean append = null == isAppend ? false : isAppend.booleanValue();
+            
+            BodyContent bodyContent = getBodyContent();
+            if (null != bodyContent) {
+                content = null == content ? bodyContent.getString() : (append ? (bodyContent.getString() + content) : (content + bodyContent.getString()));
+            }
+        }
+        
+        if (null != content) {
+            try {
+                pageContext.getOut().write(content);
+            } catch (IOException e) {
+                throw new JspException("write overridedContent occer IOException,block name:"+name,e);
+            }
+        }
+        
+        return EVAL_PAGE;
+    }
+
+    public static String getAttributeName(String name) {
+        return BLOCK + name;
+    }
+    
+    public static String getAttributeOverrideTypeName(String name) {
+        return BLOCK + name + "_type";
+    }
+    
+    public static String getAttributeAppendTypeName(String name) {
+        return BLOCK + name + "_append";
     }
 }

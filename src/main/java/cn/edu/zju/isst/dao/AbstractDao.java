@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -159,8 +160,26 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return jdbcTemplate.getJdbcOperations().update(sql, new Object[] { getFieldValue(entity, primaryKey)});
     }
     
+    public int delete(Set<Integer> ids) {
+        String sql = String.format("DELETE FROM %s WHERE %s IN (:ids)", table, primaryKey);
+        
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("ids", ids);
+        
+        return jdbcTemplate.update(sql, parameters);
+    }
+    
     public T find(int id) {
         return query(String.format("SELECT * FROM %s WHERE %s=?", table, primaryKey), id);
+    }
+    
+    public List<T> findAll(Set<Integer> ids) {
+        String sql = String.format("SELECT * FROM %s WHERE %s IN (:ids)", table, primaryKey);
+        
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("ids", ids);
+        
+        return jdbcTemplate.query(sql, parameters, getRowMapper());
     }
     
     public T query(String sql) {

@@ -19,8 +19,6 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
     
     @Override
     public int doStartTag() {
-        attributes = new HashMap<String, Object>();
-        
         return EVAL_BODY_BUFFERED;
     }
     
@@ -70,6 +68,9 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
     
     @Override
     public void setDynamicAttribute(String uri, String localName, Object value) throws JspException {
+        if (null == attributes) {
+            attributes = new HashMap<String, Object>();
+        }
         attributes.put(localName.toLowerCase(), value);
     }
 

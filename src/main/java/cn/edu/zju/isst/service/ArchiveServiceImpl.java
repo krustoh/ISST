@@ -1,5 +1,9 @@
 package cn.edu.zju.isst.service;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +12,6 @@ import cn.edu.zju.isst.dao.ArchiveDao;
 import cn.edu.zju.isst.dao.CategoryDao;
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.Category;
-import cn.edu.zju.isst.form.ArchiveForm;
 
 @Service
 public class ArchiveServiceImpl implements ArchiveService {
@@ -38,9 +41,26 @@ public class ArchiveServiceImpl implements ArchiveService {
     }
 
     @Override
-    public Archive save(ArchiveForm form) {
-        Archive archive = form.buildArchive();
+    public Archive save(Archive archive) {
+        archive.setUpdatedAt(new Date());
+        archive.setDescriptionFromContent(archive.getContent());
         archiveDao.save(archive);
+        
         return archive;
+    }
+
+    @Override
+    public int delete(Set<Integer> ids) {
+        return archiveDao.delete(ids);
+    }
+
+    @Override
+    public void delete(Archive archive) {
+        archiveDao.delete(archive);
+    }
+
+    @Override
+    public List<Archive> findAll(Set<Integer> ids) {
+        return archiveDao.findAll(ids);
     }
 }

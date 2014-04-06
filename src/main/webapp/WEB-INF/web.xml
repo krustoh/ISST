@@ -73,7 +73,11 @@
     </taglib>
     <taglib>
       <taglib-uri>/navigation</taglib-uri>
-      <taglib-location>/WEB-INF/tld//navigation.tld</taglib-location>
+      <taglib-location>/WEB-INF/tld/navigation.tld</taglib-location>
+    </taglib>
+    <taglib>
+      <taglib-uri>/field</taglib-uri>
+      <taglib-location>/WEB-INF/tld/field.tld</taglib-location>
     </taglib>
   </jsp-config>
 </web-app>

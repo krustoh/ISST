@@ -20,8 +20,6 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
     private String activeCssClass = "active";
     
     public int doStartTag() {
-        attributes = new HashMap<String, Object>();
-        
         return EVAL_BODY_BUFFERED;
     }
     
@@ -81,6 +79,9 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
     
     @Override
     public void setDynamicAttribute(String uri, String localName, Object value) throws JspException {
+        if (null == attributes) {
+            attributes = new HashMap<String, Object>();
+        }
         attributes.put(localName.toLowerCase(), value);
     }
 

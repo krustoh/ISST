@@ -94,11 +94,11 @@ public class Archive {
     
     public void setDescriptionFromContent(String content) {
         if (null == content) {
-            return ;
+            this.description = "" ;
+        } else {
+            String filtered = content.replaceAll("\\&[a-zA-Z]{0,9};", "").replaceAll("<[^>]*>", "").replaceAll("\\s", "");
+            this.description = filtered.substring(0, filtered.length() < 50 ? filtered.length() : 50);
         }
-        
-        String filtered = content.replaceAll("\\&[a-zA-Z]{0,9};", "").replaceAll("<[^>]*>", "").replaceAll("\\s", "");
-        this.description = filtered.substring(0, filtered.length() < 50 ? filtered.length() : 50);
     }
     
     public String getContent() {

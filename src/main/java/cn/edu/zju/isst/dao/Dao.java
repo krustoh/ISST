@@ -2,6 +2,7 @@ package cn.edu.zju.isst.dao;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.edu.zju.isst.common.SelectSQLBuilder;
 
@@ -10,8 +11,10 @@ public interface Dao<T> {
     public int update(T entity);
     public void save(final T entity);
     public int delete(T entity);
+    public int delete(Set<Integer> ids);
     public int count(SelectSQLBuilder select);
     public T find(int id);
+    public List<T> findAll(Set<Integer> ids);
     public T query(String sql);
     public T query(String sql, Object...params);
     public T query(String sql, Map<String, Object> params);

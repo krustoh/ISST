@@ -48,6 +48,10 @@ public class AdministratorInterceptor extends AuthenticationInterceptor {
         } else {
             modelAndView.addObject("resourceUrl", WebUtils.createResourceUrl(request, ""));
             modelAndView.addObject("baseUrl", WebUtils.createAdminUrl(request, ""));
+            
+            String baseUrl = request.getRequestURL().toString();
+            String queryString = request.getQueryString();
+            modelAndView.addObject("requestUrl", (null == queryString || queryString.length() == 0) ? baseUrl : (baseUrl+"?"+queryString));
         }
     }
 }

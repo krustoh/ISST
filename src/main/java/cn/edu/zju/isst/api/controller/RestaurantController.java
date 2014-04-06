@@ -22,7 +22,7 @@ public class RestaurantController {
             @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        return new ApiResponse(restaurantService.findAll(keywords, pageSize, page)); 
+        return new ApiResponse(restaurantService.findAll(keywords, pageSize, page).getItems()); 
     }
     
     @RequestMapping("/restaurants/{id}")

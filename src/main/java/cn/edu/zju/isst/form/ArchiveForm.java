@@ -7,15 +7,17 @@ import cn.edu.zju.isst.entity.Archive;
 public class ArchiveForm {
     private int id;
     
-    @NotEmpty
+    @NotEmpty(message = "标题不能为空")
     private String title;
     
-    @NotEmpty
+    @NotEmpty(message = "分类不能为空")
     private int categoryId;
+    
+    private int userId;
     
     private String content;
     
-    private int status;
+    private int status = Archive.STATUS_PUBLISHED;
     
     public ArchiveForm() {
     }
@@ -26,6 +28,7 @@ public class ArchiveForm {
         categoryId = archive.getCategoryId();
         content = archive.getContent();
         status = archive.getStatus();
+        userId = archive.getUserId();
     }
     
     public Archive buildArchive() {
@@ -35,7 +38,7 @@ public class ArchiveForm {
         archive.setTitle(title);
         archive.setContent(content);
         archive.setStatus(archive.getStatus());
-        
+        archive.setUserId(userId);
         return archive;
     }
     
@@ -77,5 +80,13 @@ public class ArchiveForm {
     
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
