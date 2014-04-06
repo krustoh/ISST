@@ -8,34 +8,19 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.DynamicAttributes;
-import javax.servlet.jsp.tagext.Tag;
 
 public class NavigationItemTag extends BodyTagSupport implements DynamicAttributes {
     private static final long serialVersionUID = 1L;
     
     private String tag = "li";
-    private String key;
-    private Map<String, Object> attributes;
-    private boolean active;
     private String activeCssClass = "active";
+    private Map<String, Object> attributes;
     
-    public int doStartTag() {
-        return EVAL_BODY_BUFFERED;
-    }
+    private NavigationLink activeNavigationLink;
     
     public int doEndTag() {
-        if (!active) {
-            String activeKey = Navigation.getNavigationActiveKey(pageContext);
-            if (null != activeKey && activeKey.equals(key)) {
-                active = true;
-                Tag parent = this.getParent();
-                if (null != parent && parent instanceof NavigationItemTag) {
-                    ((NavigationItemTag)parent).setActive(true);
-                }
-            }
-        }
-        
-        if (active) {
+        if (null != activeNavigationLink) {
+            Navigation.addFirstBreadcrumb(pageContext, activeNavigationLink);
             if (null == attributes) {
                 attributes = new HashMap<String, Object>();
                 attributes.put("class", activeCssClass);
@@ -46,8 +31,6 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
                     attributes.put("class", activeCssClass);
                 }
             }
-            
-            Navigation.addFirstBreadcrumb(pageContext, key);
         }
         
         StringBuilder sb = new StringBuilder();
@@ -65,7 +48,7 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
         }
         
         attributes = null;
-        active = false;
+        activeNavigationLink = null;
         
         return EVAL_PAGE;
     }
@@ -82,15 +65,11 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
         this.tag = tag;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
     public void setActiveCssClass(String activeCssClass) {
         this.activeCssClass = activeCssClass;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setActiveNavigationLink(NavigationLink link) {
+        this.activeNavigationLink = link;
     }
 }

@@ -8,6 +8,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.DynamicAttributes;
+import javax.servlet.jsp.tagext.Tag;
 
 public class NavigationLinkTag extends BodyTagSupport implements DynamicAttributes {
     private static final long serialVersionUID = 1L;
@@ -18,29 +19,23 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
     private Map<String, Object> attributes;
     
     @Override
-    public int doStartTag() {
-        return EVAL_BODY_BUFFERED;
-    }
-    
-    @Override
     public int doEndTag() throws JspException {
-        NavigationLink link = Navigation.getMenu(pageContext, key);
-        if (null != link) {
-            if (null == label) {
-                label = link.getLabel();
-            }
-            if (null == href) {
-                href = link.getUrl();
-            }
-        }
-        
         setDynamicAttribute(null, "href", href);
-        
         String content = null == this.bodyContent ? null : this.bodyContent.getString();
         if (null == label) {
-            label = content;
+            label = content != null ? content.trim() : "";
         } else if (content == null || content.isEmpty()) {
             content = label;
+        }
+        
+        NavigationLink link = new NavigationLink(label, href);
+        Navigation.addMenu(pageContext, key, link);
+        String activeKey = Navigation.getNavigationActiveKey(pageContext);
+        if (null != activeKey && activeKey.equals(key)) {
+            Tag parent = this.getParent();
+            if (null != parent && parent instanceof NavigationItemTag) {
+                ((NavigationItemTag)parent).setActiveNavigationLink(link);
+            }
         }
         
         StringBuilder sb = new StringBuilder();

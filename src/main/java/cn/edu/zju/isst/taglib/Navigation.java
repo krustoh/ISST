@@ -58,13 +58,6 @@ public class Navigation {
             getBreadcrumbs(pageContext).addFirst(link);
         }
     }
-
-    public static void addFirstBreadcrumb(PageContext pageContext, String key) {
-        NavigationLink link = getMenu(pageContext, key);
-        if (null != link) {
-            getBreadcrumbs(pageContext).addFirst(link);
-        }
-    }
     
     public static void addLastBreadcrumb(PageContext pageContext, NavigationLink link) {
         if (null != link) {
