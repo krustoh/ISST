@@ -4,13 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
-<%@ taglib uri="/navigation" prefix="navigation"%>
 
-<navigation:setNavigationActiveKey key="archive_${category.alias}"/>
+<c:set var="navigationActiveKey" value="便捷服务" scope="request"></c:set>
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
-				<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}archives/categories/${category.alias}/add.html">
+				<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}restaurants/add.html">
 					<i class="icon-plus align-top bigger-125"></i>
 						添加
 				</a>
@@ -33,39 +32,38 @@
 								</label>
 								</th>
 								<th>ID</th>
-								<th>标题</th>
-								<th>状态</th>
-								<th>发布日期</th>
-								<th>发布者</th>	
+								<th>餐馆名称</th>
+								<th>订餐电话</th>
+								<th>地址</th>
+								<th>营业时间</th>	
 								<th></th>
 							</tr>
 						</thead>
 						
 						<tbody>
-							<c:forEach items="${archives.items}" var="archive">
+							<c:forEach items="${restaurants.items}" var="restaurant">
 							<tr>
 								<td class="center">
 								<label>
-								<input type="checkbox" class="ace" name="id[]" value="${archive.id}"/> <span class="lbl"></span> </label>
+								<input type="checkbox" class="ace" name="id[]" value="${restaurant.id}"/> <span class="lbl"></span> </label>
 								</td>
-								<td>${archive.id}</td>
-								<td><a href="#">${archive.title}</a></td>
-								<td>${archive.status==0?"隐藏":"发布"}</td>
-							
+								<td>${restaurant.id}</td>
+								<td><a href="#">${restaurant.name}</a></td>
+								<td>${archive.hotline}</td>
+								<td>${archive.address}</td>								
 								<td>
-								<fmt:formatDate value="${archive.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:formatDate value="${archive.business_hours}" />
 								
 								</td>
-								<td>${archive.userId>0?archive.user.name:"管理员"}</td>
 								
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" href="${baseUrl}archives/${archive.id}.html">
+										<a class="btn btn-xs btn-info" href="${baseUrl}restaurants/${restaurant.id}.html">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" href="${baseUrl}archives/categories/${category.alias}/delete?id[]=${archive.id}">
+										<a class="btn btn-xs btn-danger" href="${baseUrl}restaurants/delete?id[]=${restaurant.id}">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -107,7 +105,7 @@
 								<i class="icon-angle-up icon-on-right"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="${baseUrl}archives/categories/${category.alias}/delete">批量删除</a></li>
+								<li><a href="${baseUrl}restaurants/delete">批量删除</a></li>
 
 								<li><a href="#">批量发布</a></li>
 
@@ -119,7 +117,7 @@
 						<div class="col-sm-8">
 							<!-- pager -->
 							<div id="pager" class="pull-right" style="margin-right: 100px;">
-								<pagination:paging page="${archives.page}" total="${archives.total}" size="${archives.pageSize}" />
+								<pagination:paging page="${restaurants.page}" total="${restaurants.total}" size="${restaurants.pageSize}" />
 							</div>
 							<!-- end pager -->
 						</div>

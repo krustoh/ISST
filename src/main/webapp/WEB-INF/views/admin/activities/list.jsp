@@ -4,10 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
-<%@ taglib uri="/navigation" prefix="navigation"%>
 
-<navigation:setNavigationActiveKey key="archive_${category.alias}"/>
-
+<c:set var="navigationActiveKey" value="archive_${category.alias}" scope="request"></c:set>
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
 				<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}archives/categories/${category.alias}/add.html">

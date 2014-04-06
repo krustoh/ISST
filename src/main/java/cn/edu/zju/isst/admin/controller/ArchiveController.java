@@ -142,7 +142,7 @@ public class ArchiveController {
             model.addAttribute("category", category);
             return "confirm/delete";
         } else {
-            if (ids.length == 1) {
+            if (idset.size() == 1) {
                 Archive archive = archiveService.find(Integer.valueOf(ids[0]).intValue());
                 if (null != archive) {
                     archiveService.delete(archive);

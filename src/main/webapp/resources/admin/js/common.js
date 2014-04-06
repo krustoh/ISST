@@ -12,15 +12,16 @@ $(function() {
 		});
 	});
 
-	$('.isst-table-form').find('button[data-url], a').click(function() {
+	$('.isst-table-form .isst-table-form-actions').find('button[data-url], a').click(function() {
 		var form = $('.isst-table-form');
 		var url = $(this).attr('data-url');
+		url = url || $(this).attr("href");
 		form.attr('action', url);
 		var checkboxes = form.find('input[name="id[]"]:checked');
 		if (checkboxes.length > 0) {
 			form.submit();
 		} else {
-			alert('没有选择可操作的项！');
+			alert('璇峰厛閫夋嫨闇�瑕佹搷浣滅殑椤癸紒');
 		}
 		return false;
 	});

@@ -28,6 +28,7 @@ public class PageTitleTag extends TagSupport {
                     out.append(" ").append(seperator).append(" ");
                 }
                 out.append(it.next().getLabel());
+                flag = true;
             }
         } catch (IOException e) {
             e.printStackTrace();

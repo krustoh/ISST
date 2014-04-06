@@ -140,4 +140,8 @@ public class Archive {
     public void setUser(UserSummary user) {
         this.user = user;
     }
+    
+    public String toString() {
+    	return getTitle();
+    }
 }

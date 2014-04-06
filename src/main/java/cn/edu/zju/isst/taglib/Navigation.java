@@ -25,7 +25,7 @@ public class Navigation {
         Map<String, NavigationLink> map = (Map<String, NavigationLink>) pageContext.getAttribute(NAVIGATION_MENU_ATTRIBUTE_KEY, PageContext.REQUEST_SCOPE);
         if (null == map) {
             map = new HashMap<String, NavigationLink>();
-            pageContext.setAttribute(PAGE_TITLE_ATTRIBUTE_KEY, map, PageContext.REQUEST_SCOPE);
+            pageContext.setAttribute(NAVIGATION_MENU_ATTRIBUTE_KEY, map, PageContext.REQUEST_SCOPE);
         }
         
         return map;

@@ -1,11 +1,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="navigation" uri="/navigation"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>
+    <navigation:pageTitle/>
     <layout:block name="title"></layout:block>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

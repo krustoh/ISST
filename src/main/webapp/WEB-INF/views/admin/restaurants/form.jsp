@@ -16,7 +16,7 @@
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
 							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
-							标题
+							餐馆名称
 							</label>
 							<div class="col-xs-12 col-sm-5">
 								<form:input id="inputError" class="width-100" path="title" />
@@ -24,22 +24,57 @@
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
 							</form:errors>
 						</field:wrapper>
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
-						<div class="col-sm-9">
-							<form:select  id="status" path="status" >
-								<form:option value="0" label="隐藏"/>
-								<form:option value="1" label="发布"/>
-							</form:select>
-						</div>
-					</div>
-
+						
+						<field:wrapper class="form-group" path="title">
+							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							订餐电话
+							</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:input id="inputError" class="width-100" path="title" />
+							</div>
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
+							</form:errors>
+						</field:wrapper>
+						
+						<field:wrapper class="form-group" path="title">
+							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							地址
+							</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:input id="inputError" class="width-100" path="title" />
+							</div>
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
+							</form:errors>
+						</field:wrapper>
+						
+						<field:wrapper class="form-group" path="title">
+							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							营业时间
+							</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:input id="inputError" class="width-100" path="title" />
+							</div>
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
+							</form:errors>
+						</field:wrapper>
+						
+						<field:wrapper class="form-group" path="title">
+							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							描述
+							</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:input id="inputError" class="width-100" path="title" />
+							</div>
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
+							</form:errors>
+						</field:wrapper>
+					
 					<div class="space-4"></div>
 					
 					<div class="row">
 						<div class="col-sm-12">
 							<h4 class="header green clearfix">
-								内容编辑
+								菜单编辑
 							</h4>
 							<div class="wysiwyg-editor" id="contentEditor"></div>
 							<form:textarea path="content" id="content" style="display:none;"></form:textarea>

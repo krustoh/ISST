@@ -23,4 +23,8 @@ public class NavigationLink implements Serializable {
     public String getUrl() {
         return url;
     }
+    
+    public String toString() {
+    	return label;
+    }
 }

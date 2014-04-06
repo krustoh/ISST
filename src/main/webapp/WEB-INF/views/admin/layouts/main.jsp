@@ -5,36 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
-<%
-String baseUrl = (String) request.getAttribute("baseUrl");
-Map<String, NavigationLink> menu = new HashMap<String, NavigationLink>();
-menu.put("archive_campus", new NavigationLink("软院生活", baseUrl+"archives/categories/campus.html"));
-menu.put("archive_news", new NavigationLink("快讯", baseUrl+"archives/categories/campus.html"));
-menu.put("archive_encyclopedia", new NavigationLink("百科", baseUrl+"archives/categories/encyclopedia.html"));
-menu.put("activities", new NavigationLink("在校活动", baseUrl+"archives/categories/activities.html"));
-menu.put("restaurants", new NavigationLink("便捷服务", baseUrl+"archives/categories/restaurants.html"));
-
-menu.put("jobs", new NavigationLink("职场生活", "/admin/archives/categories/campus/list.html"));
-menu.put("jobs_internship", new NavigationLink("实习", "/admin/jobs/categories/internship/list.html"));
-menu.put("jobs_employment", new NavigationLink("就业", "/admin/jobs/categories/employment/list.html"));
-menu.put("jobs_recommend", new NavigationLink("内推", "/admin/jobs/categories/recommend/list.html"));
-menu.put("jobs_experience", new NavigationLink("经验交流", "/admin/jobs/categories/experience/list.html"));
-
-menu.put("alumni", new NavigationLink("通讯录", "/admin/alumni/list.html"));
-menu.put("alumni_update", new NavigationLink("编辑个人信息", "/admin/alumni/update.html"));
-menu.put("alumni_check", new NavigationLink("查看个人信息", "/admin/alumni/user.html"));
-menu.put("alumni_search", new NavigationLink("查询校友信息", "/admin/alumni/userlist.html"));
-
-menu.put("cities", new NavigationLink("同城", "/admin/cities/leader.html"));
-menu.put("cities_leader", new NavigationLink("城主", "/admin/cities/leader.html"));
-menu.put("cities_activities", new NavigationLink("同城活动", "/admin/cities/activities/list.html"));
-menu.put("cities_user", new NavigationLink("同城校友", "/admin/cities/userlist.html"));
-
-
-request.setAttribute("navigationMenu", menu);
-%>
-
-
+<%@ taglib uri="/flash_message" prefix="fm"%>
 
 <layout:override name="stylesheets">
 	<script src="${resourceUrl}js/ace-extra.min.js"></script>
@@ -50,7 +21,7 @@ request.setAttribute("navigationMenu", menu);
 	<div class="navbar navbar-default" id="navbar">
 		<script type="text/javascript">
 			try {
-				ace.settings.check('navbar', 'fixed')
+				ace.settings.check('navbar', 'fixed');
 			} catch (e) {
 			}
 		</script>
@@ -95,7 +66,7 @@ request.setAttribute("navigationMenu", menu);
 	<div class="main-container" id="main-container">
 		<script type="text/javascript">
 			try {
-				ace.settings.check('main-container', 'fixed')
+				ace.settings.check('main-container', 'fixed');
 			} catch (e) {
 			}
 		</script>
@@ -107,124 +78,130 @@ request.setAttribute("navigationMenu", menu);
 			<div class="sidebar" id="sidebar">
 				<script type="text/javascript">
 					try {
-						ace.settings.check('sidebar', 'fixed')
+						ace.settings.check('sidebar', 'fixed');
 					} catch (e) {
 					}
 				</script>
 
-				<!-- <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-        <button class="btn btn-success">
-            <i class="icon-signal"></i>
-        </button>
-
-        <button class="btn btn-info">
-            <i class="icon-pencil"></i>
-        </button>
-
-        <a class="btn btn-warning" href="">
-            <i class="icon-group"></i>
-        </a>
-
-        <a class="btn btn-danger" href="">
-            <i class="icon-cogs"></i>
-        </a>
-    </div>
-
-    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-        <span class="btn btn-success"></span>
-
-        <span class="btn btn-info"></span>
-
-        <span class="btn btn-warning"></span>
-
-        <span class="btn btn-danger"></span>
-    </div>
-</div> -->
-				<!-- #sidebar-shortcuts -->
-				<navigation:navigate active="test3" menu="${navigationMenu}"
-					breadcrumbs="navigationBreadcrumbs">
-					<ul class="nav nav-list">
-						<navigation:item key="archive_campus">
-							<a href="javascript:;" class="dropdown-toggle"><i class="icon-apple" ></i>
-								<span class="menu-text">软院生活</span>
-							</a>
-							<ul class="submenu">
-								<navigation:item key="archive_campus">
-									<navigation:link key="archive_campus">快讯</navigation:link>
-								</navigation:item>
-								<navigation:item key="archive_encyclopedia">
-									<navigation:link key="archive_encyclopedia">百科</navigation:link>
-								</navigation:item>
-								<navigation:item key="activities">
-									<navigation:link key="activities">在校活动</navigation:link>
-								</navigation:item>
-								<navigation:item key="restaurants">
-									<navigation:link key="restaurants">便捷服务</navigation:link>
-								</navigation:item>
-							</ul>
-						</navigation:item>
-
-						<navigation:item key="jobs">
-							<a class="dropdown-toggle" href="javascript:;"><i class="icon-suitcase"></i>
-								<span class="menu-text">职场生活</span>
-							</a>
-							<ul class="submenu">
-								<navigation:item key="jobs_internship">
-									<navigation:link key="jobs_internship">实习</navigation:link>
-								</navigation:item>
-								<navigation:item key="jobs_employment">
-									<navigation:link key="jobs_employment">就业</navigation:link>
-								</navigation:item>
-								<navigation:item key="jobs_recommend">
-									<navigation:link key="jobs_recommend">内推</navigation:link>
-								</navigation:item>
-								<navigation:item key="jobs_experience">
-									<navigation:link key="jobs_experience">经验交流</navigation:link>
-								</navigation:item>
-							</ul>
-						</navigation:item>
-
-						<navigation:item key="alumni">
-							<a class="dropdown-toggle" href="javascript:;"><i class="icon-phone"></i>
-								<span class="menu-text">通讯录</span>
-							</a>
-							<ul class="submenu">
-								<navigation:item key="alumni_update">
-									<navigation:link key="alumni_update">编辑个人信息</navigation:link>
-								</navigation:item>
-								<navigation:item key="alumni_check">
-									<navigation:link key="alumni_check">查看个人信息</navigation:link>
-								</navigation:item>
-								<navigation:item key="alumni_search">
-									<navigation:link key="alumni_search">查询个人信息</navigation:link>
-								</navigation:item>
-							</ul>
-						</navigation:item>
-
-						<navigation:item key="cities">
-							<a class="dropdown-toggle" href="javascript:;"><i class="icon-group"></i>
-								<span class="menu-text">同城</span>
-							</a>
-							<ul class="submenu">
-								<navigation:item key="cities_leader">
-									<navigation:link key="cities_leader">城主</navigation:link>
-								</navigation:item>
-								<navigation:item key="cities_activities">
-									<navigation:link key="cities_activities">同城活动</navigation:link>
-								</navigation:item>
-								<navigation:item key="cities_user">
-									<navigation:link key="cities_user">同城校友</navigation:link>
-								</navigation:item>
-							</ul>
-						</navigation:item>
-
-
-
-					</ul>
-				</navigation:navigate>
-
-
+			
+				<ul class="nav nav-list">
+					<navigation:item>
+						<navigation:link key="campus_life" href="${baseUrl}archives/categories/campus.html" label="软院生活" class="dropdown-toggle">
+							<i class="icon-apple" ></i>
+							<span class="menu-text">软院生活</span>
+						</navigation:link>
+						<ul class="submenu">
+							<navigation:item>
+								<navigation:link key="archive_campus" href="${baseUrl}archives/categories/campus.html" label="软院快讯">
+								软院快讯
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="${baseUrl}archives/categories/encyclopedia.html" key="archive_encyclopedia" label="软院百科">
+									软院百科
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="${baseUrl}activities.html" key="activities" label="在校生活">
+									在校生活
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="${baseUrl}restaurants.html" key="restaurants" label="便捷服务">
+									便捷服务
+								</navigation:link>
+							</navigation:item>	
+						</ul>
+					</navigation:item>
+					
+					<navigation:item>
+						<navigation:link key="jobs" href="#" label="职场生活" class="dropdown-toggle">
+							<i class="icon-apple" ></i>
+							<span class="menu-text">职场生活</span>
+						</navigation:link>
+						<ul class="submenu">
+							<navigation:item>
+								<navigation:link key="jobs_internship" href="#" label="实习">
+								实习
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="jobs_employment" label="就业">
+									就业
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="jobs_recommend" label="内推">
+									内推
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="jobs_experience" label="经验交流">
+									经验交流
+								</navigation:link>
+							</navigation:item>	
+						</ul>
+					</navigation:item>
+					
+					<navigation:item>
+						<navigation:link key="alumni" href="#" label="通讯录" class="dropdown-toggle">
+							<i class="icon-apple" ></i>
+							<span class="menu-text">通讯录</span>
+						</navigation:link>
+						<ul class="submenu">
+							<navigation:item>
+								<navigation:link key="alumni_check" href="#" label="查看校友信息">
+									查看校友信息
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="alumni_edit" label="编辑校友信息">
+									编辑校友信息
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="alumni_search" label="查询校友信息">
+									查询校友信息
+								</navigation:link>
+							</navigation:item>
+						</ul>
+					</navigation:item>
+					
+					<navigation:item>
+						<navigation:link key="cities" href="#" label="同城" class="dropdown-toggle">
+							<i class="icon-apple" ></i>
+							<span class="menu-text">同城</span>
+						</navigation:link>
+						<ul class="submenu">
+							<navigation:item>
+								<navigation:link key="cities_leader" href="#" label="城主">
+									城主
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="cities_activities" label="同城活动">
+									同城活动
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="cities_alumni" label="同城校友">
+									同城校友
+								</navigation:link>
+							</navigation:item>
+						</ul>
+					</navigation:item>
+				</ul>
+			
 				<!-- /.nav-list -->
 
 				<div class="sidebar-collapse" id="sidebar-collapse">
@@ -235,7 +212,7 @@ request.setAttribute("navigationMenu", menu);
 
 				<script type="text/javascript">
 					try {
-						ace.settings.check('sidebar', 'collapsed')
+						ace.settings.check('sidebar', 'collapsed');
 					} catch (e) {
 					}
 				</script>
@@ -245,17 +222,12 @@ request.setAttribute("navigationMenu", menu);
 				<div class="breadcrumbs" id="breadcrumbs">
 					<script type="text/javascript">
 						try {
-							ace.settings.check('breadcrumbs', 'fixed')
+							ace.settings.check('breadcrumbs', 'fixed');
 						} catch (e) {
 						}
 					</script>
 
-					<ul class="breadcrumb">
-						<li><i class="icon-home home-icon"></i> <a
-							href="admin/archives/list.html">首页</a></li>
-					</ul>
-					<!-- .breadcrumb -->
-
+					<navigation:breadcrumbs/>
 
 					<!-- #nav-search -->
 					<div class="nav-search" id="nav-search">
@@ -267,9 +239,19 @@ request.setAttribute("navigationMenu", menu);
 						</form>
 					</div>
 				</div>
-				<layout:block name="content"></layout:block>
-
-
+				
+				<div class="page-content">
+					<div class="page-header">
+						<layout:block name="page-header"/>
+						<navigation:pageSubTitle/>
+					</div>
+		
+					<div class="row">
+						<fm:message/>
+						<layout:block name="content"></layout:block>
+					</div>
+				</div>
+				
 				<div class="ace-settings-container" id="ace-settings-container">
 					<div class="btn btn-app btn-xs btn-warning ace-settings-btn"
 						id="ace-settings-btn">
@@ -329,6 +311,7 @@ request.setAttribute("navigationMenu", menu);
 				id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="icon-double-angle-up icon-only bigger-110"></i> </a>
 		</div>
+	</div>
 		<!-- /.main-container -->
 </layout:override>
 
