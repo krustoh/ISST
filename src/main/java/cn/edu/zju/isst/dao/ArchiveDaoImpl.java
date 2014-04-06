@@ -14,10 +14,14 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
     
     @Override
     public PaginationList<Archive> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
-        SelectSQLBuilder select = select("id, category_id, user_id, title, description, updated_at")
-                .where("category_id=:category_id AND status=:status")
-                .addParam("category_id", categoryId).addParam("status", status)
+        SelectSQLBuilder select = select("id, category_id, user_id, title, description, updated_at, status")
+                .where("category_id=:category_id")
+                .addParam("category_id", categoryId)
                 .orderBy("updated_at DESC, id DESC");
+        
+        if (status >= 0) {
+            select.where("status=:status").addParam("status", status);
+        }
         
         if (null != keywords) {
             keywords = keywords.trim();

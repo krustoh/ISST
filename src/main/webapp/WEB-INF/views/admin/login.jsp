@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/field" prefix="field"%>
+<%@ taglib uri="/flash_message" prefix="fm"%>
 
 <c:set var="bodyCssClass" value="login-layout" scope="request" />
 
@@ -30,7 +31,7 @@
                                     </h4>
 
                                     <div class="space-6"></div>
-                                    <%@ include file="blocks/message.jsp" %>
+                                    <fm:message/>
 									<form:form modelAttribute="administratorLoginForm" method="POST">
 										
                                         <fieldset>

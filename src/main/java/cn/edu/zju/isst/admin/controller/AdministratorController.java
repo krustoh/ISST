@@ -2,6 +2,7 @@ package cn.edu.zju.isst.admin.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import cn.edu.zju.isst.common.FlashMessage;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.form.AdministratorLoginForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
@@ -33,13 +33,14 @@ public class AdministratorController {
             @Valid AdministratorLoginForm form, 
             BindingResult result, 
             Model model, 
-            HttpServletRequest request, 
+            HttpServletRequest request,
+            HttpSession session,
             HttpServletResponse response) {
         if (!result.hasErrors() && administratorService.login(request, response, form, result)) {
             return WebUtils.redirectAdminUrl(request, response, "archives/categories/campus.html");
         } else {
             model.addAttribute("administratorLoginForm", form);
-            model.addAttribute("flash_message", FlashMessage.error(result));
+            WebUtils.addErrorFlashMessage(session, result);
             return "login";
         }
     }

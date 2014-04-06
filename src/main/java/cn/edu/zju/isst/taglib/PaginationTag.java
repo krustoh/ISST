@@ -69,7 +69,7 @@ public class PaginationTag extends TagSupport  {
 
                 for (int i = startPage; i <= endPage; i++) {
                     out.append(String.format(
-                            "<li><a class=\"%s\" href=\"%s\">%s</a></li>", 
+                            "<li class=\"%s\"><a href=\"%s\">%s</a></li>", 
                             i == page ? activeCssClass : "",
                             generateUrl(i),
                             i

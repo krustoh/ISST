@@ -3,6 +3,7 @@ package cn.edu.zju.isst.form;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cn.edu.zju.isst.entity.Archive;
+import cn.edu.zju.isst.entity.UserSummary;
 
 public class ArchiveForm {
     private int id;
@@ -18,6 +19,8 @@ public class ArchiveForm {
     
     private int status = Archive.STATUS_PUBLISHED;
     
+    private UserSummary user;
+    
     public ArchiveForm() {
     }
     
@@ -28,6 +31,7 @@ public class ArchiveForm {
         content = archive.getContent();
         status = archive.getStatus();
         userId = archive.getUserId();
+        user = archive.getUser();
     }
     
     public Archive buildArchive() {
@@ -87,5 +91,9 @@ public class ArchiveForm {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public UserSummary getUser() {
+        return user;
     }
 }

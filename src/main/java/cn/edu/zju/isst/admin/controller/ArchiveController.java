@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.edu.zju.isst.common.FlashMessage;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.Category;
@@ -36,12 +36,13 @@ public class ArchiveController {
     @RequestMapping(value = "/archives/categories/{categoryAlias}.html", method = RequestMethod.GET)
     public String list(Model model,
             @PathVariable("categoryAlias") String categoryAlias, 
+            @RequestParam(value = "status", required = false, defaultValue = "-1") int status, 
             @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords, 
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         Category category = categoryService.find(categoryAlias);
         if (null != category) {
             model.addAttribute("category", category);
-            model.addAttribute("archives", archiveService.findAll(category, keywords, 10, page));
+            model.addAttribute("archives", archiveService.findAll(category, status, keywords, 10, page));
         } else {
             throw new RuntimeException("Category does not exist.");
         }
@@ -51,7 +52,12 @@ public class ArchiveController {
     
     @RequestMapping(value = "/archives/{id}.html", method = RequestMethod.GET)
     public String edit(Model model, @RequestParam(value = "id", required = true) int id) {
-        model.addAttribute("archiveForm", new ArchiveForm(archiveService.find(id)));
+        Archive archive = archiveService.find(id);
+        model.addAttribute("archiveForm", new ArchiveForm(archive));
+        
+        Category category = categoryService.find(archive.getCategoryId());
+        model.addAttribute("category", category);
+        
         return "archives/form";
     }
     
@@ -61,6 +67,7 @@ public class ArchiveController {
             BindingResult result, 
             HttpServletRequest request, 
             HttpServletResponse response,
+            HttpSession session,
             Model model) {
         Category category = categoryService.find(form.getCategoryId());
         if (result.hasErrors()) {
@@ -69,7 +76,7 @@ public class ArchiveController {
             return "archives/form";
         } else {
             Archive archive = archiveService.save(form.buildArchive());
-            model.addAttribute("flash_message", FlashMessage.success(String.format("成功保存：<i>%s</i>", archive.getTitle())));
+            WebUtils.addSuccessFlashMessage(session, String.format("成功删除：<i>%s</i>", archive.getTitle()));
             return WebUtils.redirectAdminUrl(request, response, "archives/categories/" + category.getAlias() + ".html");
         }
     }
@@ -93,6 +100,7 @@ public class ArchiveController {
             @PathVariable("categoryAlias") String categoryAlias,
             HttpServletRequest request,
             HttpServletResponse response,
+            HttpSession session,
             Model model) {
         Category category = categoryService.find(categoryAlias);
         form.setCategoryId(category.getId());
@@ -103,7 +111,7 @@ public class ArchiveController {
             return "archives/form";
         } else {
             Archive archive = archiveService.save(form.buildArchive());
-            model.addAttribute("flash_message", FlashMessage.success(String.format("成功保存：<i>%s</i>", archive.getTitle())));
+            WebUtils.addSuccessFlashMessage(session, String.format("成功删除：<i>%s</i>", archive.getTitle()));
             return WebUtils.redirectAdminUrl(request, response, "archives/categories/" + category.getAlias() + ".html");
         }
     }
@@ -115,6 +123,7 @@ public class ArchiveController {
             @PathVariable("categoryAlias") String categoryAlias, 
             HttpServletRequest request,
             HttpServletResponse response,
+            HttpSession session,
             Model model) {
         Set<Integer> idset = new HashSet<Integer>();
         for (String id : ids) {
@@ -132,13 +141,13 @@ public class ArchiveController {
                 Archive archive = archiveService.find(Integer.valueOf(ids[0]).intValue());
                 if (null != archive) {
                     archiveService.delete(archive);
-                    model.addAttribute("flash_message", FlashMessage.success(String.format("成功删除：<i>%s</i>", archive.getTitle())));
+                    WebUtils.addSuccessFlashMessage(session, String.format("成功删除：<i>%s</i>", archive.getTitle()));
                 } else {
-                    model.addAttribute("flash_message", FlashMessage.error(String.format("记录不存在或已被删除")));
+                    WebUtils.addErrorFlashMessage(session, "记录不存在或已被删除");
                 }
             } else {
                 int count = archiveService.delete(idset);
-                model.addAttribute("flash_message", FlashMessage.success(String.format("成功删除<i>%d</i>条记录", count)));
+                WebUtils.addSuccessFlashMessage(session, String.format("成功删除<i>%d</i>条记录", count));
             }
             
             return WebUtils.redirectAdminUrl(request, response, "archives/categories/"+category.getAlias()+".html");

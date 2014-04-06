@@ -79,5 +79,9 @@
       <taglib-uri>/field</taglib-uri>
       <taglib-location>/WEB-INF/tld/field.tld</taglib-location>
     </taglib>
+    <taglib>
+      <taglib-uri>/flash_message</taglib-uri>
+      <taglib-location>/WEB-INF/tld/flash_message.tld</taglib-location>
+    </taglib>
   </jsp-config>
 </web-app>
