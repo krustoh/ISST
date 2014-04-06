@@ -23,7 +23,7 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
     }
     
     @Override
-    public int doEndTag() {
+    public int doEndTag() throws JspException {
         NavigationTag navigationTag = (NavigationTag) findAncestorWithClass(this, NavigationTag.class);
         
         if (null != navigationTag) {
@@ -38,7 +38,7 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
             }
         }
         
-        attributes.put("href", href);
+        setDynamicAttribute(null, "href", href);
         
         String content = null == this.bodyContent ? null : this.bodyContent.getString();
         if (null == label) {
