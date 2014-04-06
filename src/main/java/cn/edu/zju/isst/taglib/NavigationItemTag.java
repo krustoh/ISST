@@ -24,20 +24,15 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
     }
     
     public int doEndTag() {
-        NavigationTag navigationTag = (NavigationTag) findAncestorWithClass(this, NavigationTag.class);
-        
         if (!active) {
-            if (null != navigationTag) {
-                String activeKey = navigationTag.getActive();
-                if (null != activeKey && activeKey.equals(key)) {
-                    active = true;
-                    Tag parent = this.getParent();
-                    if (null != parent && parent instanceof NavigationItemTag) {
-                        ((NavigationItemTag)parent).setActive(true);
-                    }
+            String activeKey = Navigation.getNavigationActiveKey(pageContext);
+            if (null != activeKey && activeKey.equals(key)) {
+                active = true;
+                Tag parent = this.getParent();
+                if (null != parent && parent instanceof NavigationItemTag) {
+                    ((NavigationItemTag)parent).setActive(true);
                 }
             }
-            
         }
         
         if (active) {
@@ -52,9 +47,7 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
                 }
             }
             
-            if (null != navigationTag) {
-                Navigation.addFirstBreadcrumb(pageContext, navigationTag.getMenu(key));
-            }
+            Navigation.addFirstBreadcrumb(pageContext, key);
         }
         
         StringBuilder sb = new StringBuilder();

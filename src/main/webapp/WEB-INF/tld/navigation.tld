@@ -10,19 +10,25 @@
 	<uri>navigation.tld</uri>
 
 	<tag>
-		<description>navigate</description>
-		<name>navigate</name>
-		<tag-class>cn.edu.zju.isst.taglib.NavigationTag</tag-class>
-		<body-content>JSP</body-content>
+		<description>add navigation menu</description>
+		<name>menu</name>
+		<tag-class>cn.edu.zju.isst.taglib.AddNavigationMenuTag</tag-class>
+		<body-content>empty</body-content>
 		<attribute>
-			<description>active</description>
-			<name>active</name>
+			<description>key</description>
+			<name>key</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>menu</description>
-			<name>menu</name>
+			<description>label</description>
+			<name>label</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>url</description>
+			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -89,6 +95,20 @@
 		<attribute>
 			<description>label</description>
 			<name>label</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>false</dynamic-attributes>
+	</tag>
+	
+	<tag>
+		<description>set navigation active key</description>
+		<name>setNavigationActiveKey</name>
+		<tag-class>cn.edu.zju.isst.taglib.SetNavigationActiveKeyTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>key</description>
+			<name>key</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -24,17 +24,13 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
     
     @Override
     public int doEndTag() throws JspException {
-        NavigationTag navigationTag = (NavigationTag) findAncestorWithClass(this, NavigationTag.class);
-        
-        if (null != navigationTag) {
-            NavigationLink link = navigationTag.getMenu(key);
-            if (null != link) {
-                if (null == label) {
-                    label = link.getLabel();
-                }
-                if (null == href) {
-                    href = link.getUrl();
-                }
+        NavigationLink link = Navigation.getMenu(pageContext, key);
+        if (null != link) {
+            if (null == label) {
+                label = link.getLabel();
+            }
+            if (null == href) {
+                href = link.getUrl();
             }
         }
         
