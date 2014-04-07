@@ -32,10 +32,12 @@
 								</label>
 								</th>
 								<th>ID</th>
+								<th>商标</th>
 								<th>餐馆名称</th>
 								<th>订餐电话</th>
-								<th>地址</th>
+								<th>菜单</th>
 								<th>营业时间</th>	
+								<th>地址</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -48,13 +50,14 @@
 								<input type="checkbox" class="ace" name="id[]" value="${restaurant.id}"/> <span class="lbl"></span> </label>
 								</td>
 								<td>${restaurant.id}</td>
+								<td><img class="isst-img" src="${restaurant.picture}"/></td>
 								<td><a href="#">${restaurant.name}</a></td>
-								<td>${archive.hotline}</td>
-								<td>${archive.address}</td>								
+								<td>${restaurant.hotline}</td>
+								<td><a href="#">菜单详情</a></td>							
 								<td>
-								<fmt:formatDate value="${archive.business_hours}" />
-								
+									${restaurant.businessHours}"
 								</td>
+								<td>${restaurant.address}</td>	
 								
 								<td>
 									<div
