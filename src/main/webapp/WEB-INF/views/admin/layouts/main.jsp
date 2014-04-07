@@ -110,8 +110,8 @@
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}activities.html" key="activities" label="在校生活">
-									在校生活
+								<navigation:link href="#" key="activities" label="在校活动">
+									在校活动
 								</navigation:link>
 							</navigation:item>
 							
