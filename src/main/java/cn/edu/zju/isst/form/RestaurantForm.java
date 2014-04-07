@@ -23,7 +23,9 @@ public class RestaurantForm {
     @NotEmpty(message = "营业时间不能为空")
     private String businessHours;
     
-    private MultipartFile picture;
+    private MultipartFile pictureFile;
+    
+    private String picture;
     
     @NotEmpty(message = "餐馆描述不能为空")
     private String description;
@@ -39,6 +41,7 @@ public class RestaurantForm {
         hotline = restaurant.getHotline();
         businessHours = restaurant.getBusinessHours();
         description = restaurant.getDescription();
+        picture = restaurant.getPicture();
     }
     
     public Restaurant build(HttpServletRequest request) {
@@ -53,11 +56,11 @@ public class RestaurantForm {
         restaurant.setAddress(address);
         restaurant.setHotline(hotline);
         restaurant.setBusinessHours(businessHours);
-        String picturePath = WebUtils.saveUploadedFile(request, picture);
+        String picturePath = WebUtils.saveUploadedFile(pictureFile);
         if (null != picturePath) {
-            restaurant.setPicture(picturePath);
+            restaurant.setPicturePath(picturePath);
         }
-        restaurant.setContent(description);
+        restaurant.setDescription(description);
     }
     
     public int getId() {
@@ -100,12 +103,16 @@ public class RestaurantForm {
         this.businessHours = businessHours;
     }
     
-    public MultipartFile getPicture() {
+    public String getPicture() {
         return picture;
     }
     
-    public void setPicture(MultipartFile picture) {
-        this.picture = picture;
+    public MultipartFile getPictureFile() {
+        return pictureFile;
+    }
+    
+    public void setPictureFile(MultipartFile pictureFile) {
+        this.pictureFile = pictureFile;
     }
     
     public String getDescription() {

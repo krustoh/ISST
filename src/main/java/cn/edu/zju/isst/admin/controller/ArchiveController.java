@@ -81,8 +81,8 @@ public class ArchiveController {
                 form.bindArchive(archive);
                 archiveService.save(archive);
             }
-            WebUtils.addSuccessFlashMessage(session, String.format("成功保存：<i>%s</i>", archive.getTitle()));
-            return WebUtils.redirectAdminUrl(request, response, "archives/categories/" + category.getAlias() + ".html");
+            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", archive.getTitle()));
+            return WebUtils.redirectAdminUrl("archives/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -116,8 +116,8 @@ public class ArchiveController {
             return "archives/form";
         } else {
             Archive archive = archiveService.save(form.buildArchive());
-            WebUtils.addSuccessFlashMessage(session, String.format("成功保存：<i>%s</i>", archive.getTitle()));
-            return WebUtils.redirectAdminUrl(request, response, "archives/categories/" + category.getAlias() + ".html");
+            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", archive.getTitle()));
+            return WebUtils.redirectAdminUrl("archives/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -140,23 +140,23 @@ public class ArchiveController {
         if (confirm == 0) {
             model.addAttribute("entities", archiveService.findAll(idset));
             model.addAttribute("navigationActiveKey", "archive_" + category.getAlias());
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl(request, "archives/categories/" + category.getAlias() + ".html"));
+            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("archives/categories/" + category.getAlias() + ".html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {
                 Archive archive = archiveService.find(Integer.valueOf(ids[0]).intValue());
                 if (null != archive) {
                     archiveService.delete(archive);
-                    WebUtils.addSuccessFlashMessage(session, String.format("成功删除：<i>%s</i>", archive.getTitle()));
+                    WebUtils.addSuccessFlashMessage(String.format("成功删除：<i>%s</i>", archive.getTitle()));
                 } else {
-                    WebUtils.addErrorFlashMessage(session, "记录不存在或已被删除");
+                    WebUtils.addErrorFlashMessage("记录不存在或已被删除");
                 }
             } else {
                 int count = archiveService.delete(idset);
-                WebUtils.addSuccessFlashMessage(session, String.format("成功删除 <i>%d</i> 条记录", count));
+                WebUtils.addSuccessFlashMessage(String.format("成功删除 <i>%d</i> 条记录", count));
             }
             
-            return WebUtils.redirectAdminUrl(request, response, "archives/categories/"+category.getAlias()+".html");
+            return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
         }
     }
     
@@ -178,8 +178,8 @@ public class ArchiveController {
         }
         
         Category category = categoryService.find(categoryAlias);
-        WebUtils.addSuccessFlashMessage(session, String.format("成功发布 <i>%d</i> 条记录", count));
-        return WebUtils.redirectAdminUrl(request, response, "archives/categories/"+category.getAlias()+".html");
+        WebUtils.addSuccessFlashMessage(String.format("成功发布 <i>%d</i> 条记录", count));
+        return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
     }
     
     @RequestMapping(value = "/archives/categories/{categoryAlias}/hide")
@@ -200,7 +200,7 @@ public class ArchiveController {
         }
         
         Category category = categoryService.find(categoryAlias);
-        WebUtils.addSuccessFlashMessage(session, String.format("成功隐藏 <i>%d</i> 条记录", count));
-        return WebUtils.redirectAdminUrl(request, response, "archives/categories/"+category.getAlias()+".html");
+        WebUtils.addSuccessFlashMessage(String.format("成功隐藏 <i>%d</i> 条记录", count));
+        return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
     }
 }

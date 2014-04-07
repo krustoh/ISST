@@ -1,5 +1,6 @@
 package cn.edu.zju.isst.entity;
 
+import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.dao.annotation.Column;
 import cn.edu.zju.isst.dao.annotation.Entity;
 import cn.edu.zju.isst.dao.annotation.ID;
@@ -22,14 +23,11 @@ public class Restaurant {
     @Column("business_hours")
     private String businessHours;
 
-    @Column
-    private String picture;
+    @Column("picture_path")
+    private String picturePath;
     
     @Column
     private String description;
-
-    @Column
-    private String content;
     
     public int getId() {
         return id;
@@ -48,11 +46,7 @@ public class Restaurant {
     }
     
     public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
+        return WebUtils.parseUploadedUrl(picturePath);
     }
 
     public String getAddress() {
@@ -87,15 +81,15 @@ public class Restaurant {
         this.description = description;
     }
     
-    public String getContent() {
-        return content;
-    }
-    
-    public void setContent(String content) {
-        this.content = content;
-    }
-    
     public String toString() {
         return getName();
+    }
+
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
 }

@@ -37,10 +37,10 @@ public class AdministratorController {
             HttpSession session,
             HttpServletResponse response) {
         if (!result.hasErrors() && administratorService.login(request, response, form, result)) {
-            return WebUtils.redirectAdminUrl(request, response, "archives/categories/campus.html");
+            return WebUtils.redirectAdminUrl("archives/categories/campus.html");
         } else {
             model.addAttribute("administratorLoginForm", form);
-            WebUtils.addErrorFlashMessage(session, result);
+            WebUtils.addErrorFlashMessage(result);
             return "login";
         }
     }

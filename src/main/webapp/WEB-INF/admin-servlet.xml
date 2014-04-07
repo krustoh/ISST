@@ -41,4 +41,6 @@
   <mvc:interceptors>
     <bean class="cn.edu.zju.isst.interceptor.AdministratorInterceptor"/>
   </mvc:interceptors>
+  
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 </beans>

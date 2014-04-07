@@ -58,8 +58,8 @@ public class RestaurantController {
             Restaurant restaurant = restaurantService.find(id);
             form.bind(request, restaurant);
             restaurantService.save(restaurant);
-            WebUtils.addSuccessFlashMessage(session, String.format("成功保存：<i>%s</i>", restaurant.getName()));
-            return WebUtils.redirectAdminUrl(request, response, "restaurants.html");
+            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", restaurant.getName()));
+            return WebUtils.redirectAdminUrl("restaurants.html");
         }
     }
     
@@ -84,8 +84,8 @@ public class RestaurantController {
         } else {
             Restaurant restaurant = form.build(request);
             restaurantService.save(restaurant);
-            WebUtils.addSuccessFlashMessage(session, String.format("成功保存：<i>%s</i>", restaurant.getName()));
-            return WebUtils.redirectAdminUrl(request, response, "restaurants.html");
+            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", restaurant.getName()));
+            return WebUtils.redirectAdminUrl("restaurants.html");
         }
     }
     
@@ -105,22 +105,22 @@ public class RestaurantController {
         if (confirm == 0) {
             model.addAttribute("entities", restaurantService.findAll(idset));
             model.addAttribute("navigationActiveKey", "restaurants");
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl(request, "restaurants.html"));
+            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("restaurants.html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {
                 Restaurant restaurant = restaurantService.find(Integer.valueOf(ids[0]).intValue());
                 if (null != restaurant) {
                     restaurantService.delete(restaurant);
-                    WebUtils.addSuccessFlashMessage(session, String.format("成功删除：<i>%s</i>", restaurant.getName()));
+                    WebUtils.addSuccessFlashMessage(String.format("成功删除：<i>%s</i>", restaurant.getName()));
                 } else {
-                    WebUtils.addErrorFlashMessage(session, "记录不存在或已被删除");
+                    WebUtils.addErrorFlashMessage("记录不存在或已被删除");
                 }
             } else {
                 int count = restaurantService.delete(idset);
-                WebUtils.addSuccessFlashMessage(session, String.format("成功删除<i>%d</i>条记录", count));
+                WebUtils.addSuccessFlashMessage(String.format("成功删除<i>%d</i>条记录", count));
             }
         }
-        return WebUtils.redirectAdminUrl(request, response, "restaurants.html");
+        return WebUtils.redirectAdminUrl("restaurants.html");
     }
 }

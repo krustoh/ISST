@@ -46,8 +46,8 @@ public class AdministratorInterceptor extends AuthenticationInterceptor {
             Object handler, ModelAndView modelAndView) throws Exception {
         if (modelAndView.getView() instanceof RedirectView || modelAndView.getViewName().startsWith("redirect:")) {  
         } else {
-            modelAndView.addObject("resourceUrl", WebUtils.createResourceUrl(request, ""));
-            modelAndView.addObject("baseUrl", WebUtils.createAdminUrl(request, ""));
+            modelAndView.addObject("resourceUrl", WebUtils.createResourceUrl(""));
+            modelAndView.addObject("baseUrl", WebUtils.createAdminUrl(""));
             
             String baseUrl = request.getRequestURL().toString();
             String queryString = request.getQueryString();
