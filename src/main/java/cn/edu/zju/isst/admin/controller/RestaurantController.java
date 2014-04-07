@@ -3,9 +3,6 @@ package cn.edu.zju.isst.admin.controller;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +44,14 @@ public class RestaurantController {
             @Valid RestaurantForm form, 
             BindingResult result, 
             Model model, 
-            @PathVariable("id") int id,
-            HttpServletRequest request, 
-            HttpServletResponse response,
-            HttpSession session) {
+            @PathVariable("id") int id) {
+        form.setId(id);
         if (result.hasErrors()) {
             model.addAttribute("restaurantForm", form);
             return "restaurants/form";
         } else {
             Restaurant restaurant = restaurantService.find(id);
-            form.bind(request, restaurant);
+            form.bind(restaurant);
             restaurantService.save(restaurant);
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", restaurant.getName()));
             return WebUtils.redirectAdminUrl("restaurants.html");
@@ -74,15 +69,12 @@ public class RestaurantController {
     public String saveAdd(
             @Valid RestaurantForm form, 
             BindingResult result, 
-            Model model, 
-            HttpServletRequest request, 
-            HttpServletResponse response,
-            HttpSession session) {
+            Model model) {
         if (result.hasErrors()) {
             model.addAttribute("restaurantForm", form);
             return "restaurants/form";
         } else {
-            Restaurant restaurant = form.build(request);
+            Restaurant restaurant = form.build();
             restaurantService.save(restaurant);
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", restaurant.getName()));
             return WebUtils.redirectAdminUrl("restaurants.html");
@@ -93,9 +85,6 @@ public class RestaurantController {
     public String delete(
             @RequestParam("id[]") String[] ids,
             @RequestParam(value = "confirm", required = false, defaultValue = "0") int confirm,
-            HttpServletRequest request,
-            HttpServletResponse response,
-            HttpSession session,
             Model model) {
         Set<Integer> idset = new HashSet<Integer>();
         for (String id : ids) {

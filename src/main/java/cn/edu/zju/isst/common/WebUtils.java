@@ -1,8 +1,6 @@
 package cn.edu.zju.isst.common;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,24 +56,20 @@ public class WebUtils {
 
             SimpleDateFormat dateformat = new SimpleDateFormat("/yyyy/MM/");    
             String path = dateformat.format(new Date());  
-            String realPath = request().getSession().getServletContext().getRealPath("/") + AppConfig.UPLOAD_PATH + path;
+            String realPath = request().getSession().getServletContext().getRealPath("") + AppConfig.UPLOAD_PATH + path;
             File realPathFile = new File(realPath);  
             if(!realPathFile.exists()) {
                 realPathFile.mkdirs();
             }
             
+            File savedFile = new File(realPath + fileName);
             try {
-                FileOutputStream out = new FileOutputStream(realPath + fileName);
-                out.write(file.getBytes());
-                out.flush();
-                out.close();
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
+                file.transferTo(savedFile);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
             
-            return path + "/" + fileName;
+            return path + fileName;
         }
         
         return null;
@@ -83,8 +77,8 @@ public class WebUtils {
     
     public static void deleteUploadedFile(String path) {
         if (null != path && path.startsWith("/")) {
-            String realPath = request().getSession().getServletContext().getRealPath("/") + AppConfig.UPLOAD_PATH + path;
-            File realPathFile = new File(realPath);  
+            String realPath = request().getSession().getServletContext().getRealPath("") + AppConfig.UPLOAD_PATH + path;
+            File realPathFile = new File(realPath);
             if(realPathFile.exists()) {
                 realPathFile.delete();
             }

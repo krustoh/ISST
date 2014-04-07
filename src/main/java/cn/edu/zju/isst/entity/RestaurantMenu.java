@@ -1,5 +1,6 @@
 package cn.edu.zju.isst.entity;
 
+import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.dao.annotation.Column;
 import cn.edu.zju.isst.dao.annotation.Entity;
 import cn.edu.zju.isst.dao.annotation.ID;
@@ -16,8 +17,8 @@ public class RestaurantMenu {
     @Column
     private String name;
     
-    @Column
-    private String picture;
+    @Column("picture_path")
+    private String picturePath;
     
     @Column
     private String description;
@@ -50,11 +51,7 @@ public class RestaurantMenu {
     }
     
     public String getPicture() {
-        return picture;
-    }
-    
-    public void setPicture(String picture) {
-        this.picture = picture;
+        return WebUtils.parseUploadedUrl(picturePath);
     }
     
     public String getDescription() {
@@ -71,5 +68,13 @@ public class RestaurantMenu {
     
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
 }

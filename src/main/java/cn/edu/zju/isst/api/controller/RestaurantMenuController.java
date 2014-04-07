@@ -18,6 +18,6 @@ public class RestaurantMenuController {
     
     @RequestMapping("/restaurants/{restaurantId}/menus")
     public @ResponseBody ApiResponse list(@PathVariable("restaurantId") int restaurantId) {
-        return new ApiResponse(restaurantMenuService.findAll(restaurantId)); 
+        return new ApiResponse(restaurantMenuService.findAll(restaurantId, 0, 1).getItems()); 
     }
 }

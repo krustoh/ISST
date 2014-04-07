@@ -70,6 +70,7 @@ public class ArchiveController {
             HttpServletResponse response,
             HttpSession session,
             Model model) {
+        form.setId(id);
         Category category = categoryService.find(form.getCategoryId());
         if (result.hasErrors()) {
             model.addAttribute("category", category);

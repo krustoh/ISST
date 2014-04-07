@@ -1,7 +1,5 @@
 package cn.edu.zju.isst.form;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,14 +42,14 @@ public class RestaurantForm {
         picture = restaurant.getPicture();
     }
     
-    public Restaurant build(HttpServletRequest request) {
+    public Restaurant build() {
         Restaurant restaurant = new Restaurant();
-        bind(request, restaurant);
+        bind(restaurant);
         
         return restaurant;
     }
     
-    public void bind(HttpServletRequest request, Restaurant restaurant) {
+    public void bind(Restaurant restaurant) {
         restaurant.setName(name);
         restaurant.setAddress(address);
         restaurant.setHotline(hotline);

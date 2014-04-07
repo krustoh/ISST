@@ -49,7 +49,7 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
 
     @Override
     public int changeStatus(Set<Integer> idset, int status) {
-        String sql = String.format("UPDATE%s SET status=:status WHERE %s IN (:idset)", table, primaryKey);
+        String sql = String.format("UPDATE %s SET status=:status WHERE %s IN (:idset)", table, primaryKey);
         
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("idset", idset);
