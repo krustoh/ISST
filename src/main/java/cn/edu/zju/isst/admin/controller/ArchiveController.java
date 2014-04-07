@@ -78,7 +78,7 @@ public class ArchiveController {
         } else {
             Archive archive = archiveService.find(id);
             if (null != archive) {
-                form.bindArchive(archive);
+                form.bind(archive);
                 archiveService.save(archive);
             }
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", archive.getTitle()));
@@ -115,7 +115,7 @@ public class ArchiveController {
             model.addAttribute("archiveForm", form);
             return "archives/form";
         } else {
-            Archive archive = archiveService.save(form.buildArchive());
+            Archive archive = archiveService.save(form.build());
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", archive.getTitle()));
             return WebUtils.redirectAdminUrl("archives/categories/" + category.getAlias() + ".html");
         }

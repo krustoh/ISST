@@ -17,41 +17,37 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 public class WebUtils {
-    public static final String ADMIN_BASE_PATH = "/admin/";
-    public static final String WEB_BASE_PATH = "/web/";
-    public static final String FLASH_MESSAGE_KEY = "flash_message";
-    public static final String UPLOAD_PATH = "/uploads";
     
     public static String createWebUrl(String path) {
-        return request().getContextPath() + "/web/" + path;
+        return basePath() + AppConfig.WEB_BASE_PATH + path;
     }
     
     public static String redirectWebUrl(String path) {
-        return redirectUrl(path, WEB_BASE_PATH);
+        return redirectUrl(path, AppConfig.WEB_BASE_PATH);
     }
     
     public static String createAdminUrl(String path) {
-        return request().getContextPath() + "/admin/" + path;
+        return basePath() + AppConfig.ADMIN_BASE_PATH + path;
     }
     
     public static String createResourceUrl(String path) {
-        return request().getContextPath()+"/resources/admin/" + path;
+        return basePath() + AppConfig.RESOURCE_BASE_PATH + path;
     }
     
     public static String redirectAdminUrl(String path) {
-        return redirectUrl(path, ADMIN_BASE_PATH);
+        return redirectUrl(path, AppConfig.ADMIN_BASE_PATH);
     }
     
     public static void addErrorFlashMessage(String message) {
-        request().getSession().setAttribute(FLASH_MESSAGE_KEY, FlashMessage.error(message));
+        request().getSession().setAttribute(AppConfig.FLASH_MESSAGE_KEY, FlashMessage.error(message));
     }
     
     public static void addErrorFlashMessage(BindingResult result) {
-        request().getSession().setAttribute(FLASH_MESSAGE_KEY, FlashMessage.error(result));
+        request().getSession().setAttribute(AppConfig.FLASH_MESSAGE_KEY, FlashMessage.error(result));
     }
     
     public static void addSuccessFlashMessage(String message) {
-        request().getSession().setAttribute(FLASH_MESSAGE_KEY, FlashMessage.success(message));
+        request().getSession().setAttribute(AppConfig.FLASH_MESSAGE_KEY, FlashMessage.success(message));
     }
     
     public static String saveUploadedFile(MultipartFile file) {
@@ -62,7 +58,7 @@ public class WebUtils {
 
             SimpleDateFormat dateformat = new SimpleDateFormat("/yyyy/MM/");    
             String path = dateformat.format(new Date());  
-            String realPath = request().getSession().getServletContext().getRealPath("/") + UPLOAD_PATH + path;
+            String realPath = request().getSession().getServletContext().getRealPath("/") + AppConfig.UPLOAD_PATH + path;
             File realPathFile = new File(realPath);  
             if(!realPathFile.exists()) {
                 realPathFile.mkdirs();
@@ -86,16 +82,18 @@ public class WebUtils {
     }
     
     public static void deleteUploadedFile(String path) {
-        String realPath = request().getSession().getServletContext().getRealPath("/") + UPLOAD_PATH + path;
-        File realPathFile = new File(realPath);  
-        if(realPathFile.exists()) {
-            realPathFile.delete();
+        if (null != path && path.startsWith("/")) {
+            String realPath = request().getSession().getServletContext().getRealPath("/") + AppConfig.UPLOAD_PATH + path;
+            File realPathFile = new File(realPath);  
+            if(realPathFile.exists()) {
+                realPathFile.delete();
+            }
         }
     }
     
     public static String parseUploadedUrl(String path) {
         if (null != path && path.startsWith("/")) {
-            return request().getContextPath() + UPLOAD_PATH + path;
+            return basePath() + AppConfig.UPLOAD_PATH + path;
         }
         return path;
     }
@@ -106,6 +104,17 @@ public class WebUtils {
     
     public static HttpServletResponse response() {
         return ((ServletWebRequest) RequestContextHolder.getRequestAttributes()).getResponse();
+    }
+    
+    public static String basePath() {
+        HttpServletRequest request = request();
+        String basePath = (String) request.getAttribute("basePath");
+        if (null == basePath) {
+            int port = request.getServerPort();
+            basePath = request.getScheme() + "://" + request.getServerName() + (port == 80 ? "" : (":" + port)) + request.getContextPath(); 
+            request.setAttribute("basePath", basePath);
+        }
+        return basePath;
     }
     
     private static String redirectUrl(String path, String prefix) {

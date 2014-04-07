@@ -34,18 +34,18 @@ public class ArchiveForm {
         user = archive.getUser();
     }
     
-    public Archive buildArchive() {
+    public Archive build() {
         Archive archive = new Archive();
-        bindArchive(archive);
+        bind(archive);
         
         return archive;
     }
     
-    public void bindArchive(Archive archive) {
+    public void bind(Archive archive) {
         archive.setCategoryId(categoryId);
         archive.setTitle(title);
         archive.setContent(content);
-        archive.setStatus(archive.getStatus());
+        archive.setStatus(status);
         archive.setUserId(userId);
     }
     

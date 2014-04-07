@@ -7,15 +7,15 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import cn.edu.zju.isst.common.AppConfig;
 import cn.edu.zju.isst.common.FlashMessage;
-import cn.edu.zju.isst.common.WebUtils;
 
 public class FlashMessageTag extends TagSupport {
     private static final long serialVersionUID = 1L;
     
     public int doEndTag() throws JspException {
         HttpSession session = this.pageContext.getSession();
-        FlashMessage fm = (FlashMessage) session.getAttribute(WebUtils.FLASH_MESSAGE_KEY);
+        FlashMessage fm = (FlashMessage) session.getAttribute(AppConfig.FLASH_MESSAGE_KEY);
         if (null != fm) {
             JspWriter out = this.pageContext.getOut();
             try {
@@ -27,7 +27,7 @@ public class FlashMessageTag extends TagSupport {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            session.removeAttribute(WebUtils.FLASH_MESSAGE_KEY);
+            session.removeAttribute(AppConfig.FLASH_MESSAGE_KEY);
         }
         
         return EVAL_PAGE;

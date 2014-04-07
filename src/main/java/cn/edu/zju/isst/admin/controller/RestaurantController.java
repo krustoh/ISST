@@ -112,11 +112,15 @@ public class RestaurantController {
                 Restaurant restaurant = restaurantService.find(Integer.valueOf(ids[0]).intValue());
                 if (null != restaurant) {
                     restaurantService.delete(restaurant);
+                    WebUtils.deleteUploadedFile(restaurant.getPicturePath());
                     WebUtils.addSuccessFlashMessage(String.format("成功删除：<i>%s</i>", restaurant.getName()));
                 } else {
                     WebUtils.addErrorFlashMessage("记录不存在或已被删除");
                 }
             } else {
+                for (Restaurant restaurant : restaurantService.findAll(idset)) {
+                    WebUtils.deleteUploadedFile(restaurant.getPicturePath());
+                }
                 int count = restaurantService.delete(idset);
                 WebUtils.addSuccessFlashMessage(String.format("成功删除<i>%d</i>条记录", count));
             }

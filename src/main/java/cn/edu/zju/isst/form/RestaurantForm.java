@@ -58,6 +58,10 @@ public class RestaurantForm {
         restaurant.setBusinessHours(businessHours);
         String picturePath = WebUtils.saveUploadedFile(pictureFile);
         if (null != picturePath) {
+            String oldPicturePath = restaurant.getPicturePath();
+            if (null != oldPicturePath) {
+                WebUtils.deleteUploadedFile(oldPicturePath);
+            }
             restaurant.setPicturePath(picturePath);
         }
         restaurant.setDescription(description);

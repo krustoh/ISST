@@ -10,3 +10,5 @@ Thumbs.db
 .DS_Store
 /src/main/webapp/WEB-INF/lib/
 /target
+/src/main/webapp/uploads/
+/src/main/webapp/uploadfiles/
