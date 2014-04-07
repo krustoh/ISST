@@ -59,12 +59,15 @@
 					<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="form-field-1">餐馆图标</label>
 					<div class="col-xs-12 col-sm-5">
 						<form:input type="file" id="pictureFile" path="pictureFile" />
+						
+						<c:if test="${not empty restaurantForm.picture}">
+						<div class="center">
+							<a href="${restaurantForm.picture}" data-rel="colorbox">
+								<img src="${restaurantForm.picture}" class="width-95"/>
+							</a>
+						</div>
+						</c:if>
 					</div>
-					<c:if test="${not empty restaurantForm.picture}">
-					<div class="center picture-previe">
-						<a href="${restaurantForm.picture}"><img src="${restaurantForm.picture}" /></a>
-					</div>
-					</c:if>
 				</div>
 
 				<div class="clearfix form-actions">
