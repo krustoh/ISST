@@ -134,7 +134,7 @@
 					
 					<navigation:item>
 						<navigation:link key="jobs" href="#" label="职场生活" class="dropdown-toggle">
-							<i class="icon-apple" ></i>
+							<i class="icon-suitcase" ></i>
 							<span class="menu-text">职场生活</span>
 						</navigation:link>
 						<ul class="submenu">
@@ -166,14 +166,14 @@
 					
 					<navigation:item>
 						<navigation:link key="alumni" href="#" label="通讯录" class="dropdown-toggle">
-							<i class="icon-apple" ></i>
+							<i class="icon-phone" ></i>
 							<span class="menu-text">通讯录</span>
 						</navigation:link>
 					</navigation:item>
 					
 					<navigation:item>
-						<navigation:link key="cities" href="#" label="同城" class="dropdown-toggle">
-							<i class="icon-apple" ></i>
+						<navigation:link key="cities" href="#" label="城市" class="dropdown-toggle">
+							<i class="icon-globe" ></i>
 							<span class="menu-text">城市</span>
 						</navigation:link>
 						<ul class="submenu">

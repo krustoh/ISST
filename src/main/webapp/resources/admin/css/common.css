@@ -1,7 +1,7 @@
 .isst-table-form .pagination {margin: 2px;}
 img.isst-img {
- max-width:150px;
- width:150px;
- width:expression(document.body.clientWidth>150?"150px":"auto");
+ max-width:80px;
+ width:80px;
+ width:expression(document.body.clientWidth>80?"80px":"auto");
  overflow:hidden;
 }

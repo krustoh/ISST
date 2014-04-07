@@ -21,7 +21,7 @@
 	<![endif]-->
 	
 	<!-- page specific plugin styles -->
-	
+	<link rel="stylesheet" href="${resourceUrl}css/colorbox.css" />
 	<!-- fonts -->
 	
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
@@ -77,6 +77,8 @@
 <script src="${resourceUrl}js/jquery.hotkeys.min.js"></script>
 <script src="${resourceUrl}js/bootstrap.min.js"></script>
 <script src="${resourceUrl}js/bootstrap-wysiwyg.min.js"></script>
+<script src="${resourceUrl}js/typeahead-bs2.min.js"></script>
+<script src="${resourceUrl}js/jquery.colorbox-min.js"></script>
 <script src="${resourceUrl}js/common.js"></script>
 
 <layout:block name="javascripts"></layout:block>

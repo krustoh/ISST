@@ -4,8 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
+<%@ taglib uri="/navigation" prefix="navigation"%>
 
-<c:set var="navigationActiveKey" value="便捷服务" scope="request"></c:set>
+<navigation:setNavigationActiveKey key="restaurants"/>
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
@@ -35,7 +36,6 @@
 								<th>商标</th>
 								<th>餐馆名称</th>
 								<th>订餐电话</th>
-								<th>菜单</th>
 								<th>营业时间</th>	
 								<th>地址</th>
 								<th></th>
@@ -50,15 +50,18 @@
 								<input type="checkbox" class="ace" name="id[]" value="${restaurant.id}"/> <span class="lbl"></span> </label>
 								</td>
 								<td>${restaurant.id}</td>
-								<td><img class="isst-img" src="${restaurant.picture}"/></td>
-								<td><a href="#">${restaurant.name}</a></td>
-								<td>${restaurant.hotline}</td>
-								<td><a href="#">菜单详情</a></td>							
 								<td>
-									${restaurant.businessHours}"
+								<a href="${restaurant.picture}" data-rel="colorbox"> 
+												<img class="isst-img" src="${restaurant.picture}" />
+										</a>
 								</td>
-								<td>${restaurant.address}</td>	
 								
+								<td><a href="${baseUrl}restaurants/${restaurant.id}/menus">${restaurant.name}</a></td>
+								<td>${restaurant.hotline}</td>							
+								<td>
+									${restaurant.businessHours}
+								</td>
+								<td>${restaurant.address}</td>								
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
@@ -130,4 +133,34 @@
 			</div>
 </layout:override>
 
+<layout:override name="javascripts">
+	<script type="text/javascript">
+	jQuery(function($) {
+	var colorbox_params = {
+		reposition:true,
+		scalePhotos:true,
+		scrolling:false,
+		previous:'<i class="icon-arrow-left"></i>',
+		next:'<i class="icon-arrow-right"></i>',
+		close:'&times;',
+		current:'{current} of {total}',
+		maxWidth:'100%',
+		maxHeight:'100%',
+		onOpen:function(){
+			document.body.style.overflow = 'hidden';
+		},
+		onClosed:function(){
+			document.body.style.overflow = 'auto';
+		},
+		onComplete:function(){
+			$.colorbox.resize();
+		}
+	};
+
+	$('a[data-rel="colorbox"]').colorbox(colorbox_params);
+	$("#cboxLoadingGraphic").append("<i class='icon-spinner orange'></i>");//let's add a custom loading icon
+
+});
+		</script>
+</layout:override>
 <%@ include file="../layouts/main.jsp"%>

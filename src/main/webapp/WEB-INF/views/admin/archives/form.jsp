@@ -27,7 +27,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
 						<div class="col-sm-9">
-							<form:select  id="status" path="status" >
+							<form:select  id="status" path="status">
 								<form:option value="0" label="隐藏"/>
 								<form:option value="1" label="发布"/>
 							</form:select>

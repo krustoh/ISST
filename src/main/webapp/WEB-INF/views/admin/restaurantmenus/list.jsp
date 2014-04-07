@@ -6,11 +6,12 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
-<navigation:setNavigationActiveKey key="archive_${category.alias}"/>
+<navigation:setNavigationActiveKey key="restaurants"/>
+<navigation:setPageTitle label="菜单列表"/>
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
-				<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}archives/categories/${category.alias}/add.html">
+				<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}restaurants/${restaurants.id}/menus/add.html">
 					<i class="icon-plus align-top bigger-125"></i>
 						添加
 				</a>
@@ -33,41 +34,35 @@
 								</label>
 								</th>
 								<th>ID</th>
-								<th>标题</th>
-								<th>发布日期</th>
-								<th>发布者</th>	
+								<th>图片</th>
+								<th>菜名</th>
+								<th>价格</th>
+								<th>描述</th>	
 								<th></th>
 							</tr>
 						</thead>
 						
 						<tbody>
-							<c:forEach items="${archives.items}" var="archive">
+							<c:forEach items="${restaurantmenus.items}" var="restaurantmenu">
 							<tr>
 								<td class="center">
 								<label>
-								<input type="checkbox" class="ace" name="id[]" value="${archive.id}"/> <span class="lbl"></span> </label>
+								<input type="checkbox" class="ace" name="id[]" value="${restaurantmenu.id}"/> <span class="lbl"></span> </label>
 								</td>
-								<td>${archive.id}</td>
-								<td>
-									<a href="${baseUrl}archives/${archive.id}.html">${archive.title}</a>
-									<c:if test="${archive.status==0}">
-										<span class="label label-sm label-warning">隐藏</span>
-									</c:if>  
-								</td>
-								<td>
-								<fmt:formatDate value="${archive.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
-								
-								</td>
-								<td>${archive.userId>0?archive.user.name:"管理员"}</td>
+								<td>${restaurantmenu.id}</td>
+								<td><img class="isst-img" src="${restaurantmenu.picture}"/></td>
+								<td>${restaurantmenu.name}</td>
+								<td>${restaurantmenu.price}</td>
+								<td>${restaurantmenu.description}</td>
 								
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" href="${baseUrl}archives/${archive.id}.html">
+										<a class="btn btn-xs btn-info" href="${baseUrl}restaurantmenus/${restaurantmenu.id}.html">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" href="${baseUrl}archives/categories/${category.alias}/delete?id[]=${archive.id}">
+										<a class="btn btn-xs btn-danger" href="${baseUrl}restaurantmenus/menu/delete?id[]=${restaurantmenu.id}">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -78,16 +73,22 @@
 												<i class="icon-cog icon-only bigger-110"></i>
 											</button>
 
-											<ul
-												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-												
-												<li><a href="#" class="tooltip-success"
-													data-rel="tooltip" title="Edit"> <span class="green">
-															<i class="icon-edit bigger-120"></i> </span> </a></li>
+											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">												
+												<li>
+													<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+														<span class="green">
+															<i class="icon-edit bigger-120"></i> 
+														</span>
+													</a>
+												</li>
 
-												<li><a href="#" class="tooltip-error"
-													data-rel="tooltip" title="Delete"> <span class="red">
-															<i class="icon-trash bigger-120"></i> </span> </a></li>
+												<li>
+													<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> 
+														<span class="red">
+															<i class="icon-trash bigger-120"></i>
+														</span> 
+													</a> 
+												</li>
 											</ul>
 										</div>
 									</div>
@@ -108,9 +109,9 @@
 							<ul class="dropdown-menu">
 								<li><a href="${baseUrl}archives/categories/${category.alias}/delete">批量删除</a></li>
 
-								<li><a href="${baseUrl}archives/categories/${category.alias}/publish">批量发布</a></li>
+								<li><a href="#">批量发布</a></li>
 
-								<li><a href="${baseUrl}archives/categories/${category.alias}/hide">批量隐藏</a></li>
+								<li><a href="#">批量隐藏</a></li>
 
 							</ul>
 						</div>				
