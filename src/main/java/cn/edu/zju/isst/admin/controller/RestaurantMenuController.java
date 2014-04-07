@@ -93,7 +93,7 @@ public class RestaurantMenuController {
         }
     }
     
-    @RequestMapping(value = "/restaurants/{restaurantId}/delete")
+    @RequestMapping(value = "/restaurants/{restaurantId}/menus/delete")
     public String delete(
             @PathVariable("restaurantId") int restaurantId,
             @RequestParam("id[]") String[] ids,

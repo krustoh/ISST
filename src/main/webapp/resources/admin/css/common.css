@@ -1,7 +1,5 @@
 .isst-table-form .pagination {margin: 2px;}
-img.isst-img {
- max-width:80px;
- width:80px;
- width:expression(document.body.clientWidth>80?"80px":"auto");
+.restaurants-picture {
+ height:25px;
  overflow:hidden;
 }

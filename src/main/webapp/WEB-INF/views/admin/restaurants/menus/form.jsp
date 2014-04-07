@@ -6,13 +6,13 @@
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
-<navigation:setNavigationActiveKey key="${navigationActiveKey}"/>
-<navigation:setPageTitle label="添加"/>
+<navigation:setNavigationActiveKey key="restaurants"/>
+<navigation:setPageTitle label="添加菜单"/>
 
 <layout:override name="content">
 
 			<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="restaurantForm" enctype="multipart/form-data">
+				<form:form class="form-horizontal isst-form" modelAttribute="restaurantMenuForm" enctype="multipart/form-data">
 					
 					<fieldset>
 						<field:wrapper class="form-group" path="name">
@@ -37,13 +37,6 @@
 							</form:errors>
 						</field:wrapper>
 						
-						<div class="form-group">
-							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="form-field-1">菜品图片</label>
-							<div class="col-xs-12 col-sm-5">
-								<form:input type="file" id="id-input-file-2" path="picture"/>
-							</div>
-						</div>
-						
 						<field:wrapper class="form-group" path="description">
 							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 						  		菜品描述
@@ -52,6 +45,21 @@
 								<form:textarea path="description" id="description"></form:textarea>
 							</div>
 						</field:wrapper>
+						
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="form-field-1">菜品图片</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:input type="file" id="pictureFile" path="pictureFile" />
+						
+								<c:if test="${not empty restaurantMenuForm.picture}">
+								<div class="center">
+									<a href="${restaurantMenuForm.picture}" data-rel="colorbox">
+										<img src="${restaurantMenuForm.picture}" class="width-95"/>
+									</a>
+								</div>
+								</c:if>
+							</div>
+						</div>
 					    
 						<div class="clearfix form-actions">
 							<div class="col-md-offset-3 col-md-9">
@@ -60,7 +68,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="${baseUrl}archives/categories/${category.alias}.html">
+								<a class="btn" href="${baseUrl}restaurants/${restaurant.id}/menus.html">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>
@@ -76,7 +84,7 @@
 <layout:override name="javascripts">
 	<script type="text/javascript">
 		jQuery(function($){
-			$('#id-input-file-1 , #id-input-file-2').ace_file_input({
+			$('#pictureFile').ace_file_input({
 					no_file:'No File ...',
 					btn_choose:'Choose',
 					btn_change:'Change',
@@ -94,4 +102,4 @@
 
 
 
-<%@ include file="../layouts/main.jsp"%>
+<%@ include file="../../layouts/main.jsp"%>

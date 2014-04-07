@@ -77,4 +77,8 @@ public class RestaurantMenu {
     public void setPicturePath(String picturePath) {
         this.picturePath = picturePath;
     }
+    
+    public String toString() {
+    	return getName();
+    }
 }
