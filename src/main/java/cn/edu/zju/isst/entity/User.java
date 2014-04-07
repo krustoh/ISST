@@ -7,7 +7,7 @@ import cn.edu.zju.isst.dao.annotation.Entity;
 import cn.edu.zju.isst.dao.annotation.ID;
 
 @Entity("users")
-public class User {
+public class User implements PrivateProfile {
     @ID
     @Column
     private int id;

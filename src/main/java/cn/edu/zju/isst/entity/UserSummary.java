@@ -1,6 +1,6 @@
 package cn.edu.zju.isst.entity;
 
-public class UserSummary {
+public class UserSummary implements PrivateProfile {
     private int id;
     private String name;
     private String email;

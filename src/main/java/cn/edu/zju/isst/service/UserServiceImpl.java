@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import cn.edu.zju.isst.common.PaginationList;
 import cn.edu.zju.isst.dao.UserDao;
 import cn.edu.zju.isst.entity.Klass;
 import cn.edu.zju.isst.entity.Major;
 import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.entity.UserSearchCondition;
 import cn.edu.zju.isst.form.UserLoginForm;
 import cn.edu.zju.isst.identity.UserIdentity;
 
@@ -63,5 +65,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Major> findAllMajors() {
         return userDao.findAllMajors();
+    }
+
+    @Override
+    public PaginationList<User> findAll(UserSearchCondition condition, int pageSize, int page) {
+        return userDao.findAll(condition, pageSize, page);
+    }
+
+    @Override
+    public List<User> findAlumni(UserSearchCondition condition, int pageSize, int page) {
+        return userDao.findAlumni(condition, pageSize, page);
+    }
+
+    @Override
+    public User findAlumnus(int id) {
+        return userDao.findAlumnus(id);
     }
 }

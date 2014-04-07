@@ -173,6 +173,10 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return query(String.format("SELECT * FROM %s WHERE %s=?", table, primaryKey), id);
     }
     
+    public T find(int id, RowMapper<T> rowMapper) {
+        return query(String.format("SELECT * FROM %s WHERE %s=?", table, primaryKey), rowMapper, id);
+    }
+    
     public List<T> findAll(Set<Integer> idset) {
         String sql = String.format("SELECT * FROM %s WHERE %s IN (:idset)", table, primaryKey);
         
@@ -254,6 +258,10 @@ public abstract class AbstractDao<T> implements Dao<T> {
     
     public List<T> queryAll(String sql, Map<String, Object> params) {
         return jdbcTemplate.query(sql, params, getRowMapper());
+    }
+    
+    public List<T> queryAll(String sql, Map<String, Object> params, RowMapper<T> rowMapper) {
+        return jdbcTemplate.query(sql, params, rowMapper);
     }
     
     public List<T> queryAll(SelectSQLBuilder select) {

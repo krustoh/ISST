@@ -1,6 +1,6 @@
 package cn.edu.zju.isst.form;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.edu.zju.isst.common.WebUtils;
@@ -9,23 +9,22 @@ import cn.edu.zju.isst.entity.Restaurant;
 public class RestaurantForm {
     private int id;
     
-    @NotEmpty(message = "餐馆名称不能为空")
+    @NotBlank(message = "餐馆名称不能为空")
     private String name;
     
-    @NotEmpty(message = "地址不能为空")
+    @NotBlank(message = "地址不能为空")
     private String address;
     
-    @NotEmpty(message = "订餐电话不能为空")
+    @NotBlank(message = "订餐电话不能为空")
     private String hotline;
     
-    @NotEmpty(message = "营业时间不能为空")
+    @NotBlank(message = "营业时间不能为空")
     private String businessHours;
     
     private MultipartFile pictureFile;
     
     private String picture;
     
-    @NotEmpty(message = "餐馆描述不能为空")
     private String description;
     
     public RestaurantForm() {

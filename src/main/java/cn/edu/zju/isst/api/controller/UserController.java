@@ -7,12 +7,15 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.zju.isst.common.ApiResponse;
 import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.entity.UserSearchCondition;
 import cn.edu.zju.isst.form.ApiUserLoginForm;
 import cn.edu.zju.isst.form.ApiUserLoginUpdateForm;
 import cn.edu.zju.isst.identity.UserIdentity;
@@ -77,6 +80,19 @@ public class UserController {
     @RequestMapping("/majors")
     public @ResponseBody ApiResponse findAllMajors() {
         return new ApiResponse(userService.findAllMajors());
+    }
+    
+    @RequestMapping("/alumni")
+    public @ResponseBody ApiResponse list(
+            UserSearchCondition condition,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
+        return new ApiResponse(userService.findAlumni(condition, pageSize, page));
+    }
+    
+    @RequestMapping("/alumni/{id}")
+    public @ResponseBody ApiResponse find(@PathVariable("id") int id) {
+        return new ApiResponse(userService.findAlumnus(id));
     }
     
     public static void main(String[] args) {

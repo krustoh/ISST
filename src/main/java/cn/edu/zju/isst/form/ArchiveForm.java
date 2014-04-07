@@ -1,6 +1,6 @@
 package cn.edu.zju.isst.form;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.UserSummary;
@@ -8,7 +8,7 @@ import cn.edu.zju.isst.entity.UserSummary;
 public class ArchiveForm {
     private int id;
     
-    @NotEmpty(message = "标题不能为空")
+    @NotBlank(message = "标题不能为空")
     private String title;
     
     private int categoryId;
