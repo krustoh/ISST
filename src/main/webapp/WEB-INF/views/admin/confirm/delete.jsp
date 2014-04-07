@@ -5,8 +5,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
-<c:set var="navigationActiveKey" value="archive_${category.alias}" scope="request"></c:set>
-
+<navigation:setNavigationActiveKey key="${navigationActiveKey}"/>
 <navigation:setPageTitle label="删除"/>
 
 <layout:override name="content">
@@ -36,7 +35,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="${baseUrl}archives/categories/${category.alias}.html">
+								<a class="btn" href="${cancelUrl}">
 									<i class="icon-undo bigger-110"></i> 取消
 								</a>
 							</div>

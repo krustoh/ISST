@@ -14,6 +14,9 @@ public interface ArchiveService {
     public PaginationList<Archive> findAll(String categoryAlias, String keywords, int pageSize, int page);
     public PaginationList<Archive> findAll(String categoryAlias, int status, String keywords, int pageSize, int page);
     public PaginationList<Archive> findAll(Category category, int status, String keywords, int pageSize, int page);
-    public int delete(Set<Integer> ids);
+    public int delete(Set<Integer> idset);
     public void delete(Archive archive);
+    public int publish(Set<Integer> idset);
+    public int hide(Set<Integer> idset);
+    
 }

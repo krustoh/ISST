@@ -8,19 +8,9 @@
 
 
 <layout:override name="content">
-			<div class="col-xs-12">
-				<div class="tabbable">
-					<ul class="nav nav-tabs" id="myTab">
-						<li class="active"><a data-toggle="tab" href="#home"> <i
-						class="green icon-home bigger-110"></i>基本信息 </a></li>
 
-						<li><a data-toggle="tab" href="#profile">餐馆图标</a></li>
-					</ul>
-
-				<div class="tab-content">
-					<div id="基本信息" class="tab-pane in active">
 						<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="archiveForm" method="POST">
+				<form:form class="form-horizontal isst-form" modelAttribute="restaurantForm" enctype="multipart/form-data">
 					
 					<fieldset>
 						<field:wrapper class="form-group" path="name">
@@ -67,6 +57,12 @@
 							</form:errors>
 						</field:wrapper>
 						
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="form-field-1">餐馆图标</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:input type="file" id="id-input-file-2" path="picture"/>
+							</div>
+						</div>
 						
 						<field:wrapper class="form-group" path="description">
 							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
@@ -76,18 +72,7 @@
 								<form:textarea path="description" id="description"></form:textarea>
 							</div>
 						</field:wrapper>
-					
-					    <div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1">餐馆图标</label>
-							<div class="col-sm-9">
-								<div class="widget-body">
-									<div class="widget-main">
-										<form:input type="file" id="id-input-file-2" path="picture"/>
-									</div>
-								</div>
-							</div>
-						</div>
-
+					    
 						<div class="clearfix form-actions">
 							<div class="col-md-offset-3 col-md-9">
 								<button class="btn btn-info" type="submit">
@@ -103,47 +88,9 @@
 					</fieldset>
 				</form:form>
 			</div>
-		</div>
-
-					<div id="餐馆图标" class="tab-pane">
-						<div class="col-xs-12">
-							<form:form class="form-horizontal isst-form" modelAttribute="archiveForm" method="POST">
-					    <fieldset>
-						
-					    <div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1">餐馆图标</label>
-							<div class="col-sm-9">
-								<div class="widget-body">
-									<div class="widget-main">
-										<form:input type="file" id="id-input-file-2" path="picture"/>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						
-
-						<div class="clearfix form-actions">
-							<div class="col-md-offset-3 col-md-9">
-								<button class="btn btn-info" type="submit">
-									<i class="icon-ok bigger-110"></i> 提交
-								</button>
-
-								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="${baseUrl}archives/categories/${category.alias}.html">
-									<i class="icon-undo bigger-110"></i> 返回
-								</a>
-							</div>
-						</div>
-					</fieldset>
-				</form:form>
-						</div>
-					</div>
-			</div>
-		</div>
-	</div>
-		
 	
+			
+		
 </layout:override>
 
 <layout:override name="javascripts">

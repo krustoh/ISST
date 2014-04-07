@@ -10,7 +10,7 @@ import cn.edu.zju.isst.entity.Restaurant;
 public class RestaurantDaoImpl extends AbstractDao<Restaurant> implements RestaurantDao {
     @Override
     public PaginationList<Restaurant> findAll(String keywords, int pageSize, int page) {
-        SelectSQLBuilder select = select("id, name, picture, address, hotline, business_hours, content");
+        SelectSQLBuilder select = select("id, name, picture, address, hotline, business_hours, description");
         
         if (null != keywords) {
             keywords = keywords.trim();

@@ -8,6 +8,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.DynamicAttributes;
+import javax.servlet.jsp.tagext.Tag;
 
 public class NavigationItemTag extends BodyTagSupport implements DynamicAttributes {
     private static final long serialVersionUID = 1L;
@@ -16,11 +17,12 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
     private String activeCssClass = "active";
     private Map<String, Object> attributes;
     
-    private NavigationLink activeNavigationLink;
+    private boolean active;
+    private NavigationLink navigationLink;
     
     public int doEndTag() {
-        if (null != activeNavigationLink) {
-            Navigation.addFirstBreadcrumb(pageContext, activeNavigationLink);
+        if (active) {
+            Navigation.addFirstBreadcrumb(pageContext, navigationLink);
             if (null == attributes) {
                 attributes = new HashMap<String, Object>();
                 attributes.put("class", activeCssClass);
@@ -30,6 +32,11 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
                 } else {
                     attributes.put("class", activeCssClass);
                 }
+            }
+            
+            Tag parent = this.getParent();
+            if (null != parent && parent instanceof NavigationItemTag) {
+                ((NavigationItemTag)parent).setActive(true);
             }
         }
         
@@ -48,7 +55,8 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
         }
         
         attributes = null;
-        activeNavigationLink = null;
+        navigationLink = null;
+        active = false;
         
         return EVAL_PAGE;
     }
@@ -69,7 +77,11 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
         this.activeCssClass = activeCssClass;
     }
 
-    public void setActiveNavigationLink(NavigationLink link) {
-        this.activeNavigationLink = link;
+    public void setNavigationLink(NavigationLink link) {
+        this.navigationLink = link;
+    }
+    
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -139,7 +139,8 @@ public class ArchiveController {
         
         if (confirm == 0) {
             model.addAttribute("entities", archiveService.findAll(idset));
-            model.addAttribute("category", category);
+            model.addAttribute("navigationActiveKey", "archive_" + category.getAlias());
+            model.addAttribute("cancelUrl", WebUtils.createAdminUrl(request, "archives/categories/" + category.getAlias() + ".html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {
@@ -152,10 +153,54 @@ public class ArchiveController {
                 }
             } else {
                 int count = archiveService.delete(idset);
-                WebUtils.addSuccessFlashMessage(session, String.format("成功删除<i>%d</i>条记录", count));
+                WebUtils.addSuccessFlashMessage(session, String.format("成功删除 <i>%d</i> 条记录", count));
             }
             
             return WebUtils.redirectAdminUrl(request, response, "archives/categories/"+category.getAlias()+".html");
         }
+    }
+    
+    @RequestMapping(value = "/archives/categories/{categoryAlias}/publish")
+    public String publish(
+            @RequestParam("id[]") String[] ids,
+            @PathVariable("categoryAlias") String categoryAlias, 
+            HttpServletRequest request,
+            HttpServletResponse response,
+            HttpSession session) {
+        Set<Integer> idset = new HashSet<Integer>();
+        for (String id : ids) {
+            idset.add(Integer.valueOf(id));
+        }
+        
+        int count = 0;
+        if (!idset.isEmpty()) {
+            count = archiveService.publish(idset);
+        }
+        
+        Category category = categoryService.find(categoryAlias);
+        WebUtils.addSuccessFlashMessage(session, String.format("成功发布 <i>%d</i> 条记录", count));
+        return WebUtils.redirectAdminUrl(request, response, "archives/categories/"+category.getAlias()+".html");
+    }
+    
+    @RequestMapping(value = "/archives/categories/{categoryAlias}/hide")
+    public String hide(
+            @RequestParam("id[]") String[] ids,
+            @PathVariable("categoryAlias") String categoryAlias, 
+            HttpServletRequest request,
+            HttpServletResponse response,
+            HttpSession session) {
+        Set<Integer> idset = new HashSet<Integer>();
+        for (String id : ids) {
+            idset.add(Integer.valueOf(id));
+        }
+        
+        int count = 0;
+        if (!idset.isEmpty()) {
+            count = archiveService.hide(idset);
+        }
+        
+        Category category = categoryService.find(categoryAlias);
+        WebUtils.addSuccessFlashMessage(session, String.format("成功隐藏 <i>%d</i> 条记录", count));
+        return WebUtils.redirectAdminUrl(request, response, "archives/categories/"+category.getAlias()+".html");
     }
 }

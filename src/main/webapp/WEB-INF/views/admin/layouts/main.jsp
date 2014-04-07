@@ -104,15 +104,30 @@
 							</navigation:item>
 							
 							<navigation:item>
+								<navigation:link key="archive_studying" href="${baseUrl}archives/categories/studying.html" label="学习园地">
+								学习园地
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
 								<navigation:link href="${baseUrl}activities.html" key="activities" label="在校生活">
 									在校生活
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}restaurants.html" key="restaurants" label="便捷服务">
+								<navigation:link href="${baseUrl}restaurants.html" key="services" label="便捷服务" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
 									便捷服务
+									<b class="arrow icon-angle-down"></b>
 								</navigation:link>
+								<ul class="submenu">
+									<navigation:item>
+										<navigation:link href="${baseUrl}restaurants.html" key="restaurants" label="外卖">
+											外卖
+										</navigation:link>
+									</navigation:item>
+								</ul>
 							</navigation:item>	
 						</ul>
 					</navigation:item>
@@ -154,31 +169,12 @@
 							<i class="icon-apple" ></i>
 							<span class="menu-text">通讯录</span>
 						</navigation:link>
-						<ul class="submenu">
-							<navigation:item>
-								<navigation:link key="alumni_check" href="#" label="查看校友信息">
-									查看校友信息
-								</navigation:link>
-							</navigation:item>
-							
-							<navigation:item>
-								<navigation:link href="#" key="alumni_edit" label="编辑校友信息">
-									编辑校友信息
-								</navigation:link>
-							</navigation:item>
-							
-							<navigation:item>
-								<navigation:link href="#" key="alumni_search" label="查询校友信息">
-									查询校友信息
-								</navigation:link>
-							</navigation:item>
-						</ul>
 					</navigation:item>
 					
 					<navigation:item>
 						<navigation:link key="cities" href="#" label="同城" class="dropdown-toggle">
 							<i class="icon-apple" ></i>
-							<span class="menu-text">同城</span>
+							<span class="menu-text">城市</span>
 						</navigation:link>
 						<ul class="submenu">
 							<navigation:item>
@@ -188,14 +184,14 @@
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="#" key="cities_activities" label="同城活动">
-									同城活动
+								<navigation:link href="#" key="cities_activities" label="活动">
+									活动
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="#" key="cities_alumni" label="同城校友">
-									同城校友
+								<navigation:link href="#" key="cities_alumni" label="校友">
+									校友
 								</navigation:link>
 							</navigation:item>
 						</ul>

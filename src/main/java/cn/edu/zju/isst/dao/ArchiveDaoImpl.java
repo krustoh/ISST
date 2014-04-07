@@ -1,6 +1,9 @@
 package cn.edu.zju.isst.dao;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.zju.isst.common.PaginationList;
@@ -42,5 +45,16 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
         if (entity.getUserId() > 0) {
             entity.setUser(userDao.findUserSummary(entity.getUserId()));
         }
+    }
+
+    @Override
+    public int changeStatus(Set<Integer> idset, int status) {
+        String sql = String.format("UPDATE%s SET status=:status WHERE %s IN (:idset)", table, primaryKey);
+        
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        paramSource.addValue("idset", idset);
+        paramSource.addValue("status", status);
+        
+        return jdbcTemplate.update(sql, paramSource);
     }
 }

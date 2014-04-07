@@ -160,11 +160,11 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return jdbcTemplate.getJdbcOperations().update(sql, new Object[] { getFieldValue(entity, primaryKey)});
     }
     
-    public int delete(Set<Integer> ids) {
-        String sql = String.format("DELETE FROM %s WHERE %s IN (:ids)", table, primaryKey);
+    public int delete(Set<Integer> idset) {
+        String sql = String.format("DELETE FROM %s WHERE %s IN (:idset)", table, primaryKey);
         
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("ids", ids);
+        parameters.addValue("idset", idset);
         
         return jdbcTemplate.update(sql, parameters);
     }
@@ -173,11 +173,11 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return query(String.format("SELECT * FROM %s WHERE %s=?", table, primaryKey), id);
     }
     
-    public List<T> findAll(Set<Integer> ids) {
-        String sql = String.format("SELECT * FROM %s WHERE %s IN (:ids)", table, primaryKey);
+    public List<T> findAll(Set<Integer> idset) {
+        String sql = String.format("SELECT * FROM %s WHERE %s IN (:idset)", table, primaryKey);
         
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("ids", ids);
+        parameters.addValue("idset", idset);
         
         return jdbcTemplate.query(sql, parameters, getRowMapper());
     }

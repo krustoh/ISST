@@ -30,11 +30,17 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
         
         NavigationLink link = new NavigationLink(label, href);
         Navigation.addMenu(pageContext, key, link);
+        Tag parentTag = this.getParent();
+        NavigationItemTag parent = null;
+        if (null != parentTag && parentTag instanceof NavigationItemTag) {
+            parent = (NavigationItemTag) parentTag;
+            parent.setNavigationLink(link);
+        }
+        
         String activeKey = Navigation.getNavigationActiveKey(pageContext);
         if (null != activeKey && activeKey.equals(key)) {
-            Tag parent = this.getParent();
-            if (null != parent && parent instanceof NavigationItemTag) {
-                ((NavigationItemTag)parent).setActiveNavigationLink(link);
+            if (null != parent) {
+                parent.setActive(true);
             }
         }
         

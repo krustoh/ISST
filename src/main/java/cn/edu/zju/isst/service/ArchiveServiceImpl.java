@@ -66,7 +66,17 @@ public class ArchiveServiceImpl implements ArchiveService {
     }
 
     @Override
-    public List<Archive> findAll(Set<Integer> ids) {
-        return archiveDao.findAll(ids);
+    public List<Archive> findAll(Set<Integer> idset) {
+        return archiveDao.findAll(idset);
+    }
+
+    @Override
+    public int publish(Set<Integer> idset) {
+        return archiveDao.changeStatus(idset, Archive.STATUS_PUBLISHED);
+    }
+
+    @Override
+    public int hide(Set<Integer> idset) {
+        return archiveDao.changeStatus(idset, Archive.STATUS_HIDDEN);
     }
 }

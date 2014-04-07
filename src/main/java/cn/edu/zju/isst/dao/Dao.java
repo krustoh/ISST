@@ -11,10 +11,10 @@ public interface Dao<T> {
     public int update(T entity);
     public void save(final T entity);
     public int delete(T entity);
-    public int delete(Set<Integer> ids);
+    public int delete(Set<Integer> idset);
     public int count(SelectSQLBuilder select);
     public T find(int id);
-    public List<T> findAll(Set<Integer> ids);
+    public List<T> findAll(Set<Integer> idset);
     public T query(String sql);
     public T query(String sql, Object...params);
     public T query(String sql, Map<String, Object> params);
