@@ -81,4 +81,28 @@ public class UserServiceImpl implements UserService {
     public User findAlumnus(int id) {
         return userDao.findAlumnus(id);
     }
+
+    @Override
+    public boolean checkUsername(String username, int id) {
+        return userDao.checkUsername(username, id);
+    }
+
+    @Override
+    public boolean checkUsername(String username) {
+        return userDao.checkUsername(username);
+    }
+    
+    public void save(User user) {
+        userDao.save(user);
+    }
+
+    @Override
+    public Klass findClass(int id) {
+        return userDao.findClass(id);
+    }
+
+    @Override
+    public Major findMajor(int id) {
+        return userDao.findMajor(id);
+    }
 }

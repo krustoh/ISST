@@ -207,4 +207,29 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         profile.setCompany(rs.getBoolean("private_company") ? "" : rs.getString("company"));
         profile.setPosition(rs.getBoolean("private_position") ? "" : rs.getString("position"));
     }
+
+    @Override
+    public boolean checkUsername(String username, int id) {
+        SelectSQLBuilder select = select().where("username=:username").addParam("username", username);
+        if (id > 0) {
+            select.where("id<>:id").addParam("id", id);
+        }
+        
+        return count(select) > 0;
+    }
+
+    @Override
+    public boolean checkUsername(String username) {
+        return checkUsername(username, 0);
+    }
+
+    @Override
+    public Klass findClass(int id) {
+        return query("SELECT id, name FROM classes WHERE id=?", ParameterizedBeanPropertyRowMapper.newInstance(Klass.class), id);
+    }
+
+    @Override
+    public Major findMajor(int id) {
+        return query("SELECT id, name FROM class_major_fields WHERE id=?", ParameterizedBeanPropertyRowMapper.newInstance(Major.class), id);
+    }
 }
