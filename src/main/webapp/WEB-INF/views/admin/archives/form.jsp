@@ -39,7 +39,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<h4 class="header green clearfix">
-								内容编辑
+								内容
 							</h4>
 							<div class="wysiwyg-editor" id="contentEditor"></div>
 							<form:textarea path="content" id="content" style="display:none;"></form:textarea>

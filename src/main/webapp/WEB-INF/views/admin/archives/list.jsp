@@ -81,11 +81,11 @@
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												
-												<li><a href="#" class="tooltip-success"
+												<li><a href="${baseUrl}archives/${archive.id}.html" class="tooltip-success"
 													data-rel="tooltip" title="Edit"> <span class="green">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 
-												<li><a href="#" class="tooltip-error"
+												<li><a href="${baseUrl}archives/categories/${category.alias}/delete?id[]=${archive.id}" class="tooltip-error"
 													data-rel="tooltip" title="Delete"> <span class="red">
 															<i class="icon-trash bigger-120"></i> </span> </a></li>
 											</ul>

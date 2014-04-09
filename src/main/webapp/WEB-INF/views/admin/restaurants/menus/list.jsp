@@ -73,6 +73,10 @@
 									</div>
 									<div class="visible-xs visible-sm hidden-md hidden-lg">
 										<div class="inline position-relative">
+											<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+												<i class="icon-cog icon-only bigger-110"></i>
+											</button>
+											
 											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">												
 												<li>
 													<a href="${baseUrl}/restaurants/menus/${restaurantMenu.id}.html" class="tooltip-success" data-rel="tooltip" title="Edit">
