@@ -46,5 +46,5 @@ public class ArchiveController {
         model.addAttribute("category", categoryService.find(archive.getCategoryId()));
 	    model.addAttribute("archives", archive);
         return "archives/content";
-    }
+	}
 }
