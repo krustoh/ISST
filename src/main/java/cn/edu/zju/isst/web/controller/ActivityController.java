@@ -23,13 +23,13 @@ public class ActivityController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
         model.addAttribute("campus",activityService.findAllOfCampus(keywords, pageSize, page));
-        return "campus/activities";
+        return "activities/campus/list";
     }
 
     @RequestMapping(value = "/campus/activities/{id}.html", method = RequestMethod.GET)
     public String find(@PathVariable("id") int id,
             Model model) {
         model.addAttribute( "campus",activityService.find(id));
-        return "campus/activities/{id}";
+        return "activities/campus/view";
     }
 }

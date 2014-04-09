@@ -21,8 +21,7 @@ public class ArchiveController {
     public String list(Model model, 
             @PathVariable("categoryAlias") String categoryAlias,
             @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords, 
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
-	        @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		model.addAttribute("archives", archiveService.findAll(categoryAlias, keywords, 20, page));
         return "archives/list";
     }
@@ -31,6 +30,6 @@ public class ArchiveController {
 	public String find(@PathVariable("id") int id,
 	        Model model) {
 	    model.addAttribute("archives", archiveService.find(id));
-        return "archives/{id}";
+        return "archives/view";
     }
 }
