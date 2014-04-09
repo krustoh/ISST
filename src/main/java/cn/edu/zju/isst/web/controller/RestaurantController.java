@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cn.edu.zju.isst.form.RestaurantForm;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.RestaurantService;
 
@@ -20,16 +21,14 @@ public class RestaurantController {
     @RequestMapping(value = "/restaurants.html", method = RequestMethod.GET)
     public String list(Model model,
             @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords,
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        model.addAttribute("restaurants",restaurantService.findAll(keywords, pageSize, page));
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        model.addAttribute("restaurants", restaurantService.findAll(keywords, 20, page));
         return "restaurants/list";
     }
 
-    @RequestMapping("/restaurants/{id}.html")
-    public String find(@PathVariable("id") int id,
-            Model model) {
-        model.addAttribute("restaurants",restaurantService.find(id));
-        return "restaurants/view";
+    @RequestMapping(value = "/restaurants/{id}.html", method = RequestMethod.GET)
+    public String find(Model model, @PathVariable("id") int id) {
+        model.addAttribute("restaurantForm", new RestaurantForm(restaurantService.find(id)));
+        return "restaurants/form";
     }
 }
