@@ -30,6 +30,6 @@ public class RestaurantController {
     public String find(@PathVariable("id") int id,
             Model model) {
         model.addAttribute("restaurants",restaurantService.find(id));
-        return "restaurants/{id}";
+        return "restaurants/view";
     }
 }

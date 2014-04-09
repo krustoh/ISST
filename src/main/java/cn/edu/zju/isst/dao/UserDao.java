@@ -16,7 +16,11 @@ public interface UserDao extends Dao<User> {
     public void synchronizeUsers();
     public UserSummary findUserSummary(int id);
     public List<Klass> findAllClasses();
+    public Klass findClass(int id);
     public List<Major> findAllMajors();
+    public Major findMajor(int id);
     public List<User> findAlumni(UserSearchCondition condition, int pageSize, int page);
     public PaginationList<User> findAll(UserSearchCondition condition, int pageSize, int page);
+    public boolean checkUsername(String username, int id);
+    public boolean checkUsername(String username);
 }

@@ -25,4 +25,9 @@ public interface UserService {
     public List<Major> findAllMajors();
     public PaginationList<User> findAll(UserSearchCondition condition, int pageSize, int page);
     public List<User> findAlumni(UserSearchCondition condition, int pageSize, int page);
+    public boolean checkUsername(String username, int id);
+    public boolean checkUsername(String username);
+    public void save(User user);
+    public Klass findClass(int id);
+    public Major findMajor(int id);
 }
