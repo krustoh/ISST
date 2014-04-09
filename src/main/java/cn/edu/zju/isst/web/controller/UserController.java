@@ -52,13 +52,13 @@ public class UserController {
 
     @RequestMapping("/classes.html")
     public String findAllClasses(Model model) {
-        model.addAttribute(userService.findAllClasses());
+        model.addAttribute("classes",userService.findAllClasses());
         return "classes";
     }
 
     @RequestMapping("/majors.html")
     public String findAllMajors(Model model) {
-        model.addAttribute(userService.findAllMajors());
+        model.addAttribute("majors",userService.findAllMajors());
         return "majors";
     }
 
@@ -66,7 +66,7 @@ public class UserController {
     public String list(Model model, UserSearchCondition condition,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        model.addAttribute(userService.findAlumni(condition, pageSize, page));
+        model.addAttribute("alumni",userService.findAlumni(condition, pageSize, page));
         return "alumni";
     }
 
@@ -74,7 +74,7 @@ public class UserController {
     public String find(
             Model model,
             @PathVariable("id") int id) {
-        model.addAttribute(userService.findAlumnus(id));
+        model.addAttribute("alumni",userService.findAlumnus(id));
         return "alumni/{id}";
     }
 
