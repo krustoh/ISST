@@ -1,50 +1,65 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
+<%@ taglib uri="/navigation" prefix="navigation"%>
+
+<navigation:setNavigationActiveKey key="archive_${category.alias}"/>
+
+<layout:override name="page-header">
+			
+</layout:override>
 
 <layout:override name="content">
-	<div class="page-content">
-		<div class="page-header">
-			<div class="pull-right" style="margin-right: 10%;"></div>
-
-			<h1 style="margin-top: 5px;">
-				软院生活 <small><i class="icon-double-angle-right"></i> 快讯</small>
-			</h1>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
+	<div class="col-xs-12">
 				<%@ include file="../blocks/message.jsp"%>
 				<div class="table-responsive">
-					<table class="table table-striped table-hover">
-						<tbody>
+					<form action="" class="isst-table-form">
+					
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
 							<tr>
-								<th class="center">标题</th>
-								<th class="center">时间</th>
+								<th>ID</th>
+								<th>标题</th>
+								<th>发布日期</th>
+								<th>发布者</th>	
 							</tr>
-							<c:forEach items="${archives.items }" var="archive">
+						</thead>
+						
+						<tbody>
+							<c:forEach items="${archives.items}" var="archive">
 							<tr>
-								<td><a href="web/archives/content.html">${archive.title}</a></td>
-								<td>${archive.updatedAt}</td>
+								<td>${archive.id}</td>
+								<td>
+									<a href="${baseUrl}web/archives/${archive.id}.html">${archive.title}</a>
+									<c:if test="${archive.status==0}">
+										<span class="label label-sm label-warning">隐藏</span>
+									</c:if>  
+								</td>
+								<td>
+								<fmt:formatDate value="${archive.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								
+								</td>
+								<td>${archive.userId>0?archive.user.name:"管理员"}</td>					
 							</tr>
 							</c:forEach>
-						</tbody>
+						</tbody>	
 					</table>
-					<!-- pager -->
+					
+					<div class="row">
+						<div class="col-sm-8 pull-right">
+							<!-- pager -->
 							<div id="pager" class="pull-right" style="margin-right: 100px;">
-								<pagination:paging page="${archives.page}" total="${archives.total}" size="${archives.pageSize}"/>
+								<pagination:paging page="${archives.page}" total="${archives.total}" size="${archives.pageSize}" />
 							</div>
 							<!-- end pager -->
+						</div>
+					</div>
+					</form>
 				</div>
 			</div>
-			<!-- /.col -->
-		</div>
-		<!-- /.row -->
-	</div>
-	<!-- /.page-content -->
-	</div>
-	<!-- /.main-content -->
 </layout:override>
 
 <layout:override name="javascript">

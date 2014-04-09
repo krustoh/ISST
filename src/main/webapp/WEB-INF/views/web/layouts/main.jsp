@@ -1,26 +1,30 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java"
+	import="java.util.*, cn.edu.zju.isst.taglib.NavigationLink"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
+<%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib uri="/flash_message" prefix="fm"%>
 
 <layout:override name="stylesheets">
-	<script src="resources/admin/js/ace-extra.min.js"></script>
+	<script src="${resourceUrl}js/ace-extra.min.js"></script>
 </layout:override>
 
 <layout:override name="javascripts">
-	<script src="resources/admin/js/ace-elements.min.js"></script>
-	<script src="resources/admin/js/ace.min.js"></script>
+	<script src="${resourceUrl}js/ace-elements.min.js"></script>
+	<script src="${resourceUrl}js/ace.min.js"></script>
 </layout:override>
 
 <layout:override name="body">
 
 	<div class="navbar navbar-default" id="navbar">
 		<script type="text/javascript">
-        try {
-            ace.settings.check('navbar', 'fixed')
-        } catch (e) {
-        }
-    </script>
+			try {
+				ace.settings.check('navbar', 'fixed');
+			} catch (e) {
+			}
+		</script>
 
 		<div class="navbar-container" id="navbar-container">
 			<div class="navbar-header pull-left">
@@ -32,19 +36,20 @@
 			<div class="navbar-header pull-right" role="navigation">
 				<ul class="nav ace-nav">
 
-					<li class="light-blue"><a data-toggle="dropdown" href="#"
-						class="dropdown-toggle"> <img class="nav-user-photo"
-							src="resources/admin/avatars/user.jpg" alt="Jason's Photo" /> <span
-							class="user-info"> <small>Welcom, </small> ${user.name} </span> <i
-							class="icon-caret-down"></i> </a>
+					<li class="light-blue">
+						<a data-toggle="dropdown" href="#" class="dropdown-toggle"> 
+							<img class="nav-user-photo" src="${resourceUrl}avatars/user.jpg" alt="${administrator.username}" /> 
+							<span class="user-info"> <small>Welcom, </small>
+								${administrator.username} </span> 
+							<i class="icon-caret-down"></i> 
+						</a>
 
-						<ul
-							class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+						<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
 							<li><a href="#"> <i class="icon-key"></i> 修改密码 </a>
 							</li>
 
-							<li class="divider"></li>
+							<li class="divider">&nbsp;</li>
 
 							<li><a href="#"> <i class="icon-off"></i> 退出 </a>
 							</li>
@@ -60,11 +65,11 @@
 
 	<div class="main-container" id="main-container">
 		<script type="text/javascript">
-    try {
-        ace.settings.check('main-container', 'fixed')
-    } catch (e) {
-    }
-</script>
+			try {
+				ace.settings.check('main-container', 'fixed');
+			} catch (e) {
+			}
+		</script>
 
 		<div class="main-container-inner">
 			<a class="menu-toggler" id="menu-toggler" href="#"> <span
@@ -72,74 +77,127 @@
 
 			<div class="sidebar" id="sidebar">
 				<script type="text/javascript">
-    try {
-        ace.settings.check('sidebar', 'fixed')
-    } catch (e) {
-    }
-</script>
+					try {
+						ace.settings.check('sidebar', 'fixed');
+					} catch (e) {
+					}
+				</script>
 
-				<!-- <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-        <button class="btn btn-success">
-            <i class="icon-signal"></i>
-        </button>
-
-        <button class="btn btn-info">
-            <i class="icon-pencil"></i>
-        </button>
-
-        <a class="btn btn-warning" href="">
-            <i class="icon-group"></i>
-        </a>
-
-        <a class="btn btn-danger" href="">
-            <i class="icon-cogs"></i>
-        </a>
-    </div>
-
-    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-        <span class="btn btn-success"></span>
-
-        <span class="btn btn-info"></span>
-
-        <span class="btn btn-warning"></span>
-
-        <span class="btn btn-danger"></span>
-    </div>
-</div> -->
-				<!-- #sidebar-shortcuts -->
+			
 				<ul class="nav nav-list">
-					<li class="active"><a href="#" class="dropdown-toggle">软院生活</a>
+					<navigation:item>
+						<navigation:link key="campus_life" href="${baseUrl}web/archives/categories/campus.html" label="软院生活" class="dropdown-toggle">
+							<i class="icon-apple" ></i>
+							<span class="menu-text">软院生活</span>
+						</navigation:link>
 						<ul class="submenu">
-							<li class="active"><a href="web/archives/categories/campus.html">快讯</a></li>
-							<li><a href="web/archives/categories/encyclopedia.html">百科</a></li>
-							<li><a href="web/campus/activities.html">在校活动</a></li>
-							<li><a href="web/restaurants.html">便捷服务</a></li>
+							<navigation:item>
+								<navigation:link key="archive_campus" href="${baseUrl}web/archives/categories/campus.html" label="软院快讯">
+								软院快讯
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="${baseUrl}web/archives/categories/encyclopedia.html" key="archive_encyclopedia" label="软院百科">
+									软院百科
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link key="archive_studying" href="${baseUrl}web/archives/categories/studying.html" label="学习园地">
+								学习园地
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="activities" label="在校活动">
+									在校活动
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="${baseUrl}web/restaurants.html" key="services" label="便捷服务" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+									便捷服务
+									<b class="arrow icon-angle-down"></b>
+								</navigation:link>
+								<ul class="submenu">
+									<navigation:item>
+										<navigation:link href="${baseUrl}web/restaurants.html" key="restaurants" label="外卖">
+											外卖
+										</navigation:link>
+									</navigation:item>
+								</ul>
+							</navigation:item>	
 						</ul>
-					</li>
-					<li><a href="#" class="dropdown-toggle">职场生活</a>
-						<ul class="submenu" style="display:none;">
-							<li><a href="web/archives/list.html">实习</a></li>
-							<li><a href="web/archives/list.html">就业</a></li>
-							<li><a href="web/archives/list.html">内推</a></li>
-							<li><a href="web/archives/categories/experience.html">经验交流</a></li>
+					</navigation:item>
+					
+					<navigation:item>
+						<navigation:link key="jobs" href="#" label="职场生活" class="dropdown-toggle">
+							<i class="icon-suitcase" ></i>
+							<span class="menu-text">职场生活</span>
+						</navigation:link>
+						<ul class="submenu">
+							<navigation:item>
+								<navigation:link key="jobs_internship" href="#" label="实习">
+								实习
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="jobs_employment" label="就业">
+									就业
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="jobs_recommend" label="内推">
+									内推
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="jobs_experience" label="经验交流">
+									经验交流
+								</navigation:link>
+							</navigation:item>	
 						</ul>
-					</li>
-					<li><a href="#" class="dropdown-toggle">通讯录</a>
-						<ul class="submenu" style="display:none;">
-							<li><a href="web/archives/list.html">编辑个人信息</a></li>
-							<li><a href="web/archives/list.html">查看个人信息</a></li>
-							<li><a href="web/archives/list.html">查询校友信息</a></li>
+					</navigation:item>
+					
+					<navigation:item>
+						<navigation:link key="alumni" href="#" label="通讯录" class="dropdown-toggle">
+							<i class="icon-phone" ></i>
+							<span class="menu-text">通讯录</span>
+						</navigation:link>
+					</navigation:item>
+					
+					<navigation:item>
+						<navigation:link key="cities" href="#" label="城市" class="dropdown-toggle">
+							<i class="icon-globe" ></i>
+							<span class="menu-text">城市</span>
+						</navigation:link>
+						<ul class="submenu">
+							<navigation:item>
+								<navigation:link key="cities_leader" href="#" label="城主">
+									城主
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="cities_activities" label="活动">
+									活动
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="#" key="cities_alumni" label="校友">
+									校友
+								</navigation:link>
+							</navigation:item>
 						</ul>
-					</li>
-					<li><a href="#" class="dropdown-toggle">同城</a>
-						<ul class="submenu" style="display:none;">
-							<li><a href="#">城主</a></li>
-							<li><a href="#">同城活动</a></li>
-							<li><a href="#">同城校友</a></li>
-						</ul>
-					</li>
+					</navigation:item>
 				</ul>
+			
 				<!-- /.nav-list -->
 
 				<div class="sidebar-collapse" id="sidebar-collapse">
@@ -149,28 +207,23 @@
 				</div>
 
 				<script type="text/javascript">
-    try {
-        ace.settings.check('sidebar', 'collapsed')
-    } catch (e) {
-    }
-</script>
+					try {
+						ace.settings.check('sidebar', 'collapsed');
+					} catch (e) {
+					}
+				</script>
 			</div>
 
 			<div class="main-content">
 				<div class="breadcrumbs" id="breadcrumbs">
 					<script type="text/javascript">
-            try {
-                ace.settings.check('breadcrumbs', 'fixed')
-            } catch (e) {
-            }
-        </script>
+						try {
+							ace.settings.check('breadcrumbs', 'fixed');
+						} catch (e) {
+						}
+					</script>
 
-					<ul class="breadcrumb">
-						<li><i class="icon-home home-icon"></i> <a
-							href="web/archives/categories/campus.html">首页</a></li>
-					</ul>
-					<!-- .breadcrumb -->
-
+					<navigation:breadcrumbs/>
 
 					<!-- #nav-search -->
 					<div class="nav-search" id="nav-search">
@@ -182,9 +235,19 @@
 						</form>
 					</div>
 				</div>
-				<layout:block name="content">33333333</layout:block>
-
-
+				
+				<div class="page-content">
+					<div class="page-header">
+						<layout:block name="page-header"/>
+						<navigation:pageSubTitle/>
+					</div>
+		
+					<div class="row">
+						<fm:message/>
+						<layout:block name="content"></layout:block>
+					</div>
+				</div>
+				
 				<div class="ace-settings-container" id="ace-settings-container">
 					<div class="btn btn-app btn-xs btn-warning ace-settings-btn"
 						id="ace-settings-btn">
@@ -244,8 +307,9 @@
 				id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="icon-double-angle-up icon-only bigger-110"></i> </a>
 		</div>
+	</div>
 		<!-- /.main-container -->
 </layout:override>
 
 
-<%@ include file="../layouts/html.jsp"%>
+<%@ include file="html.jsp"%>
