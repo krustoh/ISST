@@ -30,7 +30,7 @@ public class UserController {
     @RequestMapping(value = "/login.html", method = RequestMethod.POST)
     public String login(@Valid UserLoginForm form, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         if (!result.hasErrors() && null != userService.login(request, response, form, result)) {
-            return "redirect:index.html";
+            return "redirect:archives/categories/campus.html";
         } else {
             model.addAttribute("userLoginForm", form);
             model.addAttribute("flash_message", FlashMessage.error(result));
