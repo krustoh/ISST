@@ -172,8 +172,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             select.where("city_id=:cityId").addParam("cityId", condition.getCityId());
         }
         
-        if (condition.getGeneder() > 0) {
-            select.where("geneder=:geneder").addParam("geneder", condition.getGeneder());
+        if (condition.getGender() > 0) {
+            select.where("gender=:gender").addParam("gender", condition.getGender());
         }
         
         if (null != condition.getName()) {
