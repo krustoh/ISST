@@ -3,7 +3,7 @@ package cn.edu.zju.isst.entity;
 public class UserSearchCondition {
     private String name;
     private String company;
-    private int geneder;
+    private int gender;
     private int grade;
     private int classId;
     private int majorId;
@@ -17,12 +17,12 @@ public class UserSearchCondition {
         this.name = name;
     }
     
-    public int getGeneder() {
-        return geneder;
+    public int getGender() {
+        return gender;
     }
     
-    public void setGeneder(int geneder) {
-        this.geneder = geneder;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
     
     public int getGrade() {
