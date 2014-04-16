@@ -21,17 +21,17 @@ public class JobDaoImpl extends AbstractDao<Job> implements JobDao {
     public PaginationList<Job> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
         SelectSQLBuilder select = select("j.id, j.category_id, j.user_id, j.city_id, j.title, j.company, j.position, j.updated_at", "j")
                 .leftJoin("cities c", "c.id=j.city_id", "c.name city_name")
-                .where("category_id=:category_id").addParam("category_id", categoryId)
-                .orderBy("updated_at DESC, id DESC");
+                .where("j.category_id=:category_id").addParam("category_id", categoryId)
+                .orderBy("j.updated_at DESC, j.id DESC");
         
         if (status >= 0) {
-            select.where("status=:status").addParam("status", status);
+            select.where("j.status=:status").addParam("status", status);
         }
         
         if (null != keywords) {
             keywords = keywords.trim();
             if (keywords.length() > 0) {
-                select.like("title", keywords).like("company", keywords).like("position", keywords);
+                select.like("j.title", keywords).like("j.company", keywords).like("j.position", keywords);
             }
         }
         

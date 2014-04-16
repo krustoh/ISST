@@ -187,7 +187,7 @@ public class SelectSQLBuilder {
         
         if (null != joints) {
             for (Joint joint : joints) {
-                sb.append(" ").append(joint.type).append(joint.table).append(" ON ").append(joint.condition);
+                sb.append(" ").append(joint.type).append(" ").append(joint.table).append(" ON ").append(joint.condition);
             }
         }
         

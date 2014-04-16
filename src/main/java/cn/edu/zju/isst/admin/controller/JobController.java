@@ -31,6 +31,7 @@ public class JobController {
     @Autowired
     private CityService cityService;
     
+    @RequestMapping(value = "/jobs/categories/{categoryAlias}.html", method = RequestMethod.GET)
     public String list(Model model,
             @PathVariable("categoryAlias") String categoryAlias, 
             @RequestParam(value = "status", required = false, defaultValue = "-1") int status, 

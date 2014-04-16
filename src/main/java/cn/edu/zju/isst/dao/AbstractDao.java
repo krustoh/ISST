@@ -311,9 +311,9 @@ public abstract class AbstractDao<T> implements Dao<T> {
                         ResultSetMetaData metaData = rs.getMetaData();
                         int n = metaData.getColumnCount();
                         for (int i = 1; i <= n; i++) {
-                            String columnName = metaData.getColumnName(i);
+                            String columnName = metaData.getColumnLabel(i);
                             if (null != fields.get(columnName)) {
-                                Class<?> type = fields.get(columnName).getType();
+                            	Class<?> type = fields.get(columnName).getType();
                                 if (type == int.class || type == Integer.class) {
                                     setFieldValue(entity, columnName, rs.getInt(columnName));
                                 } else if (type == short.class) {
