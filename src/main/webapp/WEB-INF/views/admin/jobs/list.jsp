@@ -6,7 +6,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
-<navigation:setNavigationActiveKey key="jobs_${category.alias}"/>
+<navigation:setNavigationActiveKey key="job_${category.alias}"/>
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
@@ -22,8 +22,33 @@
 				<%@ include file="../blocks/message.jsp"%>
 				<div class="table-responsive">
 					<form action="" class="isst-table-form">
-					
-					<table class="table table-striped table-bordered table-hover">
+					<!--  	<div class="row">
+							<div class="col-sm-2 isst-table-form-actions">状态
+								<input type="text" class="form-control" placeholder="Search">
+							</div>
+							
+							<div class="col-sm-2 isst-table-form-actions">城市
+								
+								<input type="text" class="form-control" placeholder="Search">
+							</div>
+							
+							<div class="col-sm-3 isst-table-form-actions">工作单位
+								<input type="text" class="form-control" placeholder="Search">
+							</div>
+							
+							<div class="col-sm-3 isst-table-form-actions">
+								<input type="text" class="form-control" placeholder="Search">
+							</div>
+							
+							<div class="col-sm-2 isst-table-form-actions">
+								<button type="submit" class="btn btn-default">Submit</button>
+							</div>
+							
+						</div>
+						
+						<div class="space-4"></div>  -->
+						
+				<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
 								<th class="center">

@@ -133,31 +133,31 @@
 					</navigation:item>
 					
 					<navigation:item>
-						<navigation:link key="jobs" href="${baseUrl}archives/categories/experience.html" label="职场生活" class="dropdown-toggle">
+						<navigation:link key="job" href="${baseUrl}jobs/categories/internship.html" label="职场生活" class="dropdown-toggle">
 							<i class="icon-suitcase" ></i>
 							<span class="menu-text">职场信息</span>
 						</navigation:link>
 						<ul class="submenu">
 							<navigation:item>
-								<navigation:link key="jobs_internship" href="${baseUrl}jobs/categories/internship.html" label="实习">
+								<navigation:link key="job_internship" href="${baseUrl}jobs/categories/internship.html" label="实习">
 								实习
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}jobs/categories/employment.html" key="jobs_employment" label="就业">
+								<navigation:link href="${baseUrl}jobs/categories/employment.html" key="job_employment" label="就业">
 									就业
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}jobs/categories/recommend.html" key="jobs_recommend" label="内推">
+								<navigation:link href="${baseUrl}jobs/categories/recommend.html" key="job_recommend" label="内推">
 									内推
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}archives/categories/experience.html" key="jobs_experience" label="经验交流">
+								<navigation:link href="${baseUrl}archives/categories/experience.html" key="job_experience" label="经验交流">
 									经验交流
 								</navigation:link>
 							</navigation:item>	

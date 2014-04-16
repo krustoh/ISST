@@ -70,9 +70,9 @@
 								<td>${user.email}</td>
 								<td>
 									<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-success" href="${baseUrl}users/${user.id}.html"> <i class="icon-zoom-in bigger-120"></i></a> 
+										<a class="btn btn-xs btn-success" href="${baseUrl}alumni/${user.id}/view.html"> <i class="icon-zoom-in bigger-120"></i></a> 
 										<a class="btn btn-xs btn-info" href="${baseUrl}alumni/${user.id}.html"> <i class="icon-edit bigger-120"></i></a> 
-										<a class="btn btn-xs btn-danger" href="${baseUrl}users/delete?id[]=${user.id}"> <i class="icon-trash bigger-120"></i> </a>
+										<a class="btn btn-xs btn-danger" href="${baseUrl}alumni/delete?id[]=${user.id}"> <i class="icon-trash bigger-120"></i> </a>
 									</div>
 									<div class="visible-xs visible-sm hidden-md hidden-lg">
 										<div class="inline position-relative">
@@ -81,15 +81,15 @@
 											</button>
 
 											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-												<li><a href="${baseUrl}users/${user.id}.html" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i>
+												<li><a href="${baseUrl}alumni/${user.id}/view.html" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i>
 													</span> </a>
 												</li>
 												
-												<li><a href="${baseUrl}users/${user.id}.html" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i>
+												<li><a href="${baseUrl}alumni/${user.id}.html" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i>
 													</span> </a>
 												</li>
 
-												<li><a href="${baseUrl}users/delete?id[]=${user.id}" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i
+												<li><a href="${baseUrl}alumni/delete?id[]=${user.id}" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i
 															class="icon-trash bigger-120"></i> </span> </a>
 												</li>
 											</ul>
@@ -104,7 +104,7 @@
 
 				<div class="row">
 					<div class="col-sm-4 isst-table-form-actions">
-						<a href="${baseUrl}users/delete" class="btn btn-primary">批量删除</a>
+						<a href="${baseUrl}alumni/delete" class="btn btn-primary">批量删除</a>
 					</div>
 
 					<div class="col-sm-8">

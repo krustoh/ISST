@@ -6,7 +6,7 @@
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
-<c:set var="navigationActiveKey" value="archive_${category.alias}" scope="request"></c:set>
+<c:set var="navigationActiveKey" value="${category.alias=='experience'?'job_':'archive_'}${category.alias}" scope="request"></c:set>
 <navigation:setPageTitle label="${archiveForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">

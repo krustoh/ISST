@@ -6,7 +6,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
-<navigation:setNavigationActiveKey key="archive_${category.alias}"/>
+<navigation:setNavigationActiveKey key="${category.alias=='experience' ? 'job_' : 'archive_'}${category.alias}"/>
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">

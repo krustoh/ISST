@@ -19,7 +19,7 @@ public class JobDaoImpl extends AbstractDao<Job> implements JobDao {
 
     @Override
     public PaginationList<Job> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
-        SelectSQLBuilder select = select("j.id, j.category_id, j.user_id, j.city_id, j.title, j.company, j.position, j.updated_at", "j")
+        SelectSQLBuilder select = select("j.id, j.category_id, j.user_id, j.city_id, j.title, j.company, j.position, j.updated_at, j.status, j.description", "j")
                 .leftJoin("cities c", "c.id=j.city_id", "c.name city_name")
                 .where("j.category_id=:category_id").addParam("category_id", categoryId)
                 .orderBy("j.updated_at DESC, j.id DESC");

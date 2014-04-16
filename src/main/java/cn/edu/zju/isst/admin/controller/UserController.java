@@ -87,7 +87,7 @@ public class UserController {
             form.bind(user);
             userService.save(user);
             WebUtils.addSuccessFlashMessage(String.format("校友 <i>%s</i> 的帐号信息保存成功", form.getName()));
-            return WebUtils.redirectAdminUrl("alumni");
+            return WebUtils.redirectAdminUrl("alumni.html");
         }
     }
     

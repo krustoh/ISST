@@ -6,7 +6,7 @@
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
-<c:set var="navigationActiveKey" value="jobs_${category.alias}" scope="request"></c:set>
+<c:set var="navigationActiveKey" value="job_${category.alias}" scope="request"></c:set>
 <navigation:setPageTitle label="${jobForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
