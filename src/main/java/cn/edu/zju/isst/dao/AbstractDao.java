@@ -331,9 +331,11 @@ public abstract class AbstractDao<T> implements Dao<T> {
                                 } else {
                                     setFieldValue(entity, columnName, rs.getString(columnName));
                                 }
+                            } else {
+                                onFindMissColumn(entity, columnName, rs, rowNum);
                             }
                         }
-                        onFind(entity);
+                        onFind(entity, rs, rowNum);
                     } catch (InstantiationException e) {
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {
@@ -347,7 +349,10 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return rowMapper;
     }
     
-    protected void onFind(T entity) {
+    protected void onFind(T entity, ResultSet rs, int rowNum) throws SQLException {
+    }
+    
+    protected void onFindMissColumn(T entity, String column, ResultSet rs, int rowNum) throws SQLException {
     }
     
     public SelectSQLBuilder select() {
@@ -356,6 +361,10 @@ public abstract class AbstractDao<T> implements Dao<T> {
     
     public SelectSQLBuilder select(String field) {
         return SelectSQLBuilder.selectTable(table, field);
+    }
+    
+    public SelectSQLBuilder select(String field, String alias) {
+        return SelectSQLBuilder.selectTable(table + " " + alias, field);
     }
     
     public int count(SelectSQLBuilder select) {

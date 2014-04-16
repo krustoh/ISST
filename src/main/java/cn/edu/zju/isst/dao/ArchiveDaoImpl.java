@@ -1,5 +1,6 @@
 package cn.edu.zju.isst.dao;
 
+import java.sql.ResultSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
     }
     
     @Override
-    protected void onFind(Archive entity) {
+    protected void onFind(Archive entity, ResultSet rs, int rowNum) {
         if (entity.getUserId() > 0) {
             entity.setUser(userDao.findUserSummary(entity.getUserId()));
         }

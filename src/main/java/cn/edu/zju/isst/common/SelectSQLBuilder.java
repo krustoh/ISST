@@ -63,16 +63,34 @@ public class SelectSQLBuilder {
         return this;
     }
     
+    public SelectSQLBuilder leftJoin(String table, String condition, String fields) {
+        select(fields);
+        
+        return leftJoin(table, condition);
+    }
+    
     public SelectSQLBuilder rigntJoin(String table, String condition) {
         join(JointType.RIGHT_JOIN, table, condition);
         
         return this;
     }
     
+    public SelectSQLBuilder rigntJoin(String table, String condition, String fields) {
+        select(fields);
+        
+        return rigntJoin(table, condition);
+    }
+    
     public SelectSQLBuilder innerJoin(String table, String condition) {
         join(JointType.INNER_JOIN, table, condition);
         
         return this;
+    }
+    
+    public SelectSQLBuilder innerJoin(String table, String condition, String fields) {
+        select(fields);
+        
+        return innerJoin(table, condition);
     }
     
     private void join(JointType jointType, String table, String condition) {
@@ -84,11 +102,13 @@ public class SelectSQLBuilder {
     }
     
     public SelectSQLBuilder select(String fields) {
-        if (this.fields.length() > 0) {
-            this.fields.append(", ");
-        }
+        if (null != fields) {
+            if (this.fields.length() > 0) {
+                this.fields.append(", ");
+            }
 
-        this.fields.append(fields);
+            this.fields.append(fields);
+        }
         
         return this;
     }

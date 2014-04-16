@@ -1,6 +1,11 @@
 package cn.edu.zju.isst.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.zju.isst.common.PaginationList;
@@ -14,10 +19,14 @@ public class JobDaoImpl extends AbstractDao<Job> implements JobDao {
 
     @Override
     public PaginationList<Job> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
-        SelectSQLBuilder select = select("id, category_id, user_id, city_id, title, company, position, updated_at")
-                .where("category_id=:category_id AND status=:status")
-                .addParam("category_id", categoryId).addParam("status", status)
+        SelectSQLBuilder select = select("j.id, j.category_id, j.user_id, j.city_id, j.title, j.company, j.position, j.updated_at", "j")
+                .leftJoin("cities c", "c.id=j.city_id", "c.name city_name")
+                .where("category_id=:category_id").addParam("category_id", categoryId)
                 .orderBy("updated_at DESC, id DESC");
+        
+        if (status >= 0) {
+            select.where("status=:status").addParam("status", status);
+        }
         
         if (null != keywords) {
             keywords = keywords.trim();
@@ -34,9 +43,27 @@ public class JobDaoImpl extends AbstractDao<Job> implements JobDao {
     }
     
     @Override
-    protected void onFind(Job entity) {
+    protected void onFind(Job entity, ResultSet rs, int rowNum) {
         if (entity.getUserId() > 0) {
             entity.setUser(userDao.findUserSummary(entity.getUserId()));
         }
+    }
+    
+    @Override
+    protected void onFindMissColumn(Job entity, String column, ResultSet rs, int rowNum) throws SQLException {
+        if ("city_name".equals(column)) {
+            entity.setCityName(rs.getString(column));
+        }
+    }
+
+    @Override
+    public int changeStatus(Set<Integer> idset, int status) {
+        String sql = String.format("UPDATE %s SET status=:status WHERE %s IN (:idset)", table, primaryKey);
+        
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        paramSource.addValue("idset", idset);
+        paramSource.addValue("status", status);
+        
+        return jdbcTemplate.update(sql, paramSource);
     }
 }

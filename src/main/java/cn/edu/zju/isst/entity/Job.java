@@ -35,12 +35,21 @@ public class Job {
     
     @Column
     private String position;
+
+    @Column
+    private String description;
+
+    @Column
+    private String content;
     
     @Column("updated_at")
     private Date updatedAt;
     
     @Column
     private int status;
+    
+    private String cityName;
+    
     private UserSummary user;
     
     public int getId() {
@@ -129,5 +138,38 @@ public class Job {
 
     public void setUser(UserSummary user) {
         this.user = user;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public void setDescriptionFromContent(String content) {
+        if (null == content) {
+            this.description = "" ;
+        } else {
+            String filtered = content.replaceAll("\\&[a-zA-Z]{0,9};", "").replaceAll("<[^>]*>", "").replaceAll("\\s", "");
+            this.description = filtered.substring(0, filtered.length() < 50 ? filtered.length() : 50);
+        }
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }
