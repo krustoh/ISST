@@ -11,9 +11,11 @@ import cn.edu.zju.isst.collection.CollectionEntity;
 import cn.edu.zju.isst.dao.ArchiveDao;
 import cn.edu.zju.isst.dao.CategoryDao;
 import cn.edu.zju.isst.dao.CollectedNewsDao;
+import cn.edu.zju.isst.dao.JobDao;
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.Category;
 import cn.edu.zju.isst.entity.CollectedNews;
+import cn.edu.zju.isst.entity.Job;
 
 @Service
 public class CollectedNewsServiceImpl implements CollectedNewsService {
@@ -21,6 +23,8 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
     private CollectedNewsDao collectedNewsDao;
     @Autowired
     private ArchiveDao archiveDao;
+    @Autowired
+    private JobDao jobDao;
     @Autowired
     private CategoryDao categoryDao;
     
@@ -58,6 +62,35 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
             
             entity.setArchiveId(archive.getId());
             collectedNewsDao.update(entity);
+        }
+    }
+    
+    @Override
+    public void publishAllJobs() {
+        Category[] categories = new Category[] {
+                categoryDao.find("employment"), 
+                categoryDao.find("internship"), 
+                categoryDao.find("recommend")
+        };
+        
+        String[] companies = new String[] {"阿里巴巴", "百度", "腾讯"};
+        String[] positions = new String[] {"研发工程师", "测试开发工程师", "产品经理"};
+        Integer[] cities = new Integer[] {2, 4, 7};
+        
+        int i = 0;
+        for (CollectedNews entity : collectedNewsDao.findAllJobs()) {
+            Job job = new Job();
+            job.setTitle(entity.getTitle());
+            job.setContent(entity.getContent());
+            job.setUpdatedAt(entity.getPostTime());
+            job.setStatus(Archive.STATUS_PUBLISHED);
+            job.setDescriptionFromContent(entity.getContent());
+            job.setCategoryId(categories[i%3].getId());
+            job.setCompany(companies[i%3]);
+            job.setPosition(positions[i%3]);
+            job.setCityId(cities[i%3]);
+            jobDao.insert(job);
+            i++;
         }
     }
 }

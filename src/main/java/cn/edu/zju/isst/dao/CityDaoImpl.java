@@ -1,5 +1,6 @@
 package cn.edu.zju.isst.dao;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class CityDaoImpl extends AbstractDao<City> implements CityDao {
     }
     
     @Override
-    protected void onFind(City entity) {
+    protected void onFind(City entity, ResultSet rs, int rowNum) {
         if (entity.getUserId() > 0) {
             entity.setUser(userDao.findUserSummary(entity.getUserId()));
         }

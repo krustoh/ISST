@@ -7,6 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
 <navigation:setNavigationActiveKey key="alumni"/>
+<navigation:setPageTitle label="编辑"/>
 
 <layout:override name="content">
 	<div class="col-xs-12">
@@ -193,6 +194,17 @@
 					</span>
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="position">
+					</form:errors>
+				</field:wrapper>
+				
+				<field:wrapper class="form-group" path="signature">
+					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">个性签名</label>
+					<div class="col-sm-9">
+					<div class="col-xs-12 col-sm-5">
+						<form:textarea id="signature" class="form-control" path="signature" />
+					</div>
+					</div>
+					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="signature">
 					</form:errors>
 				</field:wrapper>
 

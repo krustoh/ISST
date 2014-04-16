@@ -68,7 +68,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    protected void onFind(User user) {
+    protected void onFind(User user, ResultSet rs, int rowNum) {
         isCityPrincipal(user);
     }
     

@@ -15,22 +15,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.zju.isst.common.WebUtils;
-import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.Category;
-import cn.edu.zju.isst.form.ArchiveForm;
-import cn.edu.zju.isst.identity.RequireAdministrator;
-import cn.edu.zju.isst.service.ArchiveService;
+import cn.edu.zju.isst.entity.Job;
+import cn.edu.zju.isst.form.JobForm;
 import cn.edu.zju.isst.service.CategoryService;
+import cn.edu.zju.isst.service.CityService;
+import cn.edu.zju.isst.service.JobService;
 
-@RequireAdministrator
-@Controller("adminArchiveController")
-public class ArchiveController {
+@Controller("adminJobController")
+public class JobController {
     @Autowired
-    private ArchiveService archiveService;
+    private JobService jobService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CityService cityService;
     
-    @RequestMapping(value = "/archives/categories/{categoryAlias}.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/jobs/categories/{categoryAlias}.html", method = RequestMethod.GET)
     public String list(Model model,
             @PathVariable("categoryAlias") String categoryAlias, 
             @RequestParam(value = "status", required = false, defaultValue = "-1") int status, 
@@ -39,63 +40,65 @@ public class ArchiveController {
         Category category = categoryService.find(categoryAlias);
         if (null != category) {
             model.addAttribute("category", category);
-            model.addAttribute("archives", archiveService.findAll(category, status, keywords, 10, page));
+            model.addAttribute("jobs", jobService.findAll(category, status, keywords, 10, page));
         } else {
             throw new RuntimeException("Category does not exist.");
         }
-        
-        return "archives/list";
+        return "jobs/list";
     }
     
-    @RequestMapping(value = "/archives/{id}.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/jobs/{id}.html", method = RequestMethod.GET)
     public String edit(Model model, @PathVariable("id") int id) {
-        Archive archive = archiveService.find(id);
-        model.addAttribute("archiveForm", new ArchiveForm(archive));
+        Job job = jobService.find(id);
+        model.addAttribute("jobForm", new JobForm(job));
         
-        Category category = categoryService.find(archive.getCategoryId());
+        Category category = categoryService.find(job.getCategoryId());
         model.addAttribute("category", category);
+        model.addAttribute("cities", cityService.findAllForSelect());
         
-        return "archives/form";
+        return "jobs/form";
     }
     
-    @RequestMapping(value = "/archives/{id}.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/jobs/{id}.html", method = RequestMethod.POST)
     public String saveEdit(
-            @Valid ArchiveForm form, 
+            @Valid JobForm form, 
             BindingResult result, 
             @PathVariable("id") int id,
             Model model) {
         form.setId(id);
         Category category = categoryService.find(form.getCategoryId());
         if (result.hasErrors()) {
+            model.addAttribute("cities", cityService.findAllForSelect());
             model.addAttribute("category", category);
-            model.addAttribute("archiveForm", form);
-            return "archives/form";
+            model.addAttribute("jobForm", form);
+            return "jobs/form";
         } else {
-            Archive archive = archiveService.find(id);
-            if (null != archive) {
-                form.bind(archive);
-                archiveService.save(archive);
+            Job job = jobService.find(id);
+            if (null != job) {
+                form.bind(job);
+                jobService.save(job);
             }
-            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", archive.getTitle()));
-            return WebUtils.redirectAdminUrl("archives/categories/" + category.getAlias() + ".html");
+            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", job.getTitle()));
+            return WebUtils.redirectAdminUrl("jobs/categories/" + category.getAlias() + ".html");
         }
     }
     
-    @RequestMapping(value = "/archives/categories/{categoryAlias}/add.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/jobs/categories/{categoryAlias}/add.html", method = RequestMethod.GET)
     public String add(Model model, @PathVariable("categoryAlias") String categoryAlias) {
         Category category = categoryService.find(categoryAlias);
         model.addAttribute("category", category);
+        model.addAttribute("cities", cityService.findAllForSelect());
         
-        ArchiveForm form = new ArchiveForm();
+        JobForm form = new JobForm();
         form.setCategoryId(category.getId());
-        model.addAttribute("archiveForm", form);
+        model.addAttribute("jobForm", form);
         
-        return "archives/form";
+        return "jobs/form";
     }
     
-    @RequestMapping(value = "/archives/categories/{categoryAlias}/add.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/jobs/categories/{categoryAlias}/add.html", method = RequestMethod.POST)
     public String saveAdd(
-            @Valid ArchiveForm form, 
+            @Valid JobForm form, 
             BindingResult result, 
             @PathVariable("categoryAlias") String categoryAlias,
             Model model) {
@@ -103,21 +106,22 @@ public class ArchiveController {
         form.setCategoryId(category.getId());
         
         if (result.hasErrors()) {
+            model.addAttribute("cities", cityService.findAllForSelect());
             model.addAttribute("category", category);
-            model.addAttribute("archiveForm", form);
-            return "archives/form";
+            model.addAttribute("jobForm", form);
+            return "jobs/form";
         } else {
-            Archive archive = archiveService.save(form.build());
-            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", archive.getTitle()));
-            return WebUtils.redirectAdminUrl("archives/categories/" + category.getAlias() + ".html");
+            Job job = jobService.save(form.build());
+            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", job.getTitle()));
+            return WebUtils.redirectAdminUrl("jobs/categories/" + category.getAlias() + ".html");
         }
     }
     
-    @RequestMapping(value = "/archives/categories/{categoryAlias}/delete")
+    @RequestMapping(value = "/jobs/categories/{categoryAlias}/delete")
     public String delete(
             @RequestParam("id[]") String[] ids,
             @RequestParam(value = "confirm", required = false, defaultValue = "0") int confirm,
-            @PathVariable("categoryAlias") String categoryAlias,
+            @PathVariable("categoryAlias") String categoryAlias, 
             Model model) {
         Set<Integer> idset = new HashSet<Integer>();
         for (String id : ids) {
@@ -127,29 +131,29 @@ public class ArchiveController {
         Category category = categoryService.find(categoryAlias);
         
         if (confirm == 0) {
-            model.addAttribute("entities", archiveService.findAll(idset));
-            model.addAttribute("navigationActiveKey", "archive_" + category.getAlias());
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("archives/categories/" + category.getAlias() + ".html"));
+            model.addAttribute("entities", jobService.findAll(idset));
+            model.addAttribute("navigationActiveKey", "job_" + category.getAlias());
+            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("jobs/categories/" + category.getAlias() + ".html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {
-                Archive archive = archiveService.find(Integer.valueOf(ids[0]).intValue());
-                if (null != archive) {
-                    archiveService.delete(archive);
-                    WebUtils.addSuccessFlashMessage(String.format("成功删除：<i>%s</i>", archive.getTitle()));
+                Job job = jobService.find(Integer.valueOf(ids[0]).intValue());
+                if (null != job) {
+                    jobService.delete(job);
+                    WebUtils.addSuccessFlashMessage(String.format("成功删除：<i>%s</i>", job.getTitle()));
                 } else {
                     WebUtils.addErrorFlashMessage("记录不存在或已被删除");
                 }
             } else {
-                int count = archiveService.delete(idset);
+                int count = jobService.delete(idset);
                 WebUtils.addSuccessFlashMessage(String.format("成功删除 <i>%d</i> 条记录", count));
             }
             
-            return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
+            return WebUtils.redirectAdminUrl("jobs/categories/"+category.getAlias()+".html");
         }
     }
     
-    @RequestMapping(value = "/archives/categories/{categoryAlias}/publish")
+    @RequestMapping(value = "/jobs/categories/{categoryAlias}/publish")
     public String publish(
             @RequestParam("id[]") String[] ids,
             @PathVariable("categoryAlias") String categoryAlias) {
@@ -160,15 +164,15 @@ public class ArchiveController {
         
         int count = 0;
         if (!idset.isEmpty()) {
-            count = archiveService.publish(idset);
+            count = jobService.publish(idset);
         }
         
         Category category = categoryService.find(categoryAlias);
         WebUtils.addSuccessFlashMessage(String.format("成功发布 <i>%d</i> 条记录", count));
-        return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
+        return WebUtils.redirectAdminUrl("jobs/categories/"+category.getAlias()+".html");
     }
     
-    @RequestMapping(value = "/archives/categories/{categoryAlias}/hide")
+    @RequestMapping(value = "/jobs/categories/{categoryAlias}/hide")
     public String hide(
             @RequestParam("id[]") String[] ids,
             @PathVariable("categoryAlias") String categoryAlias) {
@@ -179,11 +183,11 @@ public class ArchiveController {
         
         int count = 0;
         if (!idset.isEmpty()) {
-            count = archiveService.hide(idset);
+            count = jobService.hide(idset);
         }
         
         Category category = categoryService.find(categoryAlias);
         WebUtils.addSuccessFlashMessage(String.format("成功隐藏 <i>%d</i> 条记录", count));
-        return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
+        return WebUtils.redirectAdminUrl("jobs/categories/"+category.getAlias()+".html");
     }
 }

@@ -6,12 +6,12 @@
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
-<c:set var="navigationActiveKey" value="${category.alias=='experience'?'job_':'archive_'}${category.alias}" scope="request"></c:set>
-<navigation:setPageTitle label="${archiveForm.id>0?'编辑':'添加'}"/>
+<c:set var="navigationActiveKey" value="job_${category.alias}" scope="request"></c:set>
+<navigation:setPageTitle label="${jobForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
 			<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="archiveForm" method="POST">
+				<form:form class="form-horizontal isst-form" modelAttribute="jobForm" method="POST">
 					<form:hidden path="categoryId"/>
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
@@ -24,6 +24,31 @@
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
 							</form:errors>
 						</field:wrapper>
+						
+						<field:wrapper class="form-group" path="company">
+							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							单位
+							</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:input id="inputError" class="width-100" path="company" />
+							</div>
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="company">
+							</form:errors>
+						</field:wrapper>
+						
+						<field:wrapper class="form-group" path="cityId">
+							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							城市
+							</label>
+							<div class="col-sm-9">
+								<form:select  id="cityId" path="cityId">
+									<form:options items="${cities}" itemValue="id" itemLabel="name"/>
+								</form:select>
+							</div>
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="cityId">
+							</form:errors>
+						</field:wrapper>
+						
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
 						<div class="col-sm-9">
@@ -53,7 +78,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="${baseUrl}archives/categories/${category.alias}.html">
+								<a class="btn" href="${baseUrl}jobs/categories/${category.alias}.html">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>
