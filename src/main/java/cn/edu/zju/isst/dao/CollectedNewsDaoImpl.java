@@ -23,4 +23,10 @@ public class CollectedNewsDaoImpl extends AbstractDao<CollectedNews> implements 
         String sql = String.format("SELECT * FROM %s WHERE archive_id=0", table);
         return queryAll(sql);
     }
+    
+    @Override
+    public List<CollectedNews> findAllJobs() {
+        String sql = String.format("SELECT * FROM %s WHERE id>=87 AND id<=95", table);
+        return queryAll(sql);
+    }
 }

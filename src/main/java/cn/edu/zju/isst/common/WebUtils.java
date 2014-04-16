@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 public class WebUtils {
@@ -97,7 +96,7 @@ public class WebUtils {
     }
     
     public static HttpServletResponse response() {
-        return ((ServletWebRequest) RequestContextHolder.getRequestAttributes()).getResponse();
+        return (HttpServletResponse) request().getAttribute("response");
     }
     
     public static String basePath() {
@@ -111,6 +110,17 @@ public class WebUtils {
         return basePath;
     }
     
+    public static String requestUrl() {
+        HttpServletRequest request = request();
+        if (null == request.getAttribute("requestUrl")) {
+            String baseUrl = request.getRequestURL().toString();
+            String queryString = request.getQueryString();
+            request.setAttribute("requestUrl", (null == queryString || queryString.length() == 0) ? baseUrl : (baseUrl+"?"+queryString));
+        }
+        
+        return (String) request.getAttribute("requestUrl");
+    }
+    
     private static String redirectUrl(String path, String prefix) {
         String returnUrl = request().getParameter("returnUrl");
         if (null != returnUrl) {
@@ -118,14 +128,10 @@ public class WebUtils {
         }
         
         if (null != path && (path.startsWith("http://") || path.startsWith("https://"))) {
-            try {
-                response().sendRedirect(path);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        } else {
-            return "redirect:"+prefix + path;
+        } else if (!path.startsWith("/")) {
+            path = prefix + path;
         }
+        
+        return "redirect:" + path;
     }
 }

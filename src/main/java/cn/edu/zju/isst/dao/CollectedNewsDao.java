@@ -8,4 +8,5 @@ public interface CollectedNewsDao extends Dao<CollectedNews> {
     public void insert(CollectedNews entity);
     public boolean hasCollected(int sourceId);
     public List<CollectedNews> findAllUnpublished();
+    public List<CollectedNews> findAllJobs();
 }

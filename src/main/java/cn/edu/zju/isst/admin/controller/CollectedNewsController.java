@@ -17,6 +17,12 @@ public class CollectedNewsController {
         return "redirect:index.html";
     }
     
+    @RequestMapping("/news/collection/collect/job")
+    public String collectJob() {
+        collectedNewsService.publishAllJobs();
+        return "redirect:index.html";
+    }
+    
     @RequestMapping("/news/collection/publish")
     public String publish() {
         collectedNewsService.publishAll();

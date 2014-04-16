@@ -1,5 +1,7 @@
 package cn.edu.zju.isst.interceptor;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +24,8 @@ public class AdministratorInterceptor extends AuthenticationInterceptor {
         RequireAdministrator ra = getAnnotation(handler, RequireAdministrator.class);
         Administrator administrator = AdministratorIdentity.read(request, administratorDao);
         
+        request.setAttribute("response", response);
+        
         if (null != ra) {
             for (int role : ra.value()) {
                 if (!administrator.hasRole(role)) {
@@ -35,7 +39,8 @@ public class AdministratorInterceptor extends AuthenticationInterceptor {
             return true;
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/login.html");
+        String loginUrl = WebUtils.createAdminUrl("login.html") + "?returnUrl=" + URLEncoder.encode(WebUtils.requestUrl(), "utf-8");
+        response.sendRedirect(loginUrl);
         
         return false;
     }
@@ -48,10 +53,7 @@ public class AdministratorInterceptor extends AuthenticationInterceptor {
         } else {
             modelAndView.addObject("resourceUrl", WebUtils.createResourceUrl(""));
             modelAndView.addObject("baseUrl", WebUtils.createAdminUrl(""));
-            
-            String baseUrl = request.getRequestURL().toString();
-            String queryString = request.getQueryString();
-            modelAndView.addObject("requestUrl", (null == queryString || queryString.length() == 0) ? baseUrl : (baseUrl+"?"+queryString));
+            modelAndView.addObject("requestUrl", WebUtils.requestUrl());
         }
     }
 }

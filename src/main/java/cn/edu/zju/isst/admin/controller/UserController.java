@@ -38,7 +38,7 @@ public class UserController {
         return "redirect:index.html";
     }
     
-    @RequestMapping("/alumni")
+    @RequestMapping("/alumni.html")
     public String list(
             UserSearchCondition condition, 
             Model model,
@@ -48,7 +48,7 @@ public class UserController {
         return "users/list";
     }
     
-    @RequestMapping("/alumni/{id}.html")
+    @RequestMapping(value = "/alumni/{id}.html", method = RequestMethod.GET)
     public String edit(@PathVariable("id") int id, Model model) {
         model.addAttribute("classes", userService.findAllClasses());
         model.addAttribute("majors", userService.findAllMajors());
@@ -58,7 +58,7 @@ public class UserController {
         return "users/form";
     }
     
-    @RequestMapping(value = "/alumni/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/alumni/{id}.html", method = RequestMethod.POST)
     public String saveEdit(
             @Valid AlumniForm form, 
             BindingResult result, 

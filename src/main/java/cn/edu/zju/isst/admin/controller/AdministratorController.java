@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.edu.zju.isst.common.WebUtils;
+import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.form.AdministratorLoginForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.AdministratorService;
@@ -23,9 +24,14 @@ public class AdministratorController {
     private AdministratorService administratorService;
 
     @RequestMapping(value = "/login.html", method = RequestMethod.GET)
-    public String login(Model model) {
-        model.addAttribute("administratorLoginForm", new AdministratorLoginForm());
-        return "login";
+    public String login(Model model, HttpServletRequest request) {
+        Administrator administrator = (Administrator) request.getSession().getAttribute("administrator");
+        if (null != administrator && administrator.getId() > 0) {
+            return WebUtils.redirectAdminUrl("index.html");
+        } else {
+            model.addAttribute("administratorLoginForm", new AdministratorLoginForm());
+            return "login";
+        }
     }
 
     @RequestMapping(value = "/login.html", method = RequestMethod.POST)
@@ -37,7 +43,7 @@ public class AdministratorController {
             HttpSession session,
             HttpServletResponse response) {
         if (!result.hasErrors() && administratorService.login(request, response, form, result)) {
-            return WebUtils.redirectAdminUrl("archives/categories/campus.html");
+            return WebUtils.redirectAdminUrl("index.html");
         } else {
             model.addAttribute("administratorLoginForm", form);
             WebUtils.addErrorFlashMessage(result);
