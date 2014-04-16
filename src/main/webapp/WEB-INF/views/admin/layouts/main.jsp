@@ -39,7 +39,7 @@
 					<li class="light-blue">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle"> 
 							<img class="nav-user-photo" src="${resourceUrl}avatars/user.jpg" alt="${administrator.username}" /> 
-							<span class="user-info"> <small>Welcom, </small>
+							<span class="user-info"> <small>Welcome, </small>
 								${administrator.username} </span> 
 							<i class="icon-caret-down"></i> 
 						</a>
@@ -51,7 +51,7 @@
 
 							<li class="divider">&nbsp;</li>
 
-							<li><a href="#"> <i class="icon-off"></i> 退出 </a>
+							<li><a href="${baseUrl}logout"> <i class="icon-off"></i> 退出 </a>
 							</li>
 						</ul>
 					</li>
@@ -135,7 +135,7 @@
 					<navigation:item>
 						<navigation:link key="jobs" href="#" label="职场生活" class="dropdown-toggle">
 							<i class="icon-suitcase" ></i>
-							<span class="menu-text">职场生活</span>
+							<span class="menu-text">职场信息</span>
 						</navigation:link>
 						<ul class="submenu">
 							<navigation:item>
@@ -165,7 +165,7 @@
 					</navigation:item>
 					
 					<navigation:item>
-						<navigation:link key="alumni" href="#" label="通讯录" class="dropdown-toggle">
+						<navigation:link key="alumni" href="${baseUrl}alumni.html" label="通讯录" class="dropdown-toggle">
 							<i class="icon-phone" ></i>
 							<span class="menu-text">通讯录</span>
 						</navigation:link>
