@@ -15,7 +15,7 @@ import cn.edu.zju.isst.entity.Job;
 @Repository
 public class JobDaoImpl extends AbstractDao<Job> implements JobDao {
     @Autowired
-    private UserDao userDao;
+    private StudentUserDao studentUserDao;
 
     @Override
     public PaginationList<Job> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
@@ -45,7 +45,7 @@ public class JobDaoImpl extends AbstractDao<Job> implements JobDao {
     @Override
     protected void onFind(Job entity, ResultSet rs, int rowNum) {
         if (entity.getUserId() > 0) {
-            entity.setUser(userDao.findUserSummary(entity.getUserId()));
+            entity.setUser(studentUserDao.findUserSummary(entity.getUserId()));
         }
     }
     

@@ -6,7 +6,7 @@ import java.util.Set;
 
 import cn.edu.zju.isst.common.SelectSQLBuilder;
 
-public interface Dao<T> {
+public interface Dao<T> extends DaoPagingable<T> {
     public void insert(final T entity);
     public int update(T entity);
     public void save(final T entity);

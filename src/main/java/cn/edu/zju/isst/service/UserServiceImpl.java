@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import cn.edu.zju.isst.common.PaginationList;
+import cn.edu.zju.isst.dao.StudentDao;
+import cn.edu.zju.isst.dao.StudentUserDao;
 import cn.edu.zju.isst.dao.UserDao;
 import cn.edu.zju.isst.entity.Klass;
 import cn.edu.zju.isst.entity.Major;
-import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.entity.UserSearchCondition;
 import cn.edu.zju.isst.form.UserLoginForm;
 import cn.edu.zju.isst.identity.UserIdentity;
@@ -23,9 +25,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     
+    @Autowired
+    private StudentUserDao studentUserDao;
+    
+    @Autowired
+    private StudentDao studentDao;
+    
     @Override
-    public User login(HttpServletRequest request, HttpServletResponse response, UserLoginForm form, BindingResult result) {
-        User user = userDao.find(form.getUsername());
+    public StudentUser login(HttpServletRequest request, HttpServletResponse response, UserLoginForm form, BindingResult result) {
+        StudentUser user = studentUserDao.find(form.getUsername());
         if (null == user) {
             result.rejectValue("username", "10", "学号不存在！");
         } else if (!user.validatePassword(form.getPassword())) {
@@ -38,23 +46,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User logout(HttpServletRequest request, HttpServletResponse response) {
+    public StudentUser logout(HttpServletRequest request, HttpServletResponse response) {
         return UserIdentity.logout(request, response);
     }
 
     @Override
-    public User find(int id) {
-        return userDao.find(id);
+    public StudentUser find(int id) {
+        return studentUserDao.find(id);
     }
 
     @Override
-    public void updateLoginLocation(User user, double longitude, double latitude) {
-        userDao.updateLoginLocation(user, longitude, latitude);
-    }
-    
-    @Override
-    public void synchronizeUsers() {
-        userDao.synchronizeUsers();
+    public void updateLoginLocation(StudentUser user, double longitude, double latitude) {
+        userDao.updateLoginLocation(user.getId(), longitude, latitude);
     }
 
     @Override
@@ -68,32 +71,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginationList<User> findAll(UserSearchCondition condition, int pageSize, int page) {
-        return userDao.findAll(condition, pageSize, page);
+    public PaginationList<StudentUser> findAll(UserSearchCondition condition, int pageSize, int page) {
+        return studentUserDao.findAll(condition, pageSize, page);
     }
 
     @Override
-    public List<User> findAlumni(UserSearchCondition condition, int pageSize, int page) {
-        return userDao.findAlumni(condition, pageSize, page);
+    public PaginationList<StudentUser> findAlumni(UserSearchCondition condition, int pageSize, int page) {
+        return studentUserDao.findAlumni(condition, pageSize, page);
     }
 
     @Override
-    public User findAlumnus(int id) {
-        return userDao.findAlumnus(id);
+    public StudentUser findAlumnus(int id) {
+        return studentUserDao.findAlumnus(id);
     }
 
     @Override
     public boolean checkUsername(String username, int id) {
-        return userDao.checkUsername(username, id);
+        return studentDao.checkUsername(username, id);
     }
 
     @Override
     public boolean checkUsername(String username) {
-        return userDao.checkUsername(username);
+        return studentDao.checkUsername(username);
     }
     
-    public void save(User user) {
-        userDao.save(user);
+    public void save(StudentUser user) {
+        studentUserDao.save(user);
     }
 
     @Override

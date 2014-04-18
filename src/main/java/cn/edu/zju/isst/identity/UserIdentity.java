@@ -8,8 +8,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.util.WebUtils;
 
-import cn.edu.zju.isst.dao.UserDao;
-import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.dao.StudentUserDao;
+import cn.edu.zju.isst.entity.StudentUser;
 
 public class UserIdentity {
     private static final String secret = "vq8ukG8MKrNC7XqsbIbd7PxvX81ufNz9";
@@ -23,14 +23,14 @@ public class UserIdentity {
         return DigestUtils.md5Hex(sb.toString());
     }
     
-    public static User read(HttpServletRequest request, UserDao userDao) {
-        User user = (User) request.getSession().getAttribute("user");
+    public static StudentUser read(HttpServletRequest request, StudentUserDao studentUserDao) {
+        StudentUser user = (StudentUser) request.getSession().getAttribute("user");
         if (null == user) {
             Cookie cookie = WebUtils.getCookie(request, "user_token");
             if (null != cookie) {
                 String[] s = new String(Base64.decodeBase64(cookie.getValue())).split(":", 2);
                 if (s.length == 2) {
-                    user = userDao.find(Integer.valueOf(s[0]).intValue());
+                    user = studentUserDao.find(Integer.valueOf(s[0]).intValue());
                     if (null != user) {
                         if (generateLoginEncryptedToken(request, user).equals(s[1])) {
                             request.getSession().setAttribute("user", user);
@@ -42,7 +42,7 @@ public class UserIdentity {
             }
             
             if (null == user) {
-                user = new User();
+                user = new StudentUser();
                 request.getSession().setAttribute("user", user);
             }
         }
@@ -50,7 +50,7 @@ public class UserIdentity {
         return user;
     }
     
-    public static void login(HttpServletRequest request, HttpServletResponse response, User user, boolean isRememberMe) {
+    public static void login(HttpServletRequest request, HttpServletResponse response, StudentUser user, boolean isRememberMe) {
         request.getSession().setAttribute("user", user);
         if (isRememberMe) {
             Cookie cookie = new Cookie("user_token", generateLoginToken(request, user));
@@ -59,7 +59,7 @@ public class UserIdentity {
         }
     }
     
-    private static String generateLoginToken(HttpServletRequest request, User user) {
+    private static String generateLoginToken(HttpServletRequest request, StudentUser user) {
         String token = new StringBuilder()
         .append(user.getId())
         .append(":")
@@ -68,7 +68,7 @@ public class UserIdentity {
         return new String(Base64.encodeBase64(token.getBytes()));
     }
     
-    private static String generateLoginEncryptedToken(HttpServletRequest request, User user) {
+    private static String generateLoginEncryptedToken(HttpServletRequest request, StudentUser user) {
         return DigestUtils.md5Hex(
                 new StringBuilder()
                 .append(request.getRemoteAddr())
@@ -79,8 +79,8 @@ public class UserIdentity {
             );
     }
     
-    public static User logout(HttpServletRequest request, HttpServletResponse response) {
-        User user = (User) request.getSession().getAttribute("user");
+    public static StudentUser logout(HttpServletRequest request, HttpServletResponse response) {
+        StudentUser user = (StudentUser) request.getSession().getAttribute("user");
         request.getSession().removeAttribute("user");
         Cookie cookie = new Cookie("user_token", "");
         cookie.setMaxAge(0);

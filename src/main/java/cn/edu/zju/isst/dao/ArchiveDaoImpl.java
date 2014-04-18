@@ -14,7 +14,7 @@ import cn.edu.zju.isst.entity.Archive;
 @Repository
 public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
     @Autowired
-    private UserDao userDao;
+    private StudentUserDao studentUserDao;
     
     @Override
     public PaginationList<Archive> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
@@ -44,7 +44,7 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
     @Override
     protected void onFind(Archive entity, ResultSet rs, int rowNum) {
         if (entity.getUserId() > 0) {
-            entity.setUser(userDao.findUserSummary(entity.getUserId()));
+            entity.setUser(studentUserDao.findUserSummary(entity.getUserId()));
         }
     }
 

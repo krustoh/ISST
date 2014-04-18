@@ -2,22 +2,14 @@ package cn.edu.zju.isst.form;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.entity.StudentUser;
 
 public class AlumniForm {
     private int id;
-    
-    @NotBlank(message = "学号不能为空")
-    private String username;
-    private String password;
-    private int grade;
-    private int classId;
     private int cityId;
-    private int majorId;
-    private int gender;
-    @NotBlank(message = "姓名不能为空")
-    private String name;
+    @NotBlank(message = "Email不能为空")
     private String email;
+    @NotBlank(message = "手机号不能为空")
     private String phone;
     private String qq;
     private String signature;
@@ -31,18 +23,11 @@ public class AlumniForm {
     private boolean privatePosition;
     
     public AlumniForm() {
-        
     }
     
-    public AlumniForm(User user) {
+    public AlumniForm(StudentUser user) {
         id = user.getId();
-        username = user.getUsername();
-        grade = user.getGrade();
-        classId = user.getClassId();
         cityId = user.getCityId();
-        majorId = user.getMajorId();
-        gender = user.getGender();
-        name = user.getName();
         email = user.getEmail();
         phone = user.getPhone();
         qq = user.getQq();
@@ -56,20 +41,14 @@ public class AlumniForm {
         privatePosition = user.isPrivatePosition();
     }
     
-    public User build() {
-        User user = new User();
+    public StudentUser build() {
+        StudentUser user = new StudentUser();
         bind(user);
         return user;
     }
     
-    public void bind(User user) {
-        user.setUsername(username);
-        user.setGrade(grade);
-        user.setClassId(classId);
+    public void bind(StudentUser user) {
         user.setCityId(cityId);
-        user.setMajorId(majorId);
-        user.setGender(gender);
-        user.setName(name);
         user.setEmail(email);
         user.setPhone(phone);
         user.setQq(qq);
@@ -91,68 +70,12 @@ public class AlumniForm {
         this.id = id;
     }
     
-    public String getUsername() {
-        return username;
-    }
-    
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public int getGrade() {
-        return grade;
-    }
-    
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-    
-    public int getClassId() {
-        return classId;
-    }
-    
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
-    
     public int getCityId() {
         return cityId;
     }
     
     public void setCityId(int cityId) {
         this.cityId = cityId;
-    }
-    
-    public int getMajorId() {
-        return majorId;
-    }
-    
-    public void setMajorId(int majorId) {
-        this.majorId = majorId;
-    }
-    
-    public int getGender() {
-        return gender;
-    }
-    
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
     }
     
     public String getEmail() {

@@ -1,23 +1,26 @@
 package cn.edu.zju.isst.interceptor;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.edu.zju.isst.dao.UserDao;
-import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.common.WebUtils;
+import cn.edu.zju.isst.dao.StudentUserDao;
+import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.identity.UserIdentity;
 
-public class UserInterceptor extends AuthenticationInterceptor {
+public class WebInterceptor extends AbstractMvcInterceptor {
     @Autowired
-    private UserDao userDao;
+    private StudentUserDao studentUserDao;
     
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean onPreHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         boolean isAccessible = true;
         RequireUser ru = getAnnotation(handler, RequireUser.class);
-        User user = UserIdentity.read(request, userDao);
+        StudentUser user = UserIdentity.read(request, studentUserDao);
         
         if (null != ru) {
             if (user.getId() == 0) {
@@ -29,7 +32,8 @@ public class UserInterceptor extends AuthenticationInterceptor {
             return true;
         }
         
-        response.sendRedirect(request.getContextPath() + "/login.html");
+        String loginUrl = WebUtils.createWebUrl("login.html") + "?returnUrl=" + URLEncoder.encode(WebUtils.requestUrl(), "utf-8");
+        response.sendRedirect(loginUrl);
         
         return false;
     }

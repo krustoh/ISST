@@ -3,7 +3,7 @@ package cn.edu.zju.isst.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.zju.isst.dao.Dao;
+import cn.edu.zju.isst.dao.DaoPagingable;
 
 public class PaginationList<T> {
     private int page;
@@ -12,7 +12,7 @@ public class PaginationList<T> {
     private List<T> items;
     
     private SelectSQLBuilder sql;
-    private Dao<T> dao;
+    private DaoPagingable<T> dao;
     
     public PaginationList(int page, int pageSize) {
         this.page = page;
@@ -20,7 +20,7 @@ public class PaginationList<T> {
         this.total = 0;
     }
     
-    public PaginationList(int page, int pageSize, Dao<T> dao, SelectSQLBuilder sql) {
+    public PaginationList(int page, int pageSize, DaoPagingable<T> dao, SelectSQLBuilder sql) {
         this.page = page;
         this.pageSize = pageSize;
         this.dao = dao;

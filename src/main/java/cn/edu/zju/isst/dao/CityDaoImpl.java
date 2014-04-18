@@ -11,7 +11,7 @@ import cn.edu.zju.isst.entity.City;
 @Repository
 public class CityDaoImpl extends AbstractDao<City> implements CityDao {
     @Autowired
-    private UserDao userDao;
+    private StudentUserDao studentUserDao;
     
     @Override
     public List<City> findAll() {
@@ -21,7 +21,7 @@ public class CityDaoImpl extends AbstractDao<City> implements CityDao {
     @Override
     protected void onFind(City entity, ResultSet rs, int rowNum) {
         if (entity.getUserId() > 0) {
-            entity.setUser(userDao.findUserSummary(entity.getUserId()));
+            entity.setUser(studentUserDao.findUserSummary(entity.getUserId()));
         }
     }
 }

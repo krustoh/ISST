@@ -15,8 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class WebUtils {
     
+    public static String createUrl(String path) {
+        return baseUrl() + "/" + path;
+    }
+    
     public static String createWebUrl(String path) {
-        return basePath() + AppConfig.WEB_BASE_PATH + path;
+        return contextUrl() + AppConfig.WEB_BASE_PATH + path;
     }
     
     public static String redirectWebUrl(String path) {
@@ -24,11 +28,11 @@ public class WebUtils {
     }
     
     public static String createAdminUrl(String path) {
-        return basePath() + AppConfig.ADMIN_BASE_PATH + path;
+        return contextUrl() + AppConfig.ADMIN_BASE_PATH + path;
     }
     
     public static String createResourceUrl(String path) {
-        return basePath() + AppConfig.RESOURCE_BASE_PATH + path;
+        return baseUrl() + AppConfig.RESOURCE_BASE_PATH + path;
     }
     
     public static String redirectAdminUrl(String path) {
@@ -55,7 +59,7 @@ public class WebUtils {
 
             SimpleDateFormat dateformat = new SimpleDateFormat("/yyyy/MM/");    
             String path = dateformat.format(new Date());  
-            String realPath = request().getSession().getServletContext().getRealPath("") + AppConfig.UPLOAD_PATH + path;
+            String realPath = AppConfig.UPLOAD_BASE_PATH + path;
             File realPathFile = new File(realPath);  
             if(!realPathFile.exists()) {
                 realPathFile.mkdirs();
@@ -76,7 +80,7 @@ public class WebUtils {
     
     public static void deleteUploadedFile(String path) {
         if (null != path && path.startsWith("/")) {
-            String realPath = request().getSession().getServletContext().getRealPath("") + AppConfig.UPLOAD_PATH + path;
+            String realPath = AppConfig.UPLOAD_BASE_PATH + path;
             File realPathFile = new File(realPath);
             if(realPathFile.exists()) {
                 realPathFile.delete();
@@ -86,7 +90,7 @@ public class WebUtils {
     
     public static String parseUploadedUrl(String path) {
         if (null != path && path.startsWith("/")) {
-            return basePath() + AppConfig.UPLOAD_PATH + path;
+            return contextUrl() + AppConfig.UPLOAD_BASE_URI + path;
         }
         return path;
     }
@@ -99,15 +103,25 @@ public class WebUtils {
         return (HttpServletResponse) request().getAttribute("response");
     }
     
-    public static String basePath() {
+    public static String contextUrl() {
         HttpServletRequest request = request();
-        String basePath = (String) request.getAttribute("basePath");
-        if (null == basePath) {
+        String contextUrl = (String) request.getAttribute("contextUrl");
+        if (null == contextUrl) {
             int port = request.getServerPort();
-            basePath = request.getScheme() + "://" + request.getServerName() + (port == 80 ? "" : (":" + port)) + request.getContextPath(); 
-            request.setAttribute("basePath", basePath);
+            contextUrl = request.getScheme() + "://" + request.getServerName() + (port == 80 ? "" : (":" + port)) + request.getContextPath(); 
+            request.setAttribute("contextUrl", contextUrl);
         }
-        return basePath;
+        return contextUrl;
+    }
+    
+    public static String baseUrl() {
+        HttpServletRequest request = request();
+        String baseUrl = (String) request.getAttribute("baseUrl");
+        if (null == baseUrl) {
+            baseUrl = contextUrl() + request.getServletPath() + "/"; 
+            request.setAttribute("baseUrl", baseUrl);
+        }
+        return baseUrl;
     }
     
     public static String requestUrl() {
@@ -121,6 +135,10 @@ public class WebUtils {
         return (String) request.getAttribute("requestUrl");
     }
     
+    public static String redirectUrl(String path) {
+        return redirectUrl(path, null);
+    }
+    
     private static String redirectUrl(String path, String prefix) {
         String returnUrl = request().getParameter("returnUrl");
         if (null != returnUrl) {
@@ -129,7 +147,11 @@ public class WebUtils {
         
         if (null != path && (path.startsWith("http://") || path.startsWith("https://"))) {
         } else if (!path.startsWith("/")) {
-            path = prefix + path;
+            if (null != prefix) {
+                path = prefix + path;
+            } else {
+                path = createUrl(path);
+            }
         }
         
         return "redirect:" + path;
