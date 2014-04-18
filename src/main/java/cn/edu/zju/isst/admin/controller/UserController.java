@@ -34,8 +34,12 @@ public class UserController {
             UserSearchCondition condition, 
             Model model,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
-        
+        model.addAttribute("classes", userService.findAllClasses());
+        model.addAttribute("majors", userService.findAllMajors());
+        model.addAttribute("cities", cityService.findAllForSelect());
+        model.addAttribute("condition", condition);
         model.addAttribute("users", userService.findAll(condition, 10, page));
+        
         return "users/list";
     }
     

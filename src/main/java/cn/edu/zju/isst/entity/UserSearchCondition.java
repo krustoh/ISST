@@ -3,6 +3,7 @@ package cn.edu.zju.isst.entity;
 public class UserSearchCondition {
     private String name;
     private String company;
+    private String position;
     private int gender;
     private int grade;
     private int classId;
@@ -72,5 +73,13 @@ public class UserSearchCondition {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

@@ -88,11 +88,7 @@ public class UserController {
     
     @RequireUser
     @RequestMapping("/alumni")
-    public @ResponseBody ApiResponse list(UserSearchCondition condition, HttpSession session) {
-        StudentUser user = (StudentUser) session.getAttribute("user");
-        if (condition.getGrade() == 0) {
-            condition.setGrade(user.getGrade());
-        }
+    public @ResponseBody ApiResponse list(UserSearchCondition condition) {
         return new ApiResponse(userService.findAlumni(condition, 0, 0).getItems());
     }
 

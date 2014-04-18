@@ -160,6 +160,13 @@ public class StudentUserDaoImpl implements StudentUserDao {
                 select.like("u.company", company);
             }
         }
+        
+        if (null != condition.getPosition()) {
+            String position = condition.getPosition().trim();
+            if (!position.isEmpty()) {
+                select.like("u.position", position);
+            }
+        }
     }
     
     private RowMapper<StudentUser> getStudentUserRowMapper() {
