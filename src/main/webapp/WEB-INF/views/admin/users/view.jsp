@@ -15,52 +15,52 @@
 		<div class="table-responsive">
 			<form action="" class="isst-table-form">
 				<fieldset>
-					<table class="table table-striped table-bordered table-hover">
+					<table class="table table-bordered bootstrap-datatable datatable dataTable">
 						<thead><tr style="font-weight:bold"><td colspan="6">基本信息</td></tr></thead>
 						<tbody>
 							<tr>
-								<td>学号</td><td>${alumnus.username}</td>
-							  	<td>姓名</td><td>${alumnus.name}</td>
-							  	<td>性别</td><td>${alumnus.gender==1?'男':'女'}</td>
+								<td class="center">学号</td><td>${alumnus.username}</td>
+							  	<td class="center">姓名</td><td>${alumnus.name}</td>
+							  	<td class="center">性别</td><td>${alumnus.gender==1?'男':'女'}</td>
 							</tr>	
 							<tr>
-							  	<td>年级</td><td>${alumnus.grade}</td>
-							  	<td>班级</td><td>${alumnus.classId}</td>
-								<td>专业</td><td>${alumnus.majorId}</td>
+							  	<td class="center">年级</td><td>${alumnus.grade}</td>
+							  	<td class="center">班级</td><td>${alumnus.classId}</td>
+								<td class="center">专业</td><td>${alumnus.major}</td>
 							</tr>
 							<tr>
-								<td>QQ</td><td>${alumnus.qq}</td>
-							  	<td>邮箱</td><td>${alumnus.email}</td>
-							  	<td>联系电话</td><td>${alumnus.email}</td>
+								<td class="center">QQ</td><td>${alumnus.qq}</td>
+							  	<td class="center">邮箱</td><td>${alumnus.email}</td>
+							  	<td class="center">联系电话</td><td>${alumnus.email}</td>
 							</tr>
 						</tbody>
 						
-						<thead><tr style="font-weight:bold"><td colspan="6">工作信息</td></tr></thead>
+						<thead><tr style="font-weight:bold" ><td colspan="6">工作信息</td></tr></thead>
 						<tbody>
 							<tr>
-								<td>工作单位</td><td colspan="5">${alumnus.company}</td>
+								<td class="center">工作单位</td><td colspan="5">${alumnus.company}</td>
 							</tr>	
 							<tr>
-							  	<td>工作职务</td><td colspan="5">${alumnus.position}</td>
+							  	<td class="center">工作职务</td><td colspan="5">${alumnus.position}</td>
 							</tr>
 							<tr>
-								<td>工作城市</td><td colspan="5">${alumnus.cityId}</td>
+								<td class="center">工作城市</td><td colspan="5">${alumnus.cityId}</td>
 							</tr>
 						</tbody>
 					</table>
 
 					<div class="clearfix form-actions">
-						<div class="col-md-offset-3 col-md-9 ">
-							<a class="btn" href="${baseUrl}alumni/${user.id}.html"> 
-								<i class="icon-edit bigger-120"></i>编辑 
+						<div class="pull-right" style="margin-right: 0%;">
+							<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}alumni/${alumnus.id}.html"> 
+								<i class="icon-edit bigger-120 "></i>编辑 
 							</a>
-							&nbsp; &nbsp; &nbsp; 
-							<a class="btn" href="${baseUrl}alumni.html"> 
-								<i class="icon-download bigger-120"></i>导出 
+							
+							<a style="color:white" class="btn btn-sm btn-purple" href="${baseUrl}alumni.html"> 
+								<i class="icon-download-alt bigger-120"></i>导出 
 							</a>
-							&nbsp; &nbsp; &nbsp; 
-							<a class="btn" href="${baseUrl}alumni.html"> 
-								<i class="icon-undo bigger-120"></i>返回 
+							
+							<a style="color:white" class="btn btn-sm btn-grey" href="${baseUrl}alumni.html"> 
+								<i class="icon-undo bigger-120 "></i>返回 
 							</a>
 						</div>
 					</div>

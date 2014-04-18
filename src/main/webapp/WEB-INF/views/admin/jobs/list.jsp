@@ -21,33 +21,48 @@
 <div class="col-xs-12">
 				<%@ include file="../blocks/message.jsp"%>
 				<div class="table-responsive">
-					<form action="" class="isst-table-form">
-					<!--  	<div class="row">
-							<div class="col-sm-2 isst-table-form-actions">状态
-								<input type="text" class="form-control" placeholder="Search">
+					<form:form class="form-horizontal isst-form">
+							<fieldset>
+							<div class="col-sm-12">
+							
+							<div class="col-sm-2">
+							<label class="control-label no-padding-right" for="status">状态</label> 
+							<form:select id="status" path="status">
+								<form:option value="" label="--请选择--"/>
+								<form:option value="0" label="隐藏"/>
+								<form:option value="1" label="发布"/>
+							</form:select>
 							</div>
 							
-							<div class="col-sm-2 isst-table-form-actions">城市
-								
-								<input type="text" class="form-control" placeholder="Search">
+							
+							<div class="col-sm-2">
+							<label class="control-label no-padding-right" for="cityId">城市</label> 
+							<form:select  id="cityId" path="cityId">
+									<form:options items="${cities}" itemValue="id" itemLabel="name"/>
+								</form:select>
 							</div>
 							
-							<div class="col-sm-3 isst-table-form-actions">工作单位
-								<input type="text" class="form-control" placeholder="Search">
+							
+							<div class="col-sm-3">
+							<label class=" control-label no-padding-right" for="company">公司</label> 
+							<input type="text" placeholder="不限" /> 
 							</div>
 							
-							<div class="col-sm-3 isst-table-form-actions">
-								<input type="text" class="form-control" placeholder="Search">
-							</div>
 							
-							<div class="col-sm-2 isst-table-form-actions">
-								<button type="submit" class="btn btn-default">Submit</button>
+							<div class="col-sm-3">
+							<label class="control-label no-padding-right" for="">其他</label> 
+							<input type="text" placeholder="其他" /> 
 							</div>
-							
-						</div>
+							<button type="submit" class="btn btn-purple btn-sm pull-right" style="margin-right: 5%;">
+								查找
+								<i class="icon-search icon-on-right bigger-110"></i>
+							</button>
+							</div>
 						
-						<div class="space-4"></div>  -->
-						
+						</fieldset>
+					</form:form>
+					
+			<form action="" class="isst-table-form">		
 				<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
@@ -61,7 +76,7 @@
 								<th>标题</th>
 								<th>发布日期</th>
 								<th>发布者</th>
-								<th>单位</th>	
+								<th>公司</th>	
 								<th>城市</th>	
 								<th></th>
 							</tr>
@@ -92,13 +107,18 @@
 								<td>${job.cityName}</td>
 								
 								<td>
-									<div
-										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" href="${baseUrl}jobs/${job.id}.html">
+									<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+									
+										<c:if test="${category.alias=='recommend'}">
+										<a class="btn btn-xs btn-success tooltip-danger" data-rel="tooltip" data-placement="bottom" title="评论" href="${baseUrl}jobs/${job.id}.html">
+											<i class="icon-comments bigger-120"></i>
+										</a>	
+										</c:if>
+										<a class="btn btn-xs btn-info tooltip-danger" data-rel="tooltip" data-placement="bottom" title="编辑" href="${baseUrl}jobs/${job.id}.html">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" href="${baseUrl}jobs/categories/${category.alias}/delete?id[]=${job.id}">
+										<a class="btn btn-xs btn-danger tooltip-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="${baseUrl}jobs/categories/${category.alias}/delete?id[]=${job.id}">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -111,14 +131,23 @@
 
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+												<c:if test="${category.alias=='recommend'}">
+												<li>
+													<a href="${baseUrl}jobs/${job.id}.html" class="tooltip-success" data-rel="tooltip" title="Comments"> 
+														<span class="green">
+															<i class="icon-comments bigger-120"></i> 
+														</span> 
+													</a>
+												</li>
+												</c:if>
 												
 												<li><a href="${baseUrl}jobs/${job.id}.html" class="tooltip-success"
-													data-rel="tooltip" title="Edit"> <span class="green">
-															<i class="icon-edit bigger-120"></i> </span> </a></li>
+													data-rel="tooltip" title="编辑"> <span class="blue">
+												<i class="icon-edit bigger-120"></i> </span> </a></li>
 
 												<li><a href="${baseUrl}jobs/categories/${category.alias}/delete?id[]=${job.id}" class="tooltip-error"
-													data-rel="tooltip" title="Delete"> <span class="red">
-															<i class="icon-trash bigger-120"></i> </span> </a></li>
+													data-rel="tooltip" title="删除"> <span class="red">
+												<i class="icon-trash bigger-120"></i> </span> </a></li>
 											</ul>
 										</div>
 									</div>
@@ -158,5 +187,7 @@
 				</div>
 			</div>
 </layout:override>
+
+
 
 <%@ include file="../layouts/main.jsp"%>

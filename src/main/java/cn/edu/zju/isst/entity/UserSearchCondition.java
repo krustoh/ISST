@@ -8,7 +8,7 @@ public class UserSearchCondition {
     private int grade;
     private int classId;
     private String className;
-    private int majorId;
+    private String major;
     private int cityId;
     
     public String getName() {
@@ -43,15 +43,15 @@ public class UserSearchCondition {
         this.classId = classId;
     }
     
-    public int getMajorId() {
-        return majorId;
-    }
-    
-    public void setMajorId(int majorId) {
-        this.majorId = majorId;
-    }
-    
-    public int getCityId() {
+    public String getMajor() {
+		return major;
+	}
+
+	public void setMajor(String major) {
+		this.major = major;
+	}
+
+	public int getCityId() {
         return cityId;
     }
     

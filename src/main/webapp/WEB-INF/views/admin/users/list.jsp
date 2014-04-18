@@ -11,7 +11,7 @@
 <layout:override name="page-header">
 	<div class="pull-right" style="margin-right: 5%;">
 		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+			<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
 				<i class="icon-plus align-top bigger-125"></i> 
 				添加 
 				<i class="icon-angle-down icon-on-right"></i>
@@ -32,8 +32,61 @@
 	<div class="col-xs-12">
 		<%@ include file="../blocks/message.jsp"%>
 		<div class="table-responsive">
+			<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
+				<fieldset>
+					<div class="col-sm-12">
+						<div class="col-sm-4">
+							<label class="control-label no-padding-right" for="major">专业</label> 
+							<form:select  id="major" path="major">
+								<form:options items="${majors}" itemValue="name" itemLable="name"/>
+							</form:select>
+						</div>
+							
+						<div class="col-sm-4">
+							<label class="control-label no-padding-right" for="gender">性别</label> 
+							<form:select path="gender" id="gender">
+								<form:option value="0" label="--请选择--"/>
+								<form:option value="1" label="男"/>
+								<form:option value="2" label="女"/>
+							</form:select>
+						</div>
+							
+							<div class="col-sm-4">
+							<label class="control-label no-padding-right" for="cityId">城市</label> 
+							<form:select  id="cityId" path="cityId">
+								<form:options items="${cities}" itemValue="id" itemLabel="name"/>
+							</form:select>
+							</div>
+							
+							<div class="col-sm-3">
+							<label class=" control-label no-padding-right" for="status">姓名</label> 
+							<input type="text" size="15" placeholder="不限" /> 
+							</div>
+							
+							<div class="col-sm-3">
+							<label class=" control-label no-padding-right" for="status">年级</label> 
+							<input type="text" size="15" placeholder="不限" /> 
+							</div>
+							
+							<div class="col-sm-3">
+							<label class="control-label no-padding-right" for="status">公司</label> 
+							<input type="text" size="15" placeholder="其他" /> 
+							</div>
+							
+							<div class="col-sm-3">
+							<label class="control-label no-padding-right" for="status">职位</label> 
+							<input type="text" size="15" placeholder="其他" /> 
+							</div>
+							
+							<button type="button" class="btn btn-purple btn-sm pull-right" style="margin-right: 5%;">
+								查找
+								<i class="icon-search icon-on-right bigger-110"></i>
+							</button>
+							</div>
+						</fieldset>		
+			</form:form>
+			
 			<form action="" class="isst-table-form">
-
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -43,6 +96,7 @@
 							<th>姓名</th>
 							<th>性别</th>
 							<th>年级</th>
+							<th>专业</th>
 							<th>联系电话</th>
 							<th>邮箱</th>
 							<th></th>
@@ -55,17 +109,18 @@
 								<td class="center"><label> <input type="checkbox" class="ace" name="id[]" value="${user.id}" /> <span class="lbl"></span> </label></td>
 								<td>${user.id}</td>								
 								<td>
-									<a href="${baseUrl}users/${user.id}.html">
+									<a href="${baseUrl}alumni/${user.id}/view.html">
 										${user.username}
 									</a>
 								</td>
 								<td>
-									<a href="${baseUrl}users/${user.id}.html">
+									<a href="${baseUrl}alumni/${user.id}/view.html">
 										${user.name}
 									</a>
 								</td>
 								<td>${user.gender==1?"男":"女"}</td>
 								<td>${user.grade}</td>
+								<td>${user.major}</td>
 								<td>${user.phone}</td>
 								<td>${user.email}</td>
 								<td>

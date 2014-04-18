@@ -15,22 +15,19 @@
 			<fieldset>
 				<field:wrapper class="form-group" path="username">
 					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">学号 </label>
-					<div class="col-sm-9">
+					
 					<div class="col-xs-12 col-sm-5">
 						<form:input id="inputError" class="form-control" path="username" />
 					</div>
-					</div>
-					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="username">
 					</form:errors>
 				</field:wrapper>
 
 				<field:wrapper class="form-group" path="name">
 					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">姓名 </label>
-					<div class="col-sm-9">
+					
 					<div class="col-xs-12 col-sm-5">
 						<form:input id="inputError" class="form-control" path="name" />
-					</div>
 					</div>
 					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="name">
@@ -39,7 +36,7 @@
 
 				<field:wrapper class="form-group" path="gender">
 					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">性别 </label>
-					<div class="col-sm-9">
+				
 					<div class="col-xs-12 col-sm-5">
 							<label>
 								<form:radiobutton name="form-field-radio" class="ace" path="gender" value="1"/>
@@ -51,49 +48,34 @@
 								<span class="lbl">女</span> 
 							</label>
 					</div>
-					</div>
 					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="gender">
 					</form:errors>
 				</field:wrapper>
 				
-				<field:wrapper class="form-group" path="grade">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">年级</label>
-					<div class="col-sm-9">
-					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="grade" />
-					</div>
-					</div>
-					
-					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="grade">
-					</form:errors>
-				</field:wrapper>
-
 				<field:wrapper class="form-group" path="classId">
 					<label for="classId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">班级</label>
-					<div class="col-sm-9">
+					
 					<div class="col-xs-12 col-sm-5">
 						<form:select  id="classId" path="classId" >
 							<form:options items="${classes}" itemValue="id" itemLable="name"/>
 						</form:select>
-					</div>
 					</div>
 					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="classId">
 					</form:errors>
 				</field:wrapper>
 				
-				<field:wrapper class="form-group" path="majorId">
-					<label for="majorId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">专业</label>
-					<div class="col-sm-9">
+				<field:wrapper class="form-group" path="major">
+					<label for="major" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">专业</label>
+					
 					<div class="col-xs-12 col-sm-5">
-						<form:select  id="majorId" path="majorId">
-							<form:options items="${majors}" itemValue="id" itemLable="name"/>
+						<form:select  id="major" path="major">
+							<form:options items="${majors}" itemValue="name" itemLable="name"/>
 						</form:select>
 					</div>
-					</div>
 					
-					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="majorId">
+					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="major">
 					</form:errors>
 				</field:wrapper>
 

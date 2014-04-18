@@ -143,8 +143,11 @@ public class StudentUserDaoImpl implements StudentUserDao {
             select.where("s.sexual=:sexual").addParam("sexual", condition.getGender() == 1 ? "男" : "女");
         }
         
-        if (condition.getMajorId() > 0) {
-            select.where("s.major=:major").addParam("major", condition.getMajorId());
+        if (null != condition.getMajor()) {
+        	String major =condition.getMajor().trim();
+        	if(!major.isEmpty()) {
+        		select.where("s.major=:major").addParam("major", condition.getMajor());
+        	}
         }
         
         if (null != condition.getName()) {
