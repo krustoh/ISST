@@ -6,6 +6,7 @@ public class UserSearchCondition {
     private int gender;
     private int grade;
     private int classId;
+    private String className;
     private int majorId;
     private int cityId;
     
@@ -63,5 +64,13 @@ public class UserSearchCondition {
     
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 }

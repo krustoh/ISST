@@ -2,6 +2,7 @@ package cn.edu.zju.isst.api.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +11,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.zju.isst.common.ApiResponse;
-import cn.edu.zju.isst.entity.User;
+import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.entity.UserSearchCondition;
+import cn.edu.zju.isst.form.AlumniForm;
 import cn.edu.zju.isst.form.ApiUserLoginForm;
 import cn.edu.zju.isst.form.ApiUserLoginUpdateForm;
+import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.identity.UserIdentity;
 import cn.edu.zju.isst.service.UserService;
 
@@ -36,7 +38,7 @@ public class UserController {
             return new ApiResponse(13, "认证失败");
         }
         
-        User user = null;
+        StudentUser user = null;
         if (!result.hasErrors() && (null != (user = userService.login(request, response, form, result)))) {
             userService.updateLoginLocation(user, form.getLongitude(), form.getLatitude());
             return new ApiResponse(user);
@@ -51,7 +53,7 @@ public class UserController {
             return new ApiResponse(12, "认证失效");
         }
         
-        User user = userService.find(form.getUserId());
+        StudentUser user = userService.find(form.getUserId());
         if (null == user) {
             return new ApiResponse(10, "用户不存在");
         }
@@ -68,31 +70,54 @@ public class UserController {
     
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public @ResponseBody ApiResponse logout(HttpServletRequest request, HttpServletResponse response) {
-        User user = userService.logout(request, response);
+        StudentUser user = userService.logout(request, response);
         return new ApiResponse(user);
     }
-    
+
+    @RequireUser
     @RequestMapping("/classes")
     public @ResponseBody ApiResponse findAllClasses() {
         return new ApiResponse(userService.findAllClasses());
     }
-    
+
+    @RequireUser
     @RequestMapping("/majors")
     public @ResponseBody ApiResponse findAllMajors() {
         return new ApiResponse(userService.findAllMajors());
     }
     
+    @RequireUser
     @RequestMapping("/alumni")
-    public @ResponseBody ApiResponse list(
-            UserSearchCondition condition,
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        return new ApiResponse(userService.findAlumni(condition, pageSize, page));
+    public @ResponseBody ApiResponse list(UserSearchCondition condition, HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        if (condition.getGrade() == 0) {
+            condition.setGrade(user.getGrade());
+        }
+        return new ApiResponse(userService.findAlumni(condition, 0, 0).getItems());
     }
-    
+
+    @RequireUser
     @RequestMapping("/alumni/{id}")
     public @ResponseBody ApiResponse find(@PathVariable("id") int id) {
         return new ApiResponse(userService.findAlumnus(id));
+    }
+    
+    @RequireUser
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public @ResponseBody ApiResponse save(@Valid AlumniForm form, BindingResult result, HttpSession session) {
+        if (result.hasFieldErrors("email")) {
+            return new ApiResponse(12, result.getFieldError("email").getDefaultMessage());
+        } else if (result.hasFieldErrors("phone")) {
+            return new ApiResponse(13, result.getFieldError("phone").getDefaultMessage());
+        } else if (result.hasErrors()) {
+            return new ApiResponse(2, result.getFieldError().getDefaultMessage());
+        }
+        
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        form.bind(user);
+        userService.save(user);
+        
+        return new ApiResponse("更新成功");
     }
     
     public static void main(String[] args) {

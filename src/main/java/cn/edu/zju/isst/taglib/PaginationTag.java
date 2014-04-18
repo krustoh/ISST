@@ -14,7 +14,7 @@ public class PaginationTag extends TagSupport  {
     private int total;
     private int size;
     private int page;
-    private int length = 8;
+    private int length = 5;
     private String cssClass = "pagination";
     private String key = "page";
     private String prevCssClass = "prev";

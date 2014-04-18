@@ -20,8 +20,8 @@
 						<tbody>
 							<tr>
 								<td>学号</td><td>${alumnus.username}</td>
-							  	<td>姓名</td><td>${alumnus.username}</td>
-							  	<td>性别</td><td>${alumnus.username==1?'男':'女'}</td>
+							  	<td>姓名</td><td>${alumnus.name}</td>
+							  	<td>性别</td><td>${alumnus.gender==1?'男':'女'}</td>
 							</tr>	
 							<tr>
 							  	<td>年级</td><td>${alumnus.grade}</td>
