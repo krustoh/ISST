@@ -17,6 +17,7 @@ import cn.edu.zju.isst.entity.Klass;
 import cn.edu.zju.isst.entity.Major;
 import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.entity.UserSearchCondition;
+import cn.edu.zju.isst.entity.UserSummary;
 import cn.edu.zju.isst.form.UserLoginForm;
 import cn.edu.zju.isst.identity.UserIdentity;
 
@@ -84,7 +85,12 @@ public class UserServiceImpl implements UserService {
     public StudentUser findAlumnus(int id) {
         return studentUserDao.findAlumnus(id);
     }
-
+    
+    @Override
+    public UserSummary findUserSummary(int id) {
+        return studentUserDao.findUserSummary(id);
+    }
+    
     @Override
     public boolean checkUsername(String username, int id) {
         return studentDao.checkUsername(username, id);

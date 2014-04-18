@@ -12,6 +12,7 @@ import cn.edu.zju.isst.entity.Klass;
 import cn.edu.zju.isst.entity.Major;
 import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.entity.UserSearchCondition;
+import cn.edu.zju.isst.entity.UserSummary;
 import cn.edu.zju.isst.form.UserLoginForm;
 
 public interface UserService {
@@ -24,6 +25,7 @@ public interface UserService {
     public List<Major> findAllMajors();
     public PaginationList<StudentUser> findAll(UserSearchCondition condition, int pageSize, int page);
     public PaginationList<StudentUser> findAlumni(UserSearchCondition condition, int pageSize, int page);
+    public UserSummary findUserSummary(int id);
     public boolean checkUsername(String username, int id);
     public boolean checkUsername(String username);
     public void save(StudentUser user);
