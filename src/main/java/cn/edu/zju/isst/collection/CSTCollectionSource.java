@@ -2,7 +2,10 @@ package cn.edu.zju.isst.collection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,7 +15,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CSTCollectionSource extends AbstractURLConnectionSource<CollectionEntity> {
+public class CSTCollectionSource {
     private static final String url = "http://www.cst.zju.edu.cn/";
     private static final String charset = "utf-8";
     private static final String typeRegex = "<h3>(.*?)</h3>";
@@ -22,23 +25,13 @@ public class CSTCollectionSource extends AbstractURLConnectionSource<CollectionE
     private static final String contentEndRegex = "^</div>$";
     
     
-    private String[] allowedTypes;
-    private Pattern typePattern;
-    private Pattern titlePattern;
-    private Pattern datePattern;
-    private Pattern contentStartPattern;
-    private Pattern contentEndPattern;
+    private static final Pattern typePattern = Pattern.compile(typeRegex);
+    private static final Pattern titlePattern = Pattern.compile(titleRegex);
+    private static final Pattern datePattern = Pattern.compile(dateRegex);
+    private static final Pattern contentStartPattern = Pattern.compile(contentStartRegex);
+    private static final Pattern contentEndPattern = Pattern.compile(contentEndRegex);
     
-    public CSTCollectionSource(String[] allowedTypes) {
-        this.allowedTypes = allowedTypes;
-        typePattern = Pattern.compile(typeRegex);
-        titlePattern = Pattern.compile(titleRegex);
-        datePattern = Pattern.compile(dateRegex);
-        contentStartPattern = Pattern.compile(contentStartRegex);
-        contentEndPattern = Pattern.compile(contentEndRegex);
-    }
-    
-    public List<CollectionEntity> collectList() {
+    public static List<CollectionEntity> collectList(String[] allowedTypes) {
         List<CollectionEntity> list = new ArrayList<CollectionEntity>();
         List<String> allowedTypesList = Arrays.asList(allowedTypes);
         try {
@@ -71,10 +64,11 @@ public class CSTCollectionSource extends AbstractURLConnectionSource<CollectionE
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
         return list;
     }
 
-    public void parseDetail(CollectionEntity entity) {
+    public static void parseDetail(CollectionEntity entity) {
         try {
             BufferedReader in = read(entity.getUrl(), charset);
             String line = null;
@@ -116,23 +110,13 @@ public class CSTCollectionSource extends AbstractURLConnectionSource<CollectionE
         }
     }
     
-    @Override
-    public List<CollectionEntity> collect() {
-        List<CollectionEntity> list = collectList();
-        
-        for (CollectionEntity entity : list) {
-            parseDetail(entity);
-        }
-        
-        return list;
+    private static URLConnection connect(String url) throws IOException {
+        URLConnection uc = new URL(url).openConnection();
+        uc.setRequestProperty("User-Agent","Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3"); 
+        return uc;
     }
     
-    public static void main(String[] args) {
-        /*CSTCollectionSource source = new CSTCollectionSource(new String[] {});
-        CollectionEntity entity = new CollectionEntity();
-        entity.setUrl("http://www.cst.zju.edu.cn/index.php?c=Index&a=detail&catid=126&id=1632");
-        source.parseDetail(entity);
-        System.out.println(entity);
-        */
+    private static BufferedReader read(String url, String charset) throws IOException {
+        return new BufferedReader(new InputStreamReader(connect(url).getInputStream(), charset));
     }
 }

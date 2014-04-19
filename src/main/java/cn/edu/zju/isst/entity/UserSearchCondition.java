@@ -5,7 +5,7 @@ public class UserSearchCondition {
     private String company;
     private String position;
     private int gender;
-    private int grade;
+    private String grade;
     private int classId;
     private String className;
     private String major;
@@ -27,11 +27,11 @@ public class UserSearchCondition {
         this.gender = gender;
     }
     
-    public int getGrade() {
+    public String getGrade() {
         return grade;
     }
     
-    public void setGrade(int grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
     

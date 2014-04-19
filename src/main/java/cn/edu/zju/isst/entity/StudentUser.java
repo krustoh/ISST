@@ -60,8 +60,10 @@ public class StudentUser implements PrivateProfile {
         user.setCityId(cityId);
         user.setCityPrincipal(cityPrincipal);
         user.setCompany(company);
-        user.setId(id);
         user.setPosition(position);
+        user.setQq(qq);
+        user.setSignature(signature);
+        user.setId(id);
         user.setPrivateCompany(privateCompany);
         user.setPrivateEmail(privateEmail);
         user.setPrivatePhone(privatePhone);

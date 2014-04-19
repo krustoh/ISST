@@ -7,8 +7,8 @@ import cn.edu.zju.isst.entity.StudentUser;
 public class StudentUserForm extends AlumniForm {
     @NotBlank(message = "学号不能为空")
     private String username;
-    @NotBlank(message = "姓名不能为空")
     private String password;
+    @NotBlank(message = "姓名不能为空")
     private String name;
     private String major;
     private int gender;
@@ -22,10 +22,11 @@ public class StudentUserForm extends AlumniForm {
     public StudentUserForm(StudentUser user) {
         super(user);
 
+        username = user.getUsername();
+        password = user.getPassword();
+        name = user.getName();
         major = user.getMajor();
         gender = user.getGender();
-        name = user.getName();
-        username = user.getUsername();
         grade = user.getGrade();
         classId = user.getClassId();
     }
@@ -33,6 +34,7 @@ public class StudentUserForm extends AlumniForm {
     public void bind(StudentUser user) {
         super.bind(user);
         user.setUsername(username);
+        user.setPassword(password);
         user.setGrade(grade);
         user.setClassId(classId);
         user.setMajor(major);
@@ -95,5 +97,4 @@ public class StudentUserForm extends AlumniForm {
     public void setName(String name) {
         this.name = name;
     }
-    
 }

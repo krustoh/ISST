@@ -48,7 +48,7 @@ public class UserController {
         model.addAttribute("classes", userService.findAllClasses());
         model.addAttribute("majors", userService.findAllMajors());
         model.addAttribute("cities", cityService.findAllForSelect());
-        model.addAttribute("alumniForm", new StudentUserForm(userService.find(id)));
+        model.addAttribute("studentUserForm", new StudentUserForm(userService.find(id)));
         
         return "users/form";
     }
@@ -75,7 +75,7 @@ public class UserController {
             model.addAttribute("classes", userService.findAllClasses());
             model.addAttribute("majors", userService.findAllMajors());
             model.addAttribute("cities", cityService.findAllForSelect());
-            model.addAttribute("alumniForm", form);
+            model.addAttribute("studentUserForm", form);
             return "users/form";
         } else {
             StudentUser user = userService.find(id);

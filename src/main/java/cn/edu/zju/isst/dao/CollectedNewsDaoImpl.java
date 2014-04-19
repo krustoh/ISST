@@ -1,9 +1,9 @@
 package cn.edu.zju.isst.dao;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
+import cn.edu.zju.isst.common.PaginationList;
+import cn.edu.zju.isst.common.SelectSQLBuilder;
 import cn.edu.zju.isst.entity.CollectedNews;
 
 @Repository
@@ -19,14 +19,17 @@ public class CollectedNewsDaoImpl extends AbstractDao<CollectedNews> implements 
     }
 
     @Override
-    public List<CollectedNews> findAllUnpublished() {
-        String sql = String.format("SELECT * FROM %s WHERE archive_id=0", table);
-        return queryAll(sql);
-    }
-    
-    @Override
-    public List<CollectedNews> findAllJobs() {
-        String sql = String.format("SELECT * FROM %s WHERE id>=87 AND id<=95", table);
-        return queryAll(sql);
+    public PaginationList<CollectedNews> findAll(int categoryId, int published, int pageSize, int page) {
+        SelectSQLBuilder select = select("*");
+        
+        select.where("category_id=:categoryId").addParam("categoryId", categoryId);
+        
+        if (0 == published) {
+            select.where("post_id>0");
+        } else {
+            select.where("post_id=0");
+        }
+        
+        return new PaginationList<CollectedNews>(page, pageSize, this, select);
     }
 }

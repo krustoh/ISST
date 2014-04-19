@@ -16,11 +16,17 @@ public class CollectedNews {
     @Column
     private int id;
     
+    @Column("category_id")
+    private int categoryId;
+    
     @Column("source_id")
     private int sourceId;
     
-    @Column("archive_id")
-    private int archiveId;
+    @Column("source_category")
+    private String sourceCategory;
+    
+    @Column("post_id")
+    private int postId;
     
     @Column
     private String title;
@@ -64,12 +70,12 @@ public class CollectedNews {
         this.sourceId = sourceId;
     }
     
-    public int getArchiveId() {
-        return archiveId;
+    public int getPostId() {
+        return postId;
     }
     
-    public void setArchiveId(int archiveId) {
-        this.archiveId = archiveId;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
     
     public String getTitle() {
@@ -126,5 +132,21 @@ public class CollectedNews {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getSourceCategory() {
+        return sourceCategory;
+    }
+
+    public void setSourceCategory(String sourceCategory) {
+        this.sourceCategory = sourceCategory;
     }
 }
