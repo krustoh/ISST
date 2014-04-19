@@ -103,7 +103,7 @@
 <layout:override name="javascripts">
 <script type="text/javascript">
 jQuery(function($){
-	$("#content").isst_wysiwyg;
+	$("#content").isst_wysiwyg();
 });
 </script>
 </layout:override>

@@ -13,6 +13,8 @@
 <div class="col-xs-12">
 		<div class="table-responsive">
 			<form action="" class="isst-table-form">
+			<c:choose>
+				<c:when test="${comments.total>0}">
 				<div class="col-xs-12 col-sm-12">	
 						<div class="widget-box transparent" id="recent-box">
 							<div class="widget-header">
@@ -27,6 +29,7 @@
 									<div class="tab-content padding-8 overflow-visible">
 										<div id="comment-tab" class="tab-pane active">
 											<div class="comments">
+											
 											<c:forEach items="${comments.items}" var="comment">
 												<div class="itemdiv commentdiv">
 													<div class="user">
@@ -48,16 +51,17 @@
 														<div class="text">
 															<i class="icon-quote-left"></i>
 																${comment.content} &hellip;
-															</div>
 														</div>
-
-														<div class="tools">
-															<div class="action-buttons bigger-125">
-																<a href="${baseUrl}jobs/${job.id}/comments/delete?id[]=${comment.id}">
-																	<i class="icon-trash red"></i>
-																</a>
-															</div>
+													</div>
+													
+													<div class="tools">
+														<div class="action-buttons bigger-125">
+															<a href="${baseUrl}jobs/${job.id}/comments/delete?id[]=${comment.id}">
+																<i class="icon-trash red"></i>
+															</a>
 														</div>
+													</div>
+													
 													</div>
 												</c:forEach>
 											</div>
@@ -71,11 +75,11 @@
 					</div>
 				
 					<div class="row">
-						<div class="col-sm-4 isst-table-form-actions">
+						<div class="col-xs-12 col-sm-4 isst-table-form-actions">
 							<a href="${baseUrl}jobs/${job.id}/comments/delete" class="btn btn-primary">批量删除</a>
 						</div>
 						
-						<div class="col-sm-8">
+						<div class="col-xs-12 col-sm-8">
 							<!-- pager -->
 							<div id="pager" class="pull-right" style="margin-right: 100px;">
 								<pagination:paging page="${comments.page}" total="${comments.total}" size="${comments.pageSize}" />
@@ -83,9 +87,43 @@
 							<!-- end pager -->
 						</div>
 					</div>
+				</c:when>
+				
+				<c:otherwise>
+				<div class="col-xs-12 col-sm-12">	
+					<div class="widget-box transparent" id="recent-box">
+						<div class="widget-header">
+							<h4 class="lighter smaller">
+								<i class="icon-comments-alt bigger-150"></i>
+									${job.title}
+							</h4>
+						</div>
+						
+						<input type="hidden" value="1" name="confirm" />
+						
+						<div class="alert alert-warning">
+							<button type="button" class="close" data-dismiss="alert">
+								<i class="icon-remove"></i>
+							</button>
+							<strong>暂时没有评论！</strong>
+							<br />
+							<br />
+						</div>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+								<a class="btn btn-info" href="${baseUrl}jobs/categories/${category.alias}.html">
+									<i class="icon-ok bigger-110"></i> 确认
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>		
+				</c:otherwise>
+			</c:choose>
 			</form>
 		</div>
 	</div>
 </layout:override>
+
 
 <%@ include file="../../layouts/main.jsp"%>

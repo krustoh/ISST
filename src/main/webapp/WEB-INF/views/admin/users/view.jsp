@@ -25,7 +25,7 @@
 							</tr>	
 							<tr>
 							  	<td class="center">年级</td><td>${alumnus.grade}</td>
-							  	<td class="center">班级</td><td>${alumnus.classId}</td>
+							  	<td class="center">班级</td><td>${alumnus.className}</td>
 								<td class="center">专业</td><td>${alumnus.major}</td>
 							</tr>
 							<tr>
@@ -44,7 +44,7 @@
 							  	<td class="center">工作职务</td><td colspan="5">${alumnus.position}<c:if test="${alumnus.privatePosition}">&nbsp;&nbsp;<i class="icon-check bigger-100 "></i></c:if></td>
 							</tr>
 							<tr>
-								<td class="center">工作城市</td><td colspan="5">${alumnus.cityId}</td>
+								<td class="center">工作城市</td><td colspan="5">${alumnus.cityName}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -69,27 +69,5 @@
 		</div>
 	</div>
 </layout:override>
-
-<layout:override name="javascripts">
-	<script type="text/javascript">
-		jQuery(function($) {
-			$('#pictureFile').ace_file_input({
-				no_file : 'No File ...',
-				btn_choose : 'Choose',
-				btn_change : 'Change',
-				droppable : false,
-				onchange : null,
-				thumbnail : false
-			//| true | large
-			//whitelist:'gif|png|jpg|jpeg'
-			//blacklist:'exe|php'
-			//onchange:''
-			//
-			});
-		});
-	</script>
-</layout:override>
-
-
 
 <%@ include file="../layouts/main.jsp"%>

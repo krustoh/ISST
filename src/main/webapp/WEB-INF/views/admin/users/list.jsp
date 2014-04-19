@@ -30,7 +30,6 @@
 
 <layout:override name="content">
 	<div class="col-xs-12">
-		<%@ include file="../blocks/message.jsp"%>
 		<div class="table-responsive">
 			<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
 				<fieldset>
@@ -99,8 +98,8 @@
 						
 						<div class="form-group col-xs-12 col-sm-1">
 							<button type="submit" class="btn btn-purple btn-sm">
-								查找
 								<i class="icon-search icon-on-right bigger-110"></i>
+								查找
 							</button>
 						</div>	
 					</div>
