@@ -22,7 +22,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         Administrator administrator = administratorDao.find(form.getUsername());
         if (null == administrator) {
             result.rejectValue("username", "username.not_exist", "用户名不存在！");
-        } else if (!administrator.validatePassword(form.getPassword())) {
+        } else if (!Administrator.validatePassword(administrator.getPassword(), form.getPassword())) {
             result.rejectValue("password", "password.invalid", "密码错误！");
         } else {
             AdministratorIdentity.login(request, response, administrator, form.isRememberMe());
@@ -34,5 +34,10 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         AdministratorIdentity.logout(request, response);
+    }
+
+    @Override
+    public void changePassword(int id, String password) {
+        administratorDao.changePassword(id, password);
     }
 }

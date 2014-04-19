@@ -63,4 +63,8 @@ public class City {
     public void setUser(UserSummary user) {
         this.user = user;
     }
+    
+    public String toString() {
+        return name;
+    }
 }

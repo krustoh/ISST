@@ -72,4 +72,8 @@ public class Category {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+    
+    public String toString() {
+        return name;
+    }
 }

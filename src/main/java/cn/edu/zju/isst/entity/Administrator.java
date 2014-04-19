@@ -69,14 +69,14 @@ public class Administrator {
         this.roles = roles;
     }
     
-    public void encryptPassword(String password) {
-        this.password = Md5Crypt.md5Crypt(password.getBytes());
+    public static String encryptPassword(String password) {
+        return Md5Crypt.md5Crypt(password.getBytes());
     }
     
-    public boolean validatePassword(String password) {
-        if (null == this.password) {
+    public static boolean validatePassword(String storedPassword, String password) {
+        if (null == storedPassword || null == password) {
             return false;
         }
-        return this.password.equals(Md5Crypt.md5Crypt(password.getBytes(), this.password));
+        return storedPassword.equals(Md5Crypt.md5Crypt(password.getBytes(), storedPassword));
     }
 }

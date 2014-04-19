@@ -73,4 +73,8 @@ public class JobComment {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+    
+    public String toString() {
+        return content;
+    }
 }

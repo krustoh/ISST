@@ -11,4 +11,10 @@ public class AdministratorDaoImpl extends AbstractDao<Administrator> implements 
     public Administrator find(String username) {
         return query("SELECT * FROM admins WHERE username=?", username);
     }
+
+    @Override
+    public void changePassword(int id, String password) {
+        String sql = String.format("UPDATE %s SET password=? WHERE %s=?", table, primaryKey);
+        jdbcTemplate.getJdbcOperations().update(sql, Administrator.encryptPassword(password), id);
+    }
 }

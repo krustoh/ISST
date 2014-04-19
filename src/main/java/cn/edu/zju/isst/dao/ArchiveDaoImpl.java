@@ -30,7 +30,9 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
         if (null != keywords) {
             keywords = keywords.trim();
             if (keywords.length() > 0) {
-                select.like("title", keywords);
+                for (String word : keywords.split(" ")) {
+                    select.like("title", word);
+                }
             }
         }
         

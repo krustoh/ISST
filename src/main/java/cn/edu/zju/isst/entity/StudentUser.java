@@ -283,4 +283,8 @@ public class StudentUser implements PrivateProfile {
     public void setPrivatePosition(boolean privatePosition) {
         this.privatePosition = privatePosition;
     }
+    
+    public String toString() {
+        return name;
+    }
 }

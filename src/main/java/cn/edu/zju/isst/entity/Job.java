@@ -172,4 +172,8 @@ public class Job {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
+    
+    public String toString() {
+        return title;
+    }
 }

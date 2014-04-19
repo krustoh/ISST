@@ -143,4 +143,8 @@ public class Activity {
     public void setLocation(String location) {
         this.location = location;
     }
+    
+    public String toString() {
+        return title;
+    }
 }

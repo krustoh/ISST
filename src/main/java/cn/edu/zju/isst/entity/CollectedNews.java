@@ -149,4 +149,8 @@ public class CollectedNews {
     public void setSourceCategory(String sourceCategory) {
         this.sourceCategory = sourceCategory;
     }
+    
+    public String toString() {
+        return title;
+    }
 }

@@ -10,4 +10,5 @@ import cn.edu.zju.isst.form.AdministratorLoginForm;
 public interface AdministratorService {
     public boolean login(HttpServletRequest request, HttpServletResponse response, AdministratorLoginForm form, BindingResult result);
     public void logout(HttpServletRequest request, HttpServletResponse response);
+    public void changePassword(int id, String password);
 }

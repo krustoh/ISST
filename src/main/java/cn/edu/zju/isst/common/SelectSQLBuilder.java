@@ -126,7 +126,7 @@ public class SelectSQLBuilder {
     }
     
     public SelectSQLBuilder like(String column, String value) {
-        String paramName = parseParamName(column);
+        String paramName = parseParamName(column + "_" + (likeParamNameCount++));
         where(String.format("%s LIKE :%s", column, paramName));
         addlikeParam(paramName, value);
         
