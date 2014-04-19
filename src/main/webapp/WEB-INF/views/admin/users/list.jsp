@@ -65,6 +65,17 @@
 					</div>
 					
 					<div class="col-xs-12 col-sm-12">
+					
+						<div class="form-group col-xs-12 col-sm-4">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="major">专业</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:select  id="major" path="major">
+									<form:option value="" label="所有"/>
+									<form:options items="${majors}" itemValue="name" itemLabel="name"/>
+								</form:select> 
+							</div>
+						</div>
+						
 						<div class="form-group col-xs-12 col-sm-3">
 							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="gender">性别</label> 
 							<div class="col-xs-12 col-sm-9">
@@ -82,16 +93,6 @@
 								<form:select  id="cityId" path="cityId">
 									<form:option value="0" label="所有"/>
 									<form:options items="${cities}" itemValue="id" itemLabel="name"/>
-								</form:select> 
-							</div>
-						</div>
-						
-						<div class="form-group col-xs-12 col-sm-5">
-							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="major">专业</label> 
-							<div class="col-xs-12 col-sm-9">
-								<form:select  id="major" path="major">
-									<form:option value="0" label="所有"/>
-									<form:options items="${majors}" itemValue="name" itemLabel="name"/>
 								</form:select> 
 							</div>
 						</div>

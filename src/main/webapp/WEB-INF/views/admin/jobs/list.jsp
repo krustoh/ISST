@@ -119,7 +119,7 @@
 									<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
 									
 										<c:if test="${category.alias=='recommend'}">
-										<a class="btn btn-xs btn-success tooltip-danger" data-rel="tooltip" data-placement="bottom" title="评论" href="${baseUrl}jobs/${job.id}.html">
+										<a class="btn btn-xs btn-success tooltip-danger" data-rel="tooltip" data-placement="bottom" title="评论" href="${baseUrl}jobs/${job.id}/comments.html">
 											<i class="icon-comments bigger-120"></i>
 										</a>	
 										</c:if>
@@ -142,7 +142,7 @@
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												<c:if test="${category.alias=='recommend'}">
 												<li>
-													<a href="${baseUrl}jobs/${job.id}.html" class="tooltip-success" data-rel="tooltip" title="Comments"> 
+													<a href="${baseUrl}jobs/${job.id}/comments.html" class="tooltip-success" data-rel="tooltip" title="Comments"> 
 														<span class="green">
 															<i class="icon-comments bigger-120"></i> 
 														</span> 

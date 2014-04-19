@@ -141,6 +141,7 @@
 					<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">城市</label>
 					<div class="col-xs-12 col-sm-5">
 						<form:select  id="cityId" path="cityId" class="form-control">
+							<form:option value="0" label="其他"></form:option>
 							<form:options items="${cities}" itemValue="id" itemLabel="name"/>
 						</form:select>
 					</div>

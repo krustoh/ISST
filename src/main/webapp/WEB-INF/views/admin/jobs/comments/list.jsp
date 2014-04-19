@@ -11,60 +11,58 @@
 
 <layout:override name="content">
 <div class="col-xs-12">
-				<%@ include file="../blocks/message.jsp"%>
-				<div class="table-responsive">
-					<form action="" class="isst-table-form">
-						
-				
-					<div class="col-xs-12 col-sm-12">
+		<div class="table-responsive">
+			<form action="" class="isst-table-form">
+				<div class="col-xs-12 col-sm-12">	
 						<div class="widget-box transparent" id="recent-box">
 							<div class="widget-header">
 								<h4 class="lighter smaller">
-									<i class="icon-comment blue"></i>
-										第一条记录
+									<i class="icon-comments-alt bigger-150"></i>
+										${job.title}
 								</h4>
 							</div>
 						
-							<div class="widget-body col-sm-8">
+							<div class="widget-body col-sm-12">
 								<div class="widget-main padding-4">
 									<div class="tab-content padding-8 overflow-visible">
 										<div id="comment-tab" class="tab-pane active">
 											<div class="comments">
+											<c:forEach items="${comments.items}" var="comment">
 												<div class="itemdiv commentdiv">
 													<div class="user">
-														<label> <input type="checkbox" class="ace" name="id[]" value="${user.id}" /> <span class="lbl"></span> </label>
+														<label> <input type="checkbox" class="ace" name="id[]" value="${comment.id}" /> <span class="lbl"></span> </label>
 													</div>
 
 													<div class="body">
 														<div class="name">
-															<a href="#">Jennifer</a>
+															<a href="#">${comment.user.name}</a>
 														</div>
 
 														<div class="time">
 															<i class="icon-time"></i>
-															<span class="blue">15 min</span>
+															<span class="blue">
+																<fmt:formatDate value="${comment.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+															</span>
 														</div>
 
 														<div class="text">
 															<i class="icon-quote-left"></i>
-																Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+																${comment.content} &hellip;
 															</div>
 														</div>
 
 														<div class="tools">
 															<div class="action-buttons bigger-125">
-																<a href="#">
-																	<i class="icon-pencil blue"></i>
-																</a>
-
-																<a href="#">
+																<a href="${baseUrl}jobs/${job.id}/comments/delete?id[]=${comment.id}">
 																	<i class="icon-trash red"></i>
 																</a>
 															</div>
 														</div>
 													</div>
+												</c:forEach>
 											</div>
 										</div>
+										<div class="hr hr8"></div>
 									</div>
 								</div>
 							</div>
@@ -73,33 +71,21 @@
 					</div>
 				
 					<div class="row">
-						<div class="col-sm-4 isst-table-form-actions" >
-						<div class="btn-group dropup">
-							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-								批量操作
-								<i class="icon-angle-up icon-on-right"></i>
-							</button>
-							<ul class="dropdown-menu">
-								<li><a href="${baseUrl}jobs/categories/${category.alias}/delete">批量删除</a></li>
-
-								<li><a href="${baseUrl}jobs/categories/${category.alias}/publish">批量发布</a></li>
-
-								<li><a href="${baseUrl}jobs/categories/${category.alias}/hide">批量隐藏</a></li>
-
-							</ul>
-						</div>				
+						<div class="col-sm-4 isst-table-form-actions">
+							<a href="${baseUrl}jobs/${job.id}/comments/delete" class="btn btn-primary">批量删除</a>
 						</div>
+						
 						<div class="col-sm-8">
 							<!-- pager -->
 							<div id="pager" class="pull-right" style="margin-right: 100px;">
-								<pagination:paging page="${jobs.page}" total="${jobs.total}" size="${jobs.pageSize}" />
+								<pagination:paging page="${comments.page}" total="${comments.total}" size="${comments.pageSize}" />
 							</div>
 							<!-- end pager -->
 						</div>
 					</div>
-					</form>
-				</div>
-			</div>
+			</form>
+		</div>
+	</div>
 </layout:override>
 
-<%@ include file="../layouts/main.jsp"%>
+<%@ include file="../../layouts/main.jsp"%>
