@@ -17,7 +17,7 @@ public class ArchiveDaoImpl extends AbstractDao<Archive> implements ArchiveDao {
     private StudentUserDao studentUserDao;
     
     @Override
-    public PaginationList<Archive> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
+    public PaginationList<Archive> findAll(int categoryId, int status, String keywords, int pageSize, int page) {
         SelectSQLBuilder select = select("id, category_id, user_id, title, description, updated_at, status")
                 .where("category_id=:category_id")
                 .addParam("category_id", categoryId)

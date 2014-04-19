@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Category;
 import cn.edu.zju.isst.entity.Job;
+import cn.edu.zju.isst.entity.JobSearchCondition;
 import cn.edu.zju.isst.form.JobForm;
 import cn.edu.zju.isst.service.CategoryService;
 import cn.edu.zju.isst.service.CityService;
@@ -33,14 +34,14 @@ public class JobController {
     
     @RequestMapping(value = "/jobs/categories/{categoryAlias}.html", method = RequestMethod.GET)
     public String list(Model model,
+            JobSearchCondition condition,
             @PathVariable("categoryAlias") String categoryAlias, 
-            @RequestParam(value = "status", required = false, defaultValue = "-1") int status, 
-            @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords, 
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         Category category = categoryService.find(categoryAlias);
         if (null != category) {
             model.addAttribute("category", category);
-            model.addAttribute("jobs", jobService.findAll(category, status, keywords, 10, page));
+            model.addAttribute("condition", condition);
+            model.addAttribute("jobs", jobService.findAll(category.getId(), condition, 10, page));
         } else {
             throw new RuntimeException("Category does not exist.");
         }

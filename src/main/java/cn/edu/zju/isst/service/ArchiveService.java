@@ -5,18 +5,16 @@ import java.util.Set;
 
 import cn.edu.zju.isst.common.PaginationList;
 import cn.edu.zju.isst.entity.Archive;
-import cn.edu.zju.isst.entity.Category;
-
+import cn.edu.zju.isst.entity.ArchiveSearchCondition;
 public interface ArchiveService {
     public Archive save(Archive archive);
     public Archive find(int id);
     public List<Archive> findAll(Set<Integer> ids);
-    public PaginationList<Archive> findAll(String categoryAlias, String keywords, int pageSize, int page);
-    public PaginationList<Archive> findAll(String categoryAlias, int status, String keywords, int pageSize, int page);
-    public PaginationList<Archive> findAll(Category category, int status, String keywords, int pageSize, int page);
+    public PaginationList<Archive> findAll(int categoryId, String keywords, int pageSize, int page);
+    public PaginationList<Archive> findAll(int categoryId, int pageSize, int page);
+    public PaginationList<Archive> findAll(int categoryId, ArchiveSearchCondition condition, int pageSize, int page);
     public int delete(Set<Integer> idset);
     public void delete(Archive archive);
     public int publish(Set<Integer> idset);
     public int hide(Set<Integer> idset);
-    
 }

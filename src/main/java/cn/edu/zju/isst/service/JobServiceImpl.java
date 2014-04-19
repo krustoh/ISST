@@ -8,17 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.edu.zju.isst.common.PaginationList;
-import cn.edu.zju.isst.dao.CategoryDao;
 import cn.edu.zju.isst.dao.JobDao;
-import cn.edu.zju.isst.entity.Category;
 import cn.edu.zju.isst.entity.Job;
+import cn.edu.zju.isst.entity.JobSearchCondition;
 
 @Service
 public class JobServiceImpl implements JobService {
     @Autowired
     private JobDao jobDao;
-    @Autowired
-    private CategoryDao categoryDao;
 
     @Override
     public Job find(int id) {
@@ -26,17 +23,13 @@ public class JobServiceImpl implements JobService {
     }
     
     @Override
-    public PaginationList<Job> findAll(String categoryAlias, String keywords, int pageSize, int page) {
-        return findAll(categoryDao.find(categoryAlias), Job.STATUS_PUBLISHED, keywords, pageSize, page);
+    public PaginationList<Job> findAll(int categoryId, String keywords, int pageSize, int page) {
+        return jobDao.findAll(categoryId, Job.STATUS_PUBLISHED, keywords, pageSize, page);
     }
 
     @Override
-    public PaginationList<Job> findAll(Category category, int status, String keywords, int pageSize, int page) {
-        if (null != category) {
-            return jobDao.findAll(category.getId(), keywords, Job.STATUS_PUBLISHED, pageSize, page);
-        } else {
-            return new PaginationList<Job>(page, pageSize);
-        }
+    public PaginationList<Job> findAll(int categoryId, JobSearchCondition condition, int pageSize, int page) {
+        return jobDao.findAll(categoryId, condition.getStatus(), condition.getKeywords(), pageSize, page);
     }
 
     @Override

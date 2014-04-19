@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Archive;
+import cn.edu.zju.isst.entity.ArchiveSearchCondition;
 import cn.edu.zju.isst.entity.Category;
 import cn.edu.zju.isst.form.ArchiveForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
@@ -32,14 +33,14 @@ public class ArchiveController {
     
     @RequestMapping(value = "/archives/categories/{categoryAlias}.html", method = RequestMethod.GET)
     public String list(Model model,
+            ArchiveSearchCondition condition,
             @PathVariable("categoryAlias") String categoryAlias, 
-            @RequestParam(value = "status", required = false, defaultValue = "-1") int status, 
-            @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords, 
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         Category category = categoryService.find(categoryAlias);
         if (null != category) {
             model.addAttribute("category", category);
-            model.addAttribute("archives", archiveService.findAll(category, status, keywords, 10, page));
+            model.addAttribute("condition", condition);
+            model.addAttribute("archives", archiveService.findAll(category.getId(), condition, 10, page));
         } else {
             throw new RuntimeException("Category does not exist.");
         }

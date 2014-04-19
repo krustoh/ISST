@@ -24,7 +24,7 @@ public class JobForm {
     
     private String content;
     
-    private int status;
+    private int status = Job.STATUS_PUBLISHED;
     
     public JobForm() {
         

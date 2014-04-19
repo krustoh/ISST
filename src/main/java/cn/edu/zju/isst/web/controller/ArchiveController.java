@@ -31,7 +31,7 @@ public class ArchiveController {
 		Category category = categoryService.find(categoryAlias);
         if (null != category) {
             model.addAttribute("category", category);
-            model.addAttribute("archives", archiveService.findAll(category, Archive.STATUS_PUBLISHED, keywords, 10, page));
+            model.addAttribute("archives", archiveService.findAll(category.getId(), keywords, 10, page));
         } else {
             throw new RuntimeException("Category does not exist.");
         }

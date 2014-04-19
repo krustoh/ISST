@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class SelectSQLBuilder {
+    private int likeParamNameCount = 0;
+    
     private String table;
     private StringBuilder fields = new StringBuilder();
     private StringBuilder where = new StringBuilder();
@@ -124,14 +126,37 @@ public class SelectSQLBuilder {
     }
     
     public SelectSQLBuilder like(String column, String value) {
-        where(String.format("%s LIKE :%s", column, column));
+        String paramName = parseParamName(column);
+        where(String.format("%s LIKE :%s", column, paramName));
+        addlikeParam(paramName, value);
         
+        return this;
+    }
+    
+    public SelectSQLBuilder like(String value, String... columns) {
+        StringBuilder sb = new StringBuilder();
+        for (String column : columns) {
+            if (sb.length() > 0) {
+                sb.append(" OR ");
+            }
+            String paramName = parseParamName(column + "_" + (likeParamNameCount++));
+            sb.append(String.format("%s LIKE :%s", column, paramName));
+            addlikeParam(paramName, value);
+        }
+        where(String.format("(%s)", sb.toString()));
+        
+        return this;
+    }
+    
+    private void addlikeParam(String column, String value) {
         value = value.replaceAll("\\\\","\\\\\\\\")
                 .replaceAll("_","\\\\_")
                 .replaceAll("%", "\\\\%");
         addParam(column, "%" + value + "%");
-        
-        return this;
+    }
+    
+    private String parseParamName(String column) {
+        return column.replace('.', '_');
     }
     
     public SelectSQLBuilder addParam(String column, Object value) {

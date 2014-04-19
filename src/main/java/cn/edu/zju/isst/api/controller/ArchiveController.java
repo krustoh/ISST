@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.edu.zju.isst.common.ApiResponse;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.ArchiveService;
+import cn.edu.zju.isst.service.CategoryService;
 
 @RequireUser
 @Controller("apiArchiveController")
 public class ArchiveController {
     @Autowired
     private ArchiveService archiveService;
+    @Autowired
+    private CategoryService categoryService;
     
     @RequestMapping(value = "/archives/categories/{categoryAlias}", method = RequestMethod.GET)
     public @ResponseBody ApiResponse findAll(
@@ -24,7 +27,7 @@ public class ArchiveController {
             @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords, 
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        return new ApiResponse(archiveService.findAll(categoryAlias, keywords, pageSize, page).getItems());
+        return new ApiResponse(archiveService.findAll(categoryService.find(categoryAlias).getId(), keywords, pageSize, page).getItems());
     }
     
     @RequestMapping(value = "/archives/{id}", method = RequestMethod.GET)

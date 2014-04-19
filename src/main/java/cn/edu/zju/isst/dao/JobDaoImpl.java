@@ -18,7 +18,7 @@ public class JobDaoImpl extends AbstractDao<Job> implements JobDao {
     private StudentUserDao studentUserDao;
 
     @Override
-    public PaginationList<Job> findAll(int categoryId, String keywords, int status, int pageSize, int page) {
+    public PaginationList<Job> findAll(int categoryId, int status, String keywords, int pageSize, int page) {
         SelectSQLBuilder select = select("j.id, j.category_id, j.user_id, j.city_id, j.title, j.company, j.position, j.updated_at, j.status, j.description", "j")
                 .leftJoin("cities c", "c.id=j.city_id", "c.name city_name")
                 .where("j.category_id=:category_id").addParam("category_id", categoryId)
@@ -30,8 +30,10 @@ public class JobDaoImpl extends AbstractDao<Job> implements JobDao {
         
         if (null != keywords) {
             keywords = keywords.trim();
-            if (keywords.length() > 0) {
-                select.like("j.title", keywords).like("j.company", keywords).like("j.position", keywords);
+            for (String word : keywords.split(" ")) {
+                if (keywords.length() > 0) {
+                    select.like(word, "j.title", "j.company", "j.position");
+                }
             }
         }
         

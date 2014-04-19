@@ -51,6 +51,7 @@ public class UrlGenerator {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
+            i++;
         }
         
         return sb.toString();
