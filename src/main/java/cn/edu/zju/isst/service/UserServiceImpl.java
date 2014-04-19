@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         StudentUser user = studentUserDao.find(form.getUsername());
         if (null == user) {
             result.rejectValue("username", "10", "学号不存在！");
-        } else if (!user.validatePassword(form.getPassword())) {
+        } else if (!StudentUser.validatePassword(user.getPassword(), form.getPassword())) {
             result.rejectValue("password", "11", "密码错误！");
         } else {
             UserIdentity.login(request, response, user, form.isRememberMe());
@@ -113,5 +113,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Major findMajor(int id) {
         return userDao.findMajor(id);
+    }
+
+    @Override
+    public String changePassword(int id, String password) {
+        return studentDao.changePassword(id, password);
     }
 }

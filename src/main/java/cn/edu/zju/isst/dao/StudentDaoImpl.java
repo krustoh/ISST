@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import cn.edu.zju.isst.common.SelectSQLBuilder;
 import cn.edu.zju.isst.entity.Student;
+import cn.edu.zju.isst.entity.StudentUser;
 
 @Service
 public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
@@ -21,5 +22,13 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
     @Override
     public boolean checkUsername(String username) {
         return checkUsername(username, 0);
+    }
+
+    @Override
+    public String changePassword(int id, String password) {
+        String encryptedPassword = StudentUser.encryptPassword(password);
+        String sql = String.format("UPDATE %s SET password=? WHERE %s=?", table, primaryKey);
+        jdbcTemplate.getJdbcOperations().update(sql, encryptedPassword, id);
+        return encryptedPassword;
     }
 }

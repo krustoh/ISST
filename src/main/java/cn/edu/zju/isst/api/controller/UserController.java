@@ -1,5 +1,8 @@
 package cn.edu.zju.isst.api.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.zju.isst.common.ApiResponse;
@@ -116,10 +120,23 @@ public class UserController {
         return new ApiResponse("更新成功");
     }
     
+    @RequireUser
+    @RequestMapping(value = "/user/password", method = RequestMethod.POST)
+    public @ResponseBody ApiResponse changePassword(@RequestParam("password") String password, HttpSession session) {
+        if (null == password || password.equals("")) {
+            return new ApiResponse(14, "密码不能为空");
+        }
+        
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("password", userService.changePassword(user.getId(), password));
+        return new ApiResponse(map);
+    }
+    
     public static void main(String[] args) {
         long timestamp = System.currentTimeMillis() / 1000;
         System.out.println(timestamp);
         System.out.println(UserIdentity.encryptToken(timestamp, "21351075", "111111"));
-        System.out.println(UserIdentity.encryptToken(timestamp, "679", "$1$AI2oKqG9$Kv8CCo.UzSXQsBPRbKfVq/"));
+        System.out.println(UserIdentity.encryptToken(timestamp, "679", "$1$BvULbC23$JoQAfpK5Ed3gBLl3GSfGY1"));
     }
 }
