@@ -11,7 +11,7 @@
 
 <layout:override name="content">
 	<div class="col-xs-12">
-    	<form:form class="form-horizontal isst-form" modelAttribute="alumniForm" method="POST">
+    	<form:form class="form-horizontal isst-form" modelAttribute="studentUserForm" method="POST">
 			<fieldset>
 				<field:wrapper class="form-group" path="username">
 					<label for="username" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">学号 </label>
@@ -56,7 +56,7 @@
 				<field:wrapper class="form-group" path="classId">
 					<label for="classId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">班级</label>
 					<div class="col-xs-12 col-sm-5">
-						<form:select  id="classId" path="classId" >
+						<form:select  id="classId" path="classId" class="form-control">
 							<form:options items="${classes}" itemValue="id" itemLable="name"/>
 						</form:select>
 					</div>
@@ -67,7 +67,7 @@
 				<field:wrapper class="form-group" path="major">
 					<label for="major" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">专业</label>					
 					<div class="col-xs-12 col-sm-5">
-						<form:select  id="major" path="major">
+						<form:select  id="major" path="major" class="form-control">
 							<form:options items="${majors}" itemValue="name" itemLable="name"/>
 						</form:select>
 					</div>
@@ -79,7 +79,9 @@
 				<field:wrapper class="form-group" path="email">
 					<label for="email" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">邮箱</label>					
 					<div class="col-xs-8 col-sm-5">
-						<form:input id="email" class="form-control" path="email" />
+						<form:input id="email" class="form-control" path="email" />					
+						<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="email">
+						</form:errors>
 					</div>
 					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
@@ -87,8 +89,6 @@
 							<span class="lbl">不公开</span> 
 						</label> 
 					</div>					
-					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="email">
-					</form:errors>					
 				</field:wrapper>
          
                 
@@ -96,6 +96,8 @@
 					<label for="qq" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">QQ</label>					
 					<div class="col-xs-8 col-sm-5">
 						<form:input id="qq" class="form-control" path="qq" />
+						<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="qq">
+						</form:errors>
 					</div>
 					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
@@ -103,14 +105,14 @@
 							<span class="lbl">不公开</span>
 						</label>
 					</div>
-					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="qq">
-					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="phone">
 					<label for="phone" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">联系电话</label>					
 					<div class="col-xs-8 col-sm-5">
 						<form:input id="phone" class="form-control" path="phone" />
+						<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="phone">
+						</form:errors>
 					</div>
 					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
@@ -118,14 +120,14 @@
 							<span class="lbl">不公开</span> 
 						</label> 
 					</div>
-					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="phone">
-					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="company">
 					<label for="company" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">公司</label>
 					<div class="col-xs-8 col-sm-5">
 						<form:input id="company" class="form-control" path="company" />
+						<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="company">
+						</form:errors>
 					</div>
 					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
@@ -133,14 +135,12 @@
 							<span class="lbl">不公开</span> 
 						</label> 
 					</div>
-					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="company">
-					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="cityId">
 					<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">城市</label>
 					<div class="col-xs-12 col-sm-5">
-						<form:select  id="cityId" path="cityId">
+						<form:select  id="cityId" path="cityId" class="form-control">
 							<form:options items="${cities}" itemValue="id" itemLabel="name"/>
 						</form:select>
 					</div>
@@ -152,6 +152,8 @@
 					<label for="position" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">职务</label>
 					<div class="col-xs-8 col-sm-5">
 						<form:input id="position" class="form-control" path="position" />
+						<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="position">
+						</form:errors>
 					</div>
 					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
@@ -159,8 +161,6 @@
 							<span class="lbl">不公开</span> 
 						</label> 
 					</div>
-					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="position">
-					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="signature">

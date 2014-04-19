@@ -38,28 +38,28 @@
 						<div class="form-group col-xs-12 col-sm-3">
 							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="name">姓名</label> 
 							<div class="col-xs-12 col-sm-9">
-								<form:input id="name" path="name" placeholder="所有" /> 
+								<form:input id="name" path="name" class="form-control"/> 
 							</div>
 						</div>
 						
 						<div class="form-group col-xs-12 col-sm-3">
 							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="grade">年级</label> 
 							<div class="col-xs-12 col-sm-9">
-								<form:input id="grade" path="grade" placeholder="所有" /> 
+								<form:input id="grade" path="grade" class="form-control"/> 
 							</div>
 						</div>
 						
 						<div class="form-group col-xs-12 col-sm-3">
 							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="company">公司</label> 
 							<div class="col-xs-12 col-sm-9">
-								<form:input id="company" path="company" placeholder="所有" /> 
+								<form:input id="company" path="company" class="form-control"/> 
 							</div>
 						</div>
 						
 						<div class="form-group col-xs-12 col-sm-3">
 							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="position">职务</label> 
 							<div class="col-xs-12 col-sm-9">
-								<form:input id="position" path="position" placeholder="所有" /> 
+								<form:input id="position" path="position" class="form-control"/> 
 							</div>
 						</div>
 					</div>
