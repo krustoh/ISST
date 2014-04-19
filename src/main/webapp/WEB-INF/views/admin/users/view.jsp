@@ -31,7 +31,7 @@
 							<tr>
 								<td class="center">QQ</td><td>${alumnus.qq}</td>
 							  	<td class="center">邮箱</td><td>${alumnus.email}</td>
-							  	<td class="center">联系电话</td><td>${alumnus.email}</td>
+							  	<td class="center">联系电话</td><td>${alumnus.phone}</td>
 							</tr>
 						</tbody>
 						

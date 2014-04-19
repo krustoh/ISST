@@ -34,56 +34,76 @@
 		<div class="table-responsive">
 			<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
 				<fieldset>
-					<div class="col-sm-12">
-						<div class="col-sm-4">
-							<label class="control-label no-padding-right" for="major">专业</label> 
-							<form:select  id="major" path="major">
-								<form:options items="${majors}" itemValue="name" itemLable="name"/>
-							</form:select>
+					<div class="col-xs-12 col-sm-12">
+						<div class="form-group col-xs-12 col-sm-3">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="name">姓名</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:input id="name" path="name" placeholder="所有" /> 
+							</div>
 						</div>
-							
-						<div class="col-sm-4">
-							<label class="control-label no-padding-right" for="gender">性别</label> 
-							<form:select path="gender" id="gender">
-								<form:option value="0" label="--请选择--"/>
-								<form:option value="1" label="男"/>
-								<form:option value="2" label="女"/>
-							</form:select>
+						
+						<div class="form-group col-xs-12 col-sm-3">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="grade">年级</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:input id="grade" path="grade" placeholder="所有" /> 
+							</div>
 						</div>
-							
-							<div class="col-sm-4">
-							<label class="control-label no-padding-right" for="cityId">城市</label> 
-							<form:select  id="cityId" path="cityId">
-								<form:options items="${cities}" itemValue="id" itemLabel="name"/>
-							</form:select>
+						
+						<div class="form-group col-xs-12 col-sm-3">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="company">公司</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:input id="company" path="company" placeholder="所有" /> 
 							</div>
-							
-							<div class="col-sm-3">
-							<label class=" control-label no-padding-right" for="status">姓名</label> 
-							<input type="text" size="15" placeholder="不限" /> 
+						</div>
+						
+						<div class="form-group col-xs-12 col-sm-3">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="position">职务</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:input id="position" path="position" placeholder="所有" /> 
 							</div>
-							
-							<div class="col-sm-3">
-							<label class=" control-label no-padding-right" for="status">年级</label> 
-							<input type="text" size="15" placeholder="不限" /> 
+						</div>
+					</div>
+					
+					<div class="col-xs-12 col-sm-12">
+						<div class="form-group col-xs-12 col-sm-3">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="gender">性别</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:select  id="gender" path="gender">
+									<form:option value="0" label="所有"/>
+									<form:option value="1" label="男"/>
+									<form:option value="2" label="女"/>
+								</form:select> 
 							</div>
-							
-							<div class="col-sm-3">
-							<label class="control-label no-padding-right" for="status">公司</label> 
-							<input type="text" size="15" placeholder="其他" /> 
+						</div>
+						
+						<div class="form-group col-xs-12 col-sm-3">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="cityId">城市</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:select  id="cityId" path="cityId">
+									<form:option value="0" label="所有"/>
+									<form:options items="${cities}" itemValue="id" itemLabel="name"/>
+								</form:select> 
 							</div>
-							
-							<div class="col-sm-3">
-							<label class="control-label no-padding-right" for="status">职位</label> 
-							<input type="text" size="15" placeholder="其他" /> 
+						</div>
+						
+						<div class="form-group col-xs-12 col-sm-5">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="major">专业</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:select  id="major" path="major">
+									<form:option value="0" label="所有"/>
+									<form:options items="${majors}" itemValue="name" itemLabel="name"/>
+								</form:select> 
 							</div>
-							
-							<button type="button" class="btn btn-purple btn-sm pull-right" style="margin-right: 5%;">
+						</div>
+						
+						<div class="form-group col-xs-12 col-sm-1">
+							<button type="submit" class="btn btn-purple btn-sm">
 								查找
 								<i class="icon-search icon-on-right bigger-110"></i>
 							</button>
-							</div>
-						</fieldset>		
+						</div>	
+					</div>
+				</fieldset>		
 			</form:form>
 			
 			<form action="" class="isst-table-form">

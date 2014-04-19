@@ -14,22 +14,25 @@
 				<%@ include file="../blocks/message.jsp"%>
 				<div class="table-responsive">
 					<form action="" class="isst-table-form">
+						
+				
+					<div class="col-xs-12 col-sm-12">
 						<div class="widget-box transparent" id="recent-box">
 							<div class="widget-header">
 								<h4 class="lighter smaller">
 									<i class="icon-comment blue"></i>
-										${jobs.title}
+										第一条记录
 								</h4>
 							</div>
-							
-							<div class="widget-body">
+						
+							<div class="widget-body col-sm-8">
 								<div class="widget-main padding-4">
 									<div class="tab-content padding-8 overflow-visible">
-										<div id="comment-tab" class="tab-pane">
+										<div id="comment-tab" class="tab-pane active">
 											<div class="comments">
 												<div class="itemdiv commentdiv">
 													<div class="user">
-														<img alt="Jennifer's Avatar" src="assets/avatars/avatar1.png" />
+														<label> <input type="checkbox" class="ace" name="id[]" value="${user.id}" /> <span class="lbl"></span> </label>
 													</div>
 
 													<div class="body">
@@ -67,6 +70,7 @@
 							</div>
 							
 						</div>
+					</div>
 				
 					<div class="row">
 						<div class="col-sm-4 isst-table-form-actions" >

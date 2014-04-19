@@ -20,54 +20,9 @@
 
 <layout:override name="content">
 <div class="col-xs-12">
-				<%@ include file="../../blocks/message.jsp"%>
-				<div class="table-responsive">
-					<form action="" class="isst-table-form">
-						<fieldset>
-							<div class="col-sm-12">
-							
-							<div class="col-sm-2">
-							<label class="control-label no-padding-right" for="status">状态</label> 
-							<select name="status" id="status">
-								<option value="" >--请选择--</option>
-								<option value="0">隐藏</option>
-								<option value="1">发布</option>
-							</select>
-							</div>
-							
-							
-							<div class="col-sm-2">
-							<label class="control-label no-padding-right" for="city">城市</label> 
-							<select name="status" id="status">
-								<option value="" >--请选择--</option>
-								<option value="0">宁波</option>
-								<option value="1">杭州</option>
-								<option value="2">上海</option>
-								<option value="3">北京</option>
-								<option value="4">深圳</option>
-							</select>
-							</div>
-							
-							
-							<div class="col-sm-3">
-							<label class=" control-label no-padding-right" for="status">单位</label> 
-							<input type="text" placeholder="不限" /> 
-							</div>
-							
-							
-							<div class="col-sm-3">
-							<label class="control-label no-padding-right" for="status">其他</label> 
-							<input type="text" placeholder="其他" /> 
-							</div>
-							<button type="button" class="btn btn-purple btn-sm pull-right" style="margin-right: 5%;">
-								查找
-								<i class="icon-search icon-on-right bigger-110"></i>
-							</button>
-							</div>
-						
-						</fieldset>
-							
-				<div class="space-4"></div> 					
+			<%@ include file="../../blocks/message.jsp"%>
+			<div class="table-responsive">
+				<form action="" class="isst-table-form">						
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>

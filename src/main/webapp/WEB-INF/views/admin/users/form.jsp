@@ -11,23 +11,23 @@
 
 <layout:override name="content">
 	<div class="col-xs-12">
-    	<form:form class="form-horizontal isst-form" modelAttribute="alumniForm">
+    	<form:form class="form-horizontal isst-form" modelAttribute="alumniForm" method="POST">
 			<fieldset>
 				<field:wrapper class="form-group" path="username">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">学号 </label>
+					<label for="username" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">学号 </label>
 					
 					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="username" />
+						<form:input id="username" class="form-control" path="username" />
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="username">
 					</form:errors>
 				</field:wrapper>
 
 				<field:wrapper class="form-group" path="name">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">姓名 </label>
+					<label for="name" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">姓名 </label>
 					
 					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="name" />
+						<form:input id="name" class="form-control" path="name" />
 					</div>
 					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="name">
@@ -35,7 +35,7 @@
 				</field:wrapper>
 
 				<field:wrapper class="form-group" path="gender">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">性别 </label>
+					<label for="gender" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">性别 </label>
 				
 					<div class="col-xs-12 col-sm-5">
 							<label>
@@ -55,20 +55,17 @@
 				
 				<field:wrapper class="form-group" path="classId">
 					<label for="classId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">班级</label>
-					
 					<div class="col-xs-12 col-sm-5">
 						<form:select  id="classId" path="classId" >
 							<form:options items="${classes}" itemValue="id" itemLable="name"/>
 						</form:select>
 					</div>
-					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="classId">
 					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="major">
-					<label for="major" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">专业</label>
-					
+					<label for="major" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">专业</label>					
 					<div class="col-xs-12 col-sm-5">
 						<form:select  id="major" path="major">
 							<form:options items="${majors}" itemValue="name" itemLable="name"/>
@@ -80,111 +77,96 @@
 				</field:wrapper>
 
 				<field:wrapper class="form-group" path="email">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">邮箱</label>
-					<div class="col-sm-9">
-					<div class="col-xs-10 col-sm-5">
-						<form:input id="inputError" class="form-control" path="email" />
+					<label for="email" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">邮箱</label>					
+					<div class="col-xs-8 col-sm-5">
+						<form:input id="email" class="form-control" path="email" />
 					</div>
-					<span class="help-inline col-xs-12 col-sm-7"> 
+					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
 							<form:checkbox class="ace" id="public-check" path="privateEmail"/> 
 							<span class="lbl">不公开</span> 
 						</label> 
-					</span>
+					</div>					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="email">
-					</form:errors>
-					</div>
+					</form:errors>					
 				</field:wrapper>
          
                 
 				<field:wrapper class="form-group" path="qq">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">QQ</label>
-					<div class="col-sm-9">
-					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="qq" />
+					<label for="qq" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">QQ</label>					
+					<div class="col-xs-8 col-sm-5">
+						<form:input id="qq" class="form-control" path="qq" />
 					</div>
-					<span class="help-inline col-xs-12 col-sm-7"> 
+					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
 							<form:checkbox class="ace" id="public-check" path="privateQQ"/> 
 							<span class="lbl">不公开</span>
-						</label> 
-					</span>
+						</label>
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="qq">
 					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="phone">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">联系电话</label>
-					<div class="col-sm-9">
-					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="phone" />
+					<label for="phone" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">联系电话</label>					
+					<div class="col-xs-8 col-sm-5">
+						<form:input id="phone" class="form-control" path="phone" />
 					</div>
-					<span class="help-inline col-xs-12 col-sm-7"> 
+					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
 							<form:checkbox class="ace" id="public-check" path="privatePhone"/> 
 							<span class="lbl">不公开</span> 
 						</label> 
-					</span>
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="phone">
 					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="company">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">工作单位</label>
-					<div class="col-sm-9">
-					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="company" />
+					<label for="company" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">公司</label>
+					<div class="col-xs-8 col-sm-5">
+						<form:input id="company" class="form-control" path="company" />
 					</div>
-					<span class="help-inline col-xs-12 col-sm-7"> 
+					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
 							<form:checkbox class="ace" id="public-check" path="privateCompany"/> 
 							<span class="lbl">不公开</span> 
 						</label> 
-					</span>
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="company">
 					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="cityId">
-					<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">工作城市</label>
-					<div class="col-sm-9">
-						<div class="col-xs-12 col-sm-5">
-							<form:select  id="cityId" path="cityId">
-								<form:options items="${cities}" itemValue="id" itemLabel="name"/>
-							</form:select>
-						</div>
+					<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">城市</label>
+					<div class="col-xs-12 col-sm-5">
+						<form:select  id="cityId" path="cityId">
+							<form:options items="${cities}" itemValue="id" itemLabel="name"/>
+						</form:select>
 					</div>
-					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="cityId">
 					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="position">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">工作职务</label>
-					<div class="col-sm-9">
-					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="position" />
+					<label for="position" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">职务</label>
+					<div class="col-xs-8 col-sm-5">
+						<form:input id="position" class="form-control" path="position" />
 					</div>
-					<span class="help-inline col-xs-12 col-sm-7"> 
+					<div class="col-xs-4 col-sm-2">
 						<label class="middle"> 
 							<form:checkbox class="ace" id="public-check" path="privatePosition"/> 
 							<span class="lbl">不公开</span> 
 						</label> 
-					</span>
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="position">
 					</form:errors>
 				</field:wrapper>
 				
 				<field:wrapper class="form-group" path="signature">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">个性签名</label>
-					<div class="col-sm-9">
+					<label for="signature" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">个性签名</label>
 					<div class="col-xs-12 col-sm-5">
 						<form:textarea id="signature" class="form-control" path="signature" />
-					</div>
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="signature">
 					</form:errors>

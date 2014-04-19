@@ -15,15 +15,16 @@
 					<form:hidden path="categoryId"/>
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
-							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="inputtitle" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							标题
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputError" class="width-100" path="title" />
+								<form:input id="inputtitle" class="width-100" path="title" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
 							</form:errors>
 						</field:wrapper>
+						
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
 						<div class="col-sm-9">
@@ -177,9 +178,7 @@
 	    }
 		
 		enableImageResize();
-
 	}
-
 
 });
 		</script>
