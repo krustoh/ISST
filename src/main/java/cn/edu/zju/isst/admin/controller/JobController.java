@@ -80,7 +80,7 @@ public class JobController {
                 jobService.save(job);
             }
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", job.getTitle()));
-            return WebUtils.redirectAdminUrl("jobs/categories/" + category.getAlias() + ".html");
+            return WebUtils.redirectUrl("/jobs/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -114,7 +114,7 @@ public class JobController {
         } else {
             Job job = jobService.save(form.build());
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", job.getTitle()));
-            return WebUtils.redirectAdminUrl("jobs/categories/" + category.getAlias() + ".html");
+            return WebUtils.redirectUrl("/jobs/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -150,7 +150,7 @@ public class JobController {
                 WebUtils.addSuccessFlashMessage(String.format("成功删除 <i>%d</i> 条记录", count));
             }
             
-            return WebUtils.redirectAdminUrl("jobs/categories/"+category.getAlias()+".html");
+            return WebUtils.redirectUrl("/jobs/categories/"+category.getAlias()+".html");
         }
     }
     
@@ -170,7 +170,7 @@ public class JobController {
         
         Category category = categoryService.find(categoryAlias);
         WebUtils.addSuccessFlashMessage(String.format("成功发布 <i>%d</i> 条记录", count));
-        return WebUtils.redirectAdminUrl("jobs/categories/"+category.getAlias()+".html");
+        return WebUtils.redirectUrl("/jobs/categories/"+category.getAlias()+".html");
     }
     
     @RequestMapping(value = "/jobs/categories/{categoryAlias}/hide")
@@ -189,6 +189,6 @@ public class JobController {
         
         Category category = categoryService.find(categoryAlias);
         WebUtils.addSuccessFlashMessage(String.format("成功隐藏 <i>%d</i> 条记录", count));
-        return WebUtils.redirectAdminUrl("jobs/categories/"+category.getAlias()+".html");
+        return WebUtils.redirectUrl("/jobs/categories/"+category.getAlias()+".html");
     }
 }

@@ -24,9 +24,9 @@ abstract public class AbstractMvcInterceptor extends AuthenticationInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (isResourceHandler(handler) || null == modelAndView || modelAndView.getView() instanceof RedirectView || modelAndView.getViewName().startsWith("redirect:")) {  
         } else {
-            modelAndView.addObject("resourceUrl", WebUtils.createResourceUrl(""));
+            modelAndView.addObject("resourceUrl", WebUtils.createResourceUrl("/"));
             modelAndView.addObject("requestUrl", WebUtils.requestUrl());
-            modelAndView.addObject("baseUrl", WebUtils.baseUrl());
+            modelAndView.addObject("baseUrl", WebUtils.baseUrl() + "/");
             onPostHandle(request, response, handler, modelAndView);
         }
     }

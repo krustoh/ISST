@@ -83,5 +83,9 @@
       <taglib-uri>/flash_message</taglib-uri>
       <taglib-location>/WEB-INF/tld/flash_message.tld</taglib-location>
     </taglib>
+    <taglib>
+      <taglib-uri>/utils</taglib-uri>
+      <taglib-location>/WEB-INF/tld/utils.tld</taglib-location>
+    </taglib>
   </jsp-config>
 </web-app>

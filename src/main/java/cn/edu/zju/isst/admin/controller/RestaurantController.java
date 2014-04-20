@@ -54,7 +54,7 @@ public class RestaurantController {
             form.bind(restaurant);
             restaurantService.save(restaurant);
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", restaurant.getName()));
-            return WebUtils.redirectAdminUrl("restaurants.html");
+            return WebUtils.redirectUrl("/restaurants.html");
         }
     }
     
@@ -77,7 +77,7 @@ public class RestaurantController {
             Restaurant restaurant = form.build();
             restaurantService.save(restaurant);
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", restaurant.getName()));
-            return WebUtils.redirectAdminUrl("restaurants.html");
+            return WebUtils.redirectUrl("/restaurants.html");
         }
     }
     
@@ -114,6 +114,6 @@ public class RestaurantController {
                 WebUtils.addSuccessFlashMessage(String.format("成功删除<i>%d</i>条记录", count));
             }
         }
-        return WebUtils.redirectAdminUrl("restaurants.html");
+        return WebUtils.redirectUrl("/restaurants.html");
     }
 }

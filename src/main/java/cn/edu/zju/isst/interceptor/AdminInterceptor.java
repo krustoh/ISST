@@ -36,7 +36,7 @@ public class AdminInterceptor extends AbstractMvcInterceptor {
             return true;
         }
         
-        String loginUrl = WebUtils.createAdminUrl("login.html") + "?returnUrl=" + URLEncoder.encode(WebUtils.requestUrl(), "utf-8");
+        String loginUrl = WebUtils.createUrl("/login.html") + "?returnUrl=" + URLEncoder.encode(WebUtils.requestUrl(), "utf-8");
         response.sendRedirect(loginUrl);
         
         return false;

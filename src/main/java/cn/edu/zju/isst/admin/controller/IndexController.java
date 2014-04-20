@@ -16,9 +16,9 @@ public class IndexController {
     public String index(HttpServletRequest request) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("administrator");
         if (administrator.hasRole(Administrator.ADMIN)) {
-            return WebUtils.redirectAdminUrl("archives/categories/campus.html");
+            return WebUtils.redirectUrl("/archives/categories/campus.html");
         } else if (administrator.hasRole(Administrator.ADMIN_ALUMNI)) {
-            return WebUtils.redirectAdminUrl("alumni.html");
+            return WebUtils.redirectUrl("/alumni.html");
         }
         return null;
     }

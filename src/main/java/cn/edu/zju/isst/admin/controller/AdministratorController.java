@@ -29,7 +29,7 @@ public class AdministratorController {
     public String login(Model model, HttpServletRequest request) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("administrator");
         if (null != administrator && administrator.getId() > 0) {
-            return WebUtils.redirectAdminUrl("index.html");
+            return WebUtils.redirectUrl("/index.html");
         } else {
             model.addAttribute("administratorLoginForm", new AdministratorLoginForm());
             return "login";
@@ -45,7 +45,7 @@ public class AdministratorController {
             HttpSession session,
             HttpServletResponse response) {
         if (!result.hasErrors() && administratorService.login(request, response, form, result)) {
-            return WebUtils.redirectAdminUrl("index.html");
+            return WebUtils.redirectUrl("/index.html");
         } else {
             model.addAttribute("administratorLoginForm", form);
             WebUtils.addErrorFlashMessage(result);

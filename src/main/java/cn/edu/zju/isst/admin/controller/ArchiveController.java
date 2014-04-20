@@ -78,7 +78,7 @@ public class ArchiveController {
                 archiveService.save(archive);
             }
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", archive.getTitle()));
-            return WebUtils.redirectAdminUrl("archives/categories/" + category.getAlias() + ".html");
+            return WebUtils.redirectUrl("/archives/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -110,7 +110,7 @@ public class ArchiveController {
         } else {
             Archive archive = archiveService.save(form.build());
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", archive.getTitle()));
-            return WebUtils.redirectAdminUrl("archives/categories/" + category.getAlias() + ".html");
+            return WebUtils.redirectUrl("/archives/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -146,7 +146,7 @@ public class ArchiveController {
                 WebUtils.addSuccessFlashMessage(String.format("成功删除 <i>%d</i> 条记录", count));
             }
             
-            return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
+            return WebUtils.redirectUrl("/archives/categories/"+category.getAlias()+".html");
         }
     }
     
@@ -166,7 +166,7 @@ public class ArchiveController {
         
         Category category = categoryService.find(categoryAlias);
         WebUtils.addSuccessFlashMessage(String.format("成功发布 <i>%d</i> 条记录", count));
-        return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
+        return WebUtils.redirectUrl("/archives/categories/"+category.getAlias()+".html");
     }
     
     @RequestMapping(value = "/archives/categories/{categoryAlias}/hide")
@@ -185,6 +185,6 @@ public class ArchiveController {
         
         Category category = categoryService.find(categoryAlias);
         WebUtils.addSuccessFlashMessage(String.format("成功隐藏 <i>%d</i> 条记录", count));
-        return WebUtils.redirectAdminUrl("archives/categories/"+category.getAlias()+".html");
+        return WebUtils.redirectUrl("/archives/categories/"+category.getAlias()+".html");
     }
 }

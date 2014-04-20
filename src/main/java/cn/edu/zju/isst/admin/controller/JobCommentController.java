@@ -74,7 +74,7 @@ public class JobCommentController {
                 WebUtils.addSuccessFlashMessage(String.format("成功删除 <i>%d</i> 条记录", count));
             }
             
-            return WebUtils.redirectAdminUrl("jobs/"+jobId+"/comments.html");
+            return WebUtils.redirectUrl("/jobs/"+jobId+"/comments.html");
         }
     }
 }

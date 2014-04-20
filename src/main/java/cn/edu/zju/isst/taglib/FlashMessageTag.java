@@ -25,7 +25,7 @@ public class FlashMessageTag extends TagSupport {
                 ));
                 out.append(String.format("<i class=\"icon-remove\"></i></button>%s</div>", fm.getMessage()));
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new JspException(e);
             }
             session.removeAttribute(AppConfig.FLASH_MESSAGE_KEY);
         }

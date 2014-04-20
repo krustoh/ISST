@@ -14,9 +14,18 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 public class WebUtils {
+    public static final String RETURN_URL_KEY = "returnUrl";
     
     public static String createUrl(String path) {
-        return baseUrl() + "/" + path;
+        if (null != path && (path.startsWith("http://") || path.startsWith("https://"))) {
+            return path;
+        } else if (null == path) {
+            return baseUrl();
+        } else if (!path.startsWith("/")) {
+            path = "/" + path;
+        }
+        
+        return baseUrl() + path;
     }
     
     public static String createWebUrl(String path) {
@@ -24,7 +33,7 @@ public class WebUtils {
     }
     
     public static String redirectWebUrl(String path) {
-        return redirectUrl(path, AppConfig.WEB_BASE_PATH);
+        return redirectUrl(createWebUrl(path));
     }
     
     public static String createAdminUrl(String path) {
@@ -36,7 +45,7 @@ public class WebUtils {
     }
     
     public static String redirectAdminUrl(String path) {
-        return redirectUrl(path, AppConfig.ADMIN_BASE_PATH);
+        return redirectUrl(createAdminUrl(path));
     }
     
     public static void addErrorFlashMessage(String message) {
@@ -105,53 +114,42 @@ public class WebUtils {
     
     public static String contextUrl() {
         HttpServletRequest request = request();
-        String contextUrl = (String) request.getAttribute("contextUrl");
+        String contextUrl = (String) request.getAttribute("_contextUrl");
         if (null == contextUrl) {
             int port = request.getServerPort();
             contextUrl = request.getScheme() + "://" + request.getServerName() + (port == 80 ? "" : (":" + port)) + request.getContextPath(); 
-            request.setAttribute("contextUrl", contextUrl);
+            request.setAttribute("_contextUrl", contextUrl);
         }
         return contextUrl;
     }
     
     public static String baseUrl() {
         HttpServletRequest request = request();
-        String baseUrl = (String) request.getAttribute("baseUrl");
+        String baseUrl = (String) request.getAttribute("_baseUrl");
         if (null == baseUrl) {
-            baseUrl = contextUrl() + request.getServletPath() + "/"; 
-            request.setAttribute("baseUrl", baseUrl);
+            baseUrl = contextUrl() + request.getServletPath(); 
+            request.setAttribute("_baseUrl", baseUrl);
         }
         return baseUrl;
     }
     
     public static String requestUrl() {
         HttpServletRequest request = request();
-        if (null == request.getAttribute("requestUrl")) {
+        if (null == request.getAttribute("_requestUrl")) {
             String baseUrl = request.getRequestURL().toString();
             String queryString = request.getQueryString();
-            request.setAttribute("requestUrl", (null == queryString || queryString.length() == 0) ? baseUrl : (baseUrl+"?"+queryString));
+            request.setAttribute("_requestUrl", (null == queryString || queryString.length() == 0) ? baseUrl : (baseUrl+"?"+queryString));
         }
         
-        return (String) request.getAttribute("requestUrl");
+        return (String) request.getAttribute("_requestUrl");
     }
     
     public static String redirectUrl(String path) {
-        return redirectUrl(path, null);
-    }
-    
-    private static String redirectUrl(String path, String prefix) {
-        String returnUrl = request().getParameter("returnUrl");
+        String returnUrl = request().getParameter(RETURN_URL_KEY);
         if (null != returnUrl) {
             path = returnUrl;
-        }
-        
-        if (null != path && (path.startsWith("http://") || path.startsWith("https://"))) {
-        } else if (!path.startsWith("/")) {
-            if (null != prefix) {
-                path = prefix + path;
-            } else {
-                path = createUrl(path);
-            }
+        } else {
+            path = createUrl(path);
         }
         
         return "redirect:" + path;

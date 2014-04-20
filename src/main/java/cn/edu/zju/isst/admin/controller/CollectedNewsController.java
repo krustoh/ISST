@@ -98,7 +98,7 @@ public class CollectedNewsController {
             form.bind(news);
             collectedNewsService.save(news);
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", news.getTitle()));
-            return WebUtils.redirectAdminUrl("collectedNews/categories/" + category.getAlias() + ".html");
+            return WebUtils.redirectUrl("/collectedNews/categories/" + category.getAlias() + ".html");
         }
     }
     
@@ -134,7 +134,7 @@ public class CollectedNewsController {
                 WebUtils.addSuccessFlashMessage(String.format("成功删除 <i>%d</i> 条记录", count));
             }
             
-            return WebUtils.redirectAdminUrl("collectedNews/categories/"+category.getAlias()+".html");
+            return WebUtils.redirectUrl("/collectedNews/categories/"+category.getAlias()+".html");
         }
     }
 }
