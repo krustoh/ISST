@@ -5,6 +5,7 @@
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib uri="/utils" prefix="utils"%>
 
 <navigation:setNavigationActiveKey key="alumni" />
 
@@ -18,9 +19,9 @@
 			</button>
 		
 			<ul class="dropdown-menu">
-				<li><a href="${baseUrl}archives/categories/${category.alias}/delete">单个添加</a></li>
+				<li><a href="<utils:url url="/archives/categories/${category.alias}/delete" />">单个添加</a></li>
 
-				<li><a href="${baseUrl}archives/categories/${category.alias}/publish">批量添加</a></li>
+				<li><a href="<utils:url url="/archives/categories/${category.alias}/publish" />">批量添加</a></li>
 			</ul>
 		</div>
 	</div>
@@ -129,12 +130,12 @@
 								<td class="center"><label> <input type="checkbox" class="ace" name="id[]" value="${user.id}" /> <span class="lbl"></span> </label></td>
 								<td>${user.id}</td>								
 								<td>
-									<a href="${baseUrl}alumni/${user.id}/view.html">
+									<a href="<utils:url url="/alumni/${user.id}/view.html" />">
 										${user.username}
 									</a>
 								</td>
 								<td>
-									<a href="${baseUrl}alumni/${user.id}/view.html">
+									<a href="<utils:url url="/alumni/${user.id}/view.html" />">
 										${user.name}
 									</a>
 								</td>
@@ -145,9 +146,9 @@
 								<td>${user.email}</td>
 								<td>
 									<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-success" href="${baseUrl}alumni/${user.id}/view.html"> <i class="icon-zoom-in bigger-120"></i></a> 
-										<a class="btn btn-xs btn-info" href="${baseUrl}alumni/${user.id}.html"> <i class="icon-edit bigger-120"></i></a> 
-										<a class="btn btn-xs btn-danger" href="${baseUrl}alumni/delete?id[]=${user.id}"> <i class="icon-trash bigger-120"></i> </a>
+										<a class="btn btn-xs btn-success" data-rel="tooltip" data-placement="bottom" title="查看" href="<utils:url url="/alumni/${user.id}/view.html" />"> <i class="icon-zoom-in bigger-120"></i></a> 
+										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/alumni/${user.id}.html" />"> <i class="icon-edit bigger-120"></i></a> 
+										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/alumni/delete?id[]=${user.id}" />"> <i class="icon-trash bigger-120"></i> </a>
 									</div>
 									<div class="visible-xs visible-sm hidden-md hidden-lg">
 										<div class="inline position-relative">
@@ -156,15 +157,15 @@
 											</button>
 
 											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-												<li><a href="${baseUrl}alumni/${user.id}/view.html" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i>
+												<li><a href="<utils:url url="/alumni/${user.id}/view.html" />" class="tooltip-info" data-rel="tooltip" title="查看"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i>
 													</span> </a>
 												</li>
 												
-												<li><a href="${baseUrl}alumni/${user.id}.html" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i>
+												<li><a href="<utils:url url="/alumni/${user.id}.html" />" class="tooltip-success" data-rel="tooltip" title="编辑"> <span class="green"> <i class="icon-edit bigger-120"></i>
 													</span> </a>
 												</li>
 
-												<li><a href="${baseUrl}alumni/delete?id[]=${user.id}" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i
+												<li><a href="<utils:url url="/alumni/delete?id[]=${user.id}" />" class="tooltip-error" data-rel="tooltip" title="删除"> <span class="red"> <i
 															class="icon-trash bigger-120"></i> </span> </a>
 												</li>
 											</ul>
@@ -178,13 +179,13 @@
 				</table>
 
 				<div class="row">
-					<div class="col-sm-4 isst-table-form-actions">
-						<a href="${baseUrl}alumni/delete" class="btn btn-primary">批量删除</a>
+					<div class="col-xs-12 col-sm-4 isst-table-form-actions">
+						<a href="<utils:url url="/alumni/delete" />" class="btn btn-primary">批量删除</a>
 					</div>
 
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8">
 						<!-- pager -->
-						<div id="pager" class="pull-right" style="margin-right: 100px;">
+						<div id="pager" class="pull-right" style="margin-right: 80px;">
 							<pagination:paging page="${users.page}" total="${users.total}" size="${users.pageSize}" />
 						</div>
 						<!-- end pager -->

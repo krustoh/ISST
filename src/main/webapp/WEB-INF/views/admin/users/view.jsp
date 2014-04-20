@@ -5,6 +5,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib uri="/utils" prefix="utils"%>
 
 <navigation:setNavigationActiveKey key="alumni"/>
 <navigation:setPageTitle label="查看"/>
@@ -51,15 +52,15 @@
 
 					<div class="clearfix form-actions">
 						<div class="pull-right" style="margin-right: 0%;">
-							<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}alumni/${alumnus.id}.html"> 
+							<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/alumni/${alumnus.id}.html" />"> 
 								<i class="icon-edit bigger-120 "></i>编辑 
 							</a>
 							
-							<a style="color:white" class="btn btn-sm btn-purple" href="${baseUrl}alumni.html"> 
+							<a style="color:white" class="btn btn-sm btn-purple" href="<utils:url url="/alumni.html" />"> 
 								<i class="icon-download-alt bigger-120"></i>导出 
 							</a>
 							
-							<a style="color:white" class="btn btn-sm btn-grey" href="${baseUrl}alumni.html"> 
+							<a style="color:white" class="btn btn-sm btn-grey" href="<utils:returnUrl url="/alumni.html" />"> 
 								<i class="icon-undo bigger-120 "></i>返回 
 							</a>
 						</div>

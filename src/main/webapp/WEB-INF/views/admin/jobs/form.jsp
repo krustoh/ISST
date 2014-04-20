@@ -5,6 +5,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib uri="/utils" prefix="utils"%>
 
 <c:set var="navigationActiveKey" value="job_${category.alias}" scope="request"></c:set>
 <navigation:setPageTitle label="${jobForm.id>0?'编辑':'添加'}"/>
@@ -88,7 +89,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="${baseUrl}jobs/categories/${category.alias}.html">
+								<a class="btn" href="<utils:returnUrl url="/alumni.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>

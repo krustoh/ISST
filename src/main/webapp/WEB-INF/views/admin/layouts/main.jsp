@@ -6,14 +6,15 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/flash_message" prefix="fm"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <layout:override name="stylesheets">
-	<script src="${resourceUrl}js/ace-extra.min.js"></script>
+	<script src="<utils:resourceUrl path="/js/ace-extra.min.js" />"></script>
 </layout:override>
 
 <layout:override name="javascripts">
-	<script src="${resourceUrl}js/ace-elements.min.js"></script>
-	<script src="${resourceUrl}js/ace.min.js"></script>
+	<script src="<utils:resourceUrl path="/js/ace-elements.min.js" />"></script>
+	<script src="<utils:resourceUrl path="/js/ace.min.js" />"></script>
 </layout:override>
 
 <layout:override name="body">
@@ -38,7 +39,7 @@
 
 					<li class="light-blue">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle"> 
-							<img class="nav-user-photo" src="${resourceUrl}avatars/user.jpg" alt="${administrator.username}" /> 
+							<img class="nav-user-photo" src="<utils:resourceUrl path="/avatars/user.jpg" />" alt="${administrator.username}" /> 
 							<span class="user-info"> <small>Welcome, </small>
 								${administrator.username} </span> 
 							<i class="icon-caret-down"></i> 
@@ -46,12 +47,12 @@
 
 						<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
-							<li><a href="${baseUrl}password.html"> <i class="icon-key"></i> 修改密码 </a>
+							<li><a href="<utils:url url="/password.html" />"> <i class="icon-key"></i> 修改密码 </a>
 							</li>
 
 							<li class="divider">&nbsp;</li>
 
-							<li><a href="${baseUrl}logout"> <i class="icon-off"></i> 退出 </a>
+							<li><a href="<utils:url url="/logout" />"> <i class="icon-off"></i> 退出 </a>
 							</li>
 						</ul>
 					</li>
@@ -86,25 +87,25 @@
 			
 				<ul class="nav nav-list">
 					<navigation:item>
-						<navigation:link key="campus_life" href="${baseUrl}archives/categories/campus.html" label="软院生活" class="dropdown-toggle">
+						<navigation:link key="campus_life" href="/archives/categories/campus.html" label="软院生活" class="dropdown-toggle">
 							<i class="icon-apple" ></i>
 							<span class="menu-text">软院生活</span>
 						</navigation:link>
 						<ul class="submenu">
 							<navigation:item>
-								<navigation:link key="archive_campus" href="${baseUrl}archives/categories/campus.html" label="软院快讯">
+								<navigation:link key="archive_campus" href="/archives/categories/campus.html" label="软院快讯">
 								软院快讯
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}archives/categories/encyclopedia.html" key="archive_encyclopedia" label="软院百科">
+								<navigation:link href="/archives/categories/encyclopedia.html" key="archive_encyclopedia" label="软院百科">
 									软院百科
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link key="archive_studying" href="${baseUrl}archives/categories/studying.html" label="学习园地">
+								<navigation:link key="archive_studying" href="/archives/categories/studying.html" label="学习园地">
 								学习园地
 								</navigation:link>
 							</navigation:item>
@@ -116,14 +117,14 @@
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}restaurants.html" key="services" label="便捷服务" class="dropdown-toggle">
+								<navigation:link href="/restaurants.html" key="services" label="便捷服务" class="dropdown-toggle">
 									<i class="icon-double-angle-right"></i>
 									便捷服务
 									<b class="arrow icon-angle-down"></b>
 								</navigation:link>
 								<ul class="submenu">
 									<navigation:item>
-										<navigation:link href="${baseUrl}restaurants.html" key="restaurants" label="外卖">
+										<navigation:link href="/restaurants.html" key="restaurants" label="外卖">
 											外卖
 										</navigation:link>
 									</navigation:item>
@@ -133,31 +134,31 @@
 					</navigation:item>
 					
 					<navigation:item>
-						<navigation:link key="job" href="${baseUrl}jobs/categories/internship.html" label="职场生活" class="dropdown-toggle">
+						<navigation:link key="job" href="/jobs/categories/internship.html" label="职场生活" class="dropdown-toggle">
 							<i class="icon-suitcase" ></i>
 							<span class="menu-text">职场信息</span>
 						</navigation:link>
 						<ul class="submenu">
 							<navigation:item>
-								<navigation:link key="job_internship" href="${baseUrl}jobs/categories/internship.html" label="实习">
+								<navigation:link key="job_internship" href="/jobs/categories/internship.html" label="实习">
 								实习
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}jobs/categories/employment.html" key="job_employment" label="就业">
+								<navigation:link href="/jobs/categories/employment.html" key="job_employment" label="就业">
 									就业
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}jobs/categories/recommend.html" key="job_recommend" label="内推">
+								<navigation:link href="/jobs/categories/recommend.html" key="job_recommend" label="内推">
 									内推
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="${baseUrl}archives/categories/experience.html" key="job_experience" label="经验交流">
+								<navigation:link href="/archives/categories/experience.html" key="job_experience" label="经验交流">
 									经验交流
 								</navigation:link>
 							</navigation:item>	
@@ -165,7 +166,7 @@
 					</navigation:item>
 					
 					<navigation:item>
-						<navigation:link key="alumni" href="${baseUrl}alumni.html" label="通讯录" class="dropdown-toggle">
+						<navigation:link key="alumni" href="/alumni.html" label="通讯录" class="dropdown-toggle">
 							<i class="icon-phone" ></i>
 							<span class="menu-text">通讯录</span>
 						</navigation:link>
@@ -228,10 +229,12 @@
 					<!-- #nav-search -->
 					<div class="nav-search" id="nav-search">
 						<form class="form-search">
-							<span class="input-icon"> <input type="text"
-								placeholder="搜索" class="nav-search-input" id="nav-search-input"
-								autocomplete="off"> <i
-								class="icon-search nav-search-icon"></i> </span>
+							<span class="input-icon input-icon-right">
+								<input type="text" class="nav-search-input" id="nav-search-input" autocomplete="off"> 
+								<i class="icon-search nav-search-icon"></i>
+								  
+							</span>
+							
 						</form>
 					</div>
 				</div>

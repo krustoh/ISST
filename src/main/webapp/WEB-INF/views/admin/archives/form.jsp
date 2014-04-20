@@ -5,6 +5,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib uri="/utils" prefix="utils"%>
 
 <c:set var="navigationActiveKey" value="${category.alias=='experience'?'job_':'archive_'}${category.alias}" scope="request"></c:set>
 <navigation:setPageTitle label="${archiveForm.id>0?'编辑':'添加'}"/>
@@ -53,7 +54,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="${baseUrl}archives/categories/${category.alias}.html">
+								<a class="btn" href="<utils:returnUrl url="/archives/categories/${category.alias}.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>

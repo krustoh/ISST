@@ -10,6 +10,8 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.DynamicAttributes;
 import javax.servlet.jsp.tagext.Tag;
 
+import cn.edu.zju.isst.common.WebUtils;
+
 public class NavigationLinkTag extends BodyTagSupport implements DynamicAttributes {
     private static final long serialVersionUID = 1L;
     
@@ -76,7 +78,7 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
     }
 
     public void setHref(String href) {
-        this.href = href;
+        this.href = WebUtils.createUrl(href);
     }
 
     public void setLabel(String label) {

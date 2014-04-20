@@ -5,12 +5,13 @@
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib uri="/utils" prefix="utils"%>
 
 <navigation:setNavigationActiveKey key="${category.alias=='experience' ? 'job_' : 'archive_'}${category.alias}"/>
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
-				<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}archives/categories/${category.alias}/add.html">
+				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/archives/categories/${category.alias}/add.html" />">
 					<i class="icon-plus align-top bigger-125"></i>
 						添加
 				</a>
@@ -79,7 +80,7 @@
 								</td>
 								<td>${archive.id}</td>
 								<td>
-									<a href="${baseUrl}archives/${archive.id}.html">${archive.title}</a>
+									<a href="<utils:url url="/archives/${archive.id}.html" />">${archive.title}</a>
 									<c:if test="${archive.status==0}">
 										<span class="label label-sm label-warning">隐藏</span>
 									</c:if>  
@@ -88,16 +89,25 @@
 								<fmt:formatDate value="${archive.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
 								
 								</td>
-								<td>${archive.userId>0?archive.user.name:"管理员"}</td>
+								<td>
+								<c:choose>
+									<c:when test="${archive.userId>0}">
+										<a href="<utils:url url="/alumni/${archive.user.id}/view.html" returned="true"/>">${archive.user.name}</a>
+									</c:when>
+									<c:otherwise>
+										管理员
+									</c:otherwise>
+								</c:choose>
+								</td>
 								
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" href="${baseUrl}archives/${archive.id}.html">
+										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/archives/${archive.id}.html" />">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" href="${baseUrl}archives/categories/${category.alias}/delete?id[]=${archive.id}">
+										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/archives/categories/${category.alias}/delete?id[]=${archive.id}" />">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -111,12 +121,12 @@
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												
-												<li><a href="${baseUrl}archives/${archive.id}.html" class="tooltip-success"
-													data-rel="tooltip" title="Edit"> <span class="green">
+												<li><a href="<utils:url url="/archives/${archive.id}.html" />" class="tooltip-success"
+													data-rel="tooltip" title="编辑"> <span class="green">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 
-												<li><a href="${baseUrl}archives/categories/${category.alias}/delete?id[]=${archive.id}" class="tooltip-error"
-													data-rel="tooltip" title="Delete"> <span class="red">
+												<li><a href="<utils:url url="/archives/categories/${category.alias}/delete?id[]=${archive.id}" />" class="tooltip-error"
+													data-rel="tooltip" title="删除"> <span class="red">
 															<i class="icon-trash bigger-120"></i> </span> </a></li>
 											</ul>
 										</div>
@@ -129,25 +139,25 @@
 					</table>
 					
 					<div class="row">
-						<div class="col-sm-4 isst-table-form-actions" >
+						<div class="col-sm-4 col-xs-3 isst-table-form-actions" >
 						<div class="btn-group dropup">
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 								批量操作
 								<i class="icon-angle-up icon-on-right"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="${baseUrl}archives/categories/${category.alias}/delete">批量删除</a></li>
+								<li><a href="<utils:url url="/archives/categories/${category.alias}/delete" />">批量删除</a></li>
 
-								<li><a href="${baseUrl}archives/categories/${category.alias}/publish">批量发布</a></li>
+								<li><a href="<utils:url url="/archives/categories/${category.alias}/publish" />">批量发布</a></li>
 
-								<li><a href="${baseUrl}archives/categories/${category.alias}/hide">批量隐藏</a></li>
+								<li><a href="<utils:url url="/archives/categories/${category.alias}/hide" />">批量隐藏</a></li>
 
 							</ul>
 						</div>				
 						</div>
-						<div class="col-sm-8">
+						<div class="col-sm-8 col-xs-9">
 							<!-- pager -->
-							<div id="pager" class="pull-right" style="margin-right: 100px;">
+							<div id="pager" class="pull-right" style="margin-right: 80px;">
 								<pagination:paging page="${archives.page}" total="${archives.total}" size="${archives.pageSize}" />
 							</div>
 							<!-- end pager -->

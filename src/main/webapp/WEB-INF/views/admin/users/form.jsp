@@ -5,6 +5,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib uri="/utils" prefix="utils"%>
 
 <navigation:setNavigationActiveKey key="alumni"/>
 <navigation:setPageTitle label="编辑"/>
@@ -179,7 +180,7 @@
 							<i class="icon-ok bigger-110"></i> 提交
 						</button>
 						&nbsp; &nbsp; &nbsp; 
-						<a class="btn" href="${baseUrl}alumni.html"> 
+						<a class="btn" href="<utils:returnUrl url="/alumni.html" />"> 
 							<i class="icon-undo bigger-110"></i> 返回 
 						</a>
 					</div>

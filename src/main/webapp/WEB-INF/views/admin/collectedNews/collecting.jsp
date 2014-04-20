@@ -57,8 +57,7 @@ $(function() {
 			dataType: "json",
 			url: "<utils:url url="/collectedNews/categories/${category.alias}/collect/archive" />",
 			success: function(data) {
-				$("#newsCollectedCount").html(data.length);
-				$("#newsCollectTotal").html(data.length);
+				$(".newsCollectTotal").html(data.length);
 				if (data.length > 0) {
 					$("#newsCollectShow").show();
 					newsList = data;
@@ -96,9 +95,9 @@ $(function() {
 			<button type="button" class="close" data-dismiss="alert">
 				<i class="icon-remove"></i>
 			</button>
-			<strong>已采集到 <em id="newsCollectedCount"></em> 条 </strong> <br />
+			<strong>已采集到 <em class="newsCollectTotal"></em> 条 </strong> <br />
 			<p id="newsCollectShow" style="display:none;">
-				<strong>正在采集：<em id="newsCollectCurrent"></em> / <em id="newsCollectTotal"></em></strong> &nbsp; &nbsp;
+				<strong>正在采集：<em id="newsCollectCurrent"></em> / <em class="newsCollectTotal"></em></strong> &nbsp; &nbsp;
 				<em id="newsCollectTitle"></em>
 			</p>
 		</div>

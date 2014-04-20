@@ -5,6 +5,7 @@
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <navigation:setNavigationActiveKey key="job_${category.alias}"/>
 <navigation:setPageTitle label="评论"/>
@@ -38,7 +39,7 @@
 
 													<div class="body">
 														<div class="name">
-															<a href="#">${comment.user.name}</a>
+															<a href="<utils:url url="/alumni/${comment.user.id}/view.html" returned="true"/>">${comment.user.name}</a>
 														</div>
 
 														<div class="time">
@@ -56,7 +57,7 @@
 													
 													<div class="tools">
 														<div class="action-buttons bigger-125">
-															<a href="${baseUrl}jobs/${job.id}/comments/delete?id[]=${comment.id}">
+															<a data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/jobs/${job.id}/comments/delete?id[]=${comment.id}" />">
 																<i class="icon-trash red"></i>
 															</a>
 														</div>
@@ -76,12 +77,12 @@
 				
 					<div class="row">
 						<div class="col-xs-12 col-sm-4 isst-table-form-actions">
-							<a href="${baseUrl}jobs/${job.id}/comments/delete" class="btn btn-primary">批量删除</a>
+							<a href="<utils:url url="/jobs/${job.id}/comments/delete" />" class="btn btn-primary">批量删除</a>
 						</div>
 						
 						<div class="col-xs-12 col-sm-8">
 							<!-- pager -->
-							<div id="pager" class="pull-right" style="margin-right: 100px;">
+							<div id="pager" class="pull-right" style="margin-right: 80px;">
 								<pagination:paging page="${comments.page}" total="${comments.total}" size="${comments.pageSize}" />
 							</div>
 							<!-- end pager -->
@@ -111,7 +112,7 @@
 						</div>
 						<div class="clearfix form-actions">
 							<div class="col-md-offset-3 col-md-9">
-								<a class="btn btn-info" href="${baseUrl}jobs/categories/${category.alias}.html">
+								<a class="btn btn-info" href="<utils:url url="/jobs/categories/${category.alias}.html" />">
 									<i class="icon-ok bigger-110"></i> 确认
 								</a>
 							</div>

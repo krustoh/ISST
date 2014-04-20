@@ -4,6 +4,7 @@
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <navigation:setNavigationActiveKey key="${navigationActiveKey}"/>
 <navigation:setPageTitle label="删除"/>

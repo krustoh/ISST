@@ -5,12 +5,13 @@
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <navigation:setNavigationActiveKey key="restaurants" />
 
 <layout:override name="page-header">
 	<div class="pull-right" style="margin-right: 6%;">
-		<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}restaurants/add.html"> <i class="icon-plus align-top bigger-125"></i> 添加 </a>
+		<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/restaurants/add.html" />"> <i class="icon-plus align-top bigger-125"></i> 添加 </a>
 	</div>
 </layout:override>
 
@@ -43,7 +44,7 @@
 											<img class="restaurants-picture" src="${restaurant.picture}" />
 										</a>
 									</c:if>
-									<a href="${baseUrl}restaurants/${restaurant.id}/menus.html">
+									<a href="<utils:url url="/restaurants/${restaurant.id}/menus.html" />">
 										${restaurant.name}
 									</a>
 								</td>
@@ -52,8 +53,8 @@
 								<td>${restaurant.address}</td>
 								<td>
 									<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" href="${baseUrl}restaurants/${restaurant.id}.html"> <i class="icon-edit bigger-120"></i> </a> <a class="btn btn-xs btn-danger"
-											href="${baseUrl}restaurants/delete?id[]=${restaurant.id}"> <i class="icon-trash bigger-120"></i> </a>
+										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/restaurants/${restaurant.id}.html" />"> <i class="icon-edit bigger-120"></i> </a> 
+										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/restaurants/delete?id[]=${restaurant.id}" />"> <i class="icon-trash bigger-120"></i> </a>
 									</div>
 									<div class="visible-xs visible-sm hidden-md hidden-lg">
 										<div class="inline position-relative">
@@ -62,11 +63,11 @@
 											</button>
 
 											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-												<li><a href="${baseUrl}restaurants/${restaurant.id}.html" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i>
+												<li><a href="<utils:url url="/restaurants/${restaurant.id}.html" />" class="tooltip-success" data-rel="tooltip" title="编辑"> <span class="green"> <i class="icon-edit bigger-120"></i>
 													</span> </a>
 												</li>
 
-												<li><a href="${baseUrl}restaurants/delete?id[]=${restaurant.id}" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i
+												<li><a href="<utils:url url="/restaurants/delete?id[]=${restaurant.id}" />" class="tooltip-error" data-rel="tooltip" title="删除"> <span class="red"> <i
 															class="icon-trash bigger-120"></i> </span> </a>
 												</li>
 											</ul>
@@ -79,13 +80,13 @@
 				</table>
 
 				<div class="row">
-					<div class="col-sm-4 isst-table-form-actions">
-						<a href="${baseUrl}restaurants/delete" class="btn btn-primary">批量删除</a>
+					<div class="col-xs-12 col-sm-4 isst-table-form-actions">
+						<a href="<utils:url url="/restaurants/delete" />" class="btn btn-primary">批量删除</a>
 					</div>
 
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8">
 						<!-- pager -->
-						<div id="pager" class="pull-right" style="margin-right: 100px;">
+						<div id="pager" class="pull-right" style="margin-right: 80px;">
 							<pagination:paging page="${restaurants.page}" total="${restaurants.total}" size="${restaurants.pageSize}" />
 						</div>
 						<!-- end pager -->

@@ -4,11 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <c:set var="navigationActiveKey" value="archive_${category.alias}" scope="request"></c:set>
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
-				<a style="color:white" class="btn btn-sm btn-primary" href="${baseUrl}archives/categories/${category.alias}/add.html">
+				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/archives/categories/${category.alias}/add.html" />">
 					<i class="icon-plus align-top bigger-125"></i>
 						添加
 				</a>
@@ -59,11 +60,11 @@
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" href="${baseUrl}archives/${archive.id}.html">
+										<a class="btn btn-xs btn-info" href="<utils:url url="/archives/${archive.id}.html" />">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" href="${baseUrl}archives/categories/${category.alias}/delete?id[]=${archive.id}">
+										<a class="btn btn-xs btn-danger" href="<utils:url url="/archives/categories/${category.alias}/delete?id[]=${archive.id}" />">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -105,7 +106,7 @@
 								<i class="icon-angle-up icon-on-right"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="${baseUrl}archives/categories/${category.alias}/delete">批量删除</a></li>
+								<li><a href="<utils:url url="/archives/categories/${category.alias}/delete" />">批量删除</a></li>
 
 								<li><a href="#">批量发布</a></li>
 

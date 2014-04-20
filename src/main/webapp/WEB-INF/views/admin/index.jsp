@@ -4,6 +4,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
 
+
 <layout:override name="content">
 
 <ul>

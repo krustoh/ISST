@@ -5,6 +5,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <navigation:setNavigationActiveKey key="restaurants"/>
 <navigation:setPageTitle label="添加菜单"/>
@@ -68,7 +69,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="${baseUrl}restaurants/${restaurant.id}/menus.html">
+								<a class="btn" href="<utils:returnUrl url="/restaurants/${restaurant.id}/menus.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>

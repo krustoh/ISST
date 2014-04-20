@@ -5,6 +5,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <layout:override name="content">
 	<div class="col-xs-12">
@@ -46,7 +47,7 @@
 							<i class="icon-ok bigger-110"></i> 提交
 						</button>
 						&nbsp; &nbsp; &nbsp; 
-						<a class="btn" href="${baseUrl}login.html"> 
+						<a class="btn" href="<utils:returnUrl url="/login.html" />"> 
 							<i class="icon-undo bigger-110"></i> 返回 
 						</a>
 					</div>
