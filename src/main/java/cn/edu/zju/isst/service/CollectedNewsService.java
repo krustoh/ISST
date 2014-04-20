@@ -8,7 +8,7 @@ import cn.edu.zju.isst.entity.CollectedNews;
 
 public interface CollectedNewsService {
     public CollectedNews find(int id);
-    public PaginationList<CollectedNews> findAll(int categoryId, int published, int pageSize, int page);
+    public PaginationList<CollectedNews> findAll(int categoryId, int status, int pageSize, int page);
     public List<CollectedNews> findAll(Set<Integer> idset);
     public int delete(CollectedNews news);
     public int delete(Set<Integer> idset);
@@ -18,4 +18,6 @@ public interface CollectedNewsService {
     public CollectedNews collectDetail(int id);
     public int publishForArchive(Set<Integer> idset);
     public int publishForJob(Set<Integer> idset);
+    public int ignore(Set<Integer> idset);
+    public int unprocess(Set<Integer> idset);
 }

@@ -39,7 +39,7 @@ public class ArchiveServiceImpl implements ArchiveService {
 
     @Override
     public Archive save(Archive archive) {
-        archive.setUpdatedAt(new Date());System.out.println(new Date().getTime());System.out.println(new Date());
+        archive.setUpdatedAt(new Date());
         archive.setDescriptionFromContent(archive.getContent());
         archiveDao.save(archive);
         

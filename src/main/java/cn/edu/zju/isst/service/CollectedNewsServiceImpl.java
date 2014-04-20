@@ -32,7 +32,6 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
                 "重要通知", "学生思政", "新闻中心", "教务信息", "合作科研", "招生信息"
             });
     }
-
     
     @Override
     public List<CollectedNews> collectForJob(int categoryId) {
@@ -52,6 +51,7 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
                 CollectedNews collectedNews = new CollectedNews(entity);
                 collectedNews.setCreatedAt(createdAt);
                 collectedNews.setCategoryId(categoryId);
+                collectedNews.setStatus(CollectedNews.STATUS_UNCOLLECTED);
                 collectedNewsDao.insert(collectedNews);
                 
                 list.add(collectedNews);
@@ -73,7 +73,7 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
             CSTCollectionSource.parseDetail(entity);
             news.setContent(entity.getContent());
             news.setPostTime(entity.getPostTime());
-            
+            news.setStatus(CollectedNews.STATUS_UNPROCESSED);
             collectedNewsDao.save(news);
         }
         return news;
@@ -84,7 +84,7 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
         List<CollectedNews> collectedNews = collectedNewsDao.findAll(idset);
         int count = 0;
         for (CollectedNews news : collectedNews) {
-            if (news.getPostId() == 0) {
+            if (news.getPostId() == 0 && news.getStatus() == CollectedNews.STATUS_UNPROCESSED) {
                 Archive archive = new Archive();
                 archive.setTitle(news.getTitle());
                 archive.setContent(news.getContent());
@@ -95,6 +95,7 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
                 archiveDao.insert(archive);
                 
                 news.setPostId(archive.getId());
+                news.setStatus(CollectedNews.STATUS_PUBLISHED);
                 collectedNewsDao.update(news);
                 
                 count++;
@@ -109,7 +110,7 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
         List<CollectedNews> collectedNews = collectedNewsDao.findAll(idset);
         int count = 0;
         for (CollectedNews news : collectedNews) {
-            if (news.getPostId() == 0) {
+            if (news.getPostId() == 0 && news.getStatus() == CollectedNews.STATUS_UNPROCESSED) {
                 Job job = new Job();
                 job.setTitle(news.getTitle());
                 job.setContent(news.getContent());
@@ -123,6 +124,7 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
                 jobDao.insert(job);
                 
                 news.setPostId(job.getId());
+                news.setStatus(CollectedNews.STATUS_PUBLISHED);
                 collectedNewsDao.update(news);
                 
                 count++;
@@ -138,8 +140,8 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
     }
 
     @Override
-    public PaginationList<CollectedNews> findAll(int categoryId, int published, int pageSize, int page) {
-        return collectedNewsDao.findAll(categoryId, published, pageSize, page);
+    public PaginationList<CollectedNews> findAll(int categoryId, int status, int pageSize, int page) {
+        return collectedNewsDao.findAll(categoryId, status, pageSize, page);
     }
 
     @Override
@@ -160,5 +162,15 @@ public class CollectedNewsServiceImpl implements CollectedNewsService {
     @Override
     public void save(CollectedNews news) {
         collectedNewsDao.save(news);
+    }
+
+    @Override
+    public int ignore(Set<Integer> idset) {
+        return collectedNewsDao.ignore(idset);
+    }
+
+    @Override
+    public int unprocess(Set<Integer> idset) {
+        return collectedNewsDao.unprocess(idset);
     }
 }

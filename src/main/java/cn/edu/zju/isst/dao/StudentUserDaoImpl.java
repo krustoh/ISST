@@ -125,7 +125,7 @@ public class StudentUserDaoImpl implements StudentUserDao {
     }
     
     private void parseSearchCondition(UserSearchCondition condition, SelectSQLBuilder select) {
-        if (null != condition.getGrade() && condition.getGrade().length() > 0) {
+        if (null != condition.getGrade() && condition.getGrade().length() > 0 && !condition.getGrade().equals("0")) {
             select.where("c.start_year=:grade").addParam("grade", condition.getGrade());
         }
         

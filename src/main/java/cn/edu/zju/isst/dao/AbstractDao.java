@@ -320,23 +320,25 @@ public abstract class AbstractDao<T> implements Dao<T> {
                     for (int i = 1; i <= n; i++) {
                         String columnName = metaData.getColumnLabel(i);
                         if (null != fields.get(columnName)) {
-                            Class<?> type = fields.get(columnName).getType();
-                            if (type == int.class || type == Integer.class) {
-                                setFieldValue(entity, columnName, rs.getInt(columnName));
-                            } else if (type == short.class) {
-                                setFieldValue(entity, columnName, rs.getShort(columnName));
-                            } else if (type == long.class || type == Long.class) {
-                                setFieldValue(entity, columnName, rs.getLong(columnName));
-                            } else if (type == double.class || type == Double.class) {
-                                setFieldValue(entity, columnName, rs.getDouble(columnName));
-                            } else if (type == float.class || type == Float.class) {
-                                setFieldValue(entity, columnName, rs.getFloat(columnName));
-                            } else if (type == boolean.class || type == Boolean.class) {
-                                setFieldValue(entity, columnName, rs.getBoolean(columnName));
-                            } else if (type == Date.class) {
-                                setFieldValue(entity, columnName, new Date(rs.getTimestamp(columnName).getTime()));
-                            } else {
-                                setFieldValue(entity, columnName, rs.getString(columnName));
+                            if (null != rs.getObject(columnName)) {
+                                Class<?> type = fields.get(columnName).getType();
+                                if (type == int.class || type == Integer.class) {
+                                    setFieldValue(entity, columnName, rs.getInt(columnName));
+                                } else if (type == short.class) {
+                                    setFieldValue(entity, columnName, rs.getShort(columnName));
+                                } else if (type == long.class || type == Long.class) {
+                                    setFieldValue(entity, columnName, rs.getLong(columnName));
+                                } else if (type == double.class || type == Double.class) {
+                                    setFieldValue(entity, columnName, rs.getDouble(columnName));
+                                } else if (type == float.class || type == Float.class) {
+                                    setFieldValue(entity, columnName, rs.getFloat(columnName));
+                                } else if (type == boolean.class || type == Boolean.class) {
+                                    setFieldValue(entity, columnName, rs.getBoolean(columnName));
+                                } else if (type == Date.class) {
+                                    setFieldValue(entity, columnName, new Date(rs.getTimestamp(columnName).getTime()));
+                                } else {
+                                    setFieldValue(entity, columnName, rs.getString(columnName));
+                                }
                             }
                         } else {
                             onFindMissColumn(entity, columnName, rs, rowNum);

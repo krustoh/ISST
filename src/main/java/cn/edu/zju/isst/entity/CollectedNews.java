@@ -12,6 +12,11 @@ import cn.edu.zju.isst.dao.annotation.ID;
 
 @Entity("collected_news")
 public class CollectedNews {
+    public static final int STATUS_UNCOLLECTED = 0;
+    public static final int STATUS_UNPROCESSED = 1;
+    public static final int STATUS_PUBLISHED = 2;
+    public static final int STATUS_IGNORED = 3;
+    
     @ID
     @Column
     private int id;
@@ -42,6 +47,9 @@ public class CollectedNews {
 
     @Column
     private String url;
+    
+    @Column
+    private int status;
     
     public CollectedNews() {
     }
@@ -152,5 +160,13 @@ public class CollectedNews {
     
     public String toString() {
         return title;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

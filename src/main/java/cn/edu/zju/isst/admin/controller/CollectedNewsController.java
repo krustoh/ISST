@@ -30,27 +30,42 @@ public class CollectedNewsController {
     @Autowired
     private CategoryService categoryService;
     
-    @RequestMapping("/collectedNews/categories/{categoryAlias}")
-    public String list(
-            @PathVariable("categoryAlias") String categoryAlias, 
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "published", required = false, defaultValue = "0") int published,
+    @RequestMapping("/collectedNews/categories/{categoryAlias}.html")
+    public String collecting(
+            @PathVariable("categoryAlias") String categoryAlias,
             Model model) {
         Category category = categoryService.find(categoryAlias);
         
-        model.addAttribute("news", collectedNewsService.findAll(category.getId(), published, 20, page));
-        model.addAttribute("category", category);
-        model.addAttribute("published", published);
-        
-        return "collectedNews/list";
-    }
-
-    @RequestMapping("/collectedNews/categories/{categoryAlias}/collect.html")
-    public String collect(@PathVariable("categoryAlias") String categoryAlias, Model model) {
-        Category category = categoryService.find(categoryAlias);
+        model.addAttribute("news", collectedNewsService.findAll(category.getId(), CollectedNews.STATUS_UNPROCESSED, 0, 0));
         model.addAttribute("category", category);
         
         return "collectedNews/collecting";
+    }
+    
+    @RequestMapping("/collectedNews/categories/{categoryAlias}/published.html")
+    public String listForPublished(
+            @PathVariable("categoryAlias") String categoryAlias,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            Model model) {
+        return list(CollectedNews.STATUS_PUBLISHED, "published", categoryAlias, page, model);
+    }
+    
+    @RequestMapping("/collectedNews/categories/{categoryAlias}/ignored.html")
+    public String listForIgnored(
+            @PathVariable("categoryAlias") String categoryAlias,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            Model model) {
+        return list(CollectedNews.STATUS_IGNORED, "ignored", categoryAlias, page, model);
+    }
+    
+    private String list(int status, String statusLabel, String categoryAlias, int page, Model model) {
+        Category category = categoryService.find(categoryAlias);
+        
+        model.addAttribute("news", collectedNewsService.findAll(category.getId(), status, 10, page));
+        model.addAttribute("category", category);
+        model.addAttribute("status", statusLabel);
+        
+        return "collectedNews/list";
     }
 
     @RequestMapping("/collectedNews/categories/{categoryAlias}/collect/archive")
@@ -100,6 +115,54 @@ public class CollectedNewsController {
             WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", news.getTitle()));
             return WebUtils.redirectUrl("/collectedNews/categories/" + category.getAlias() + ".html");
         }
+    }
+    
+    @RequestMapping(value = "/collectedNews/categories/{categoryAlias}/publish/archive")
+    public String publish(
+            @RequestParam("id[]") String[] ids,
+            @PathVariable("categoryAlias") String categoryAlias,
+            Model model) {
+        Set<Integer> idset = new HashSet<Integer>();
+        for (String id : ids) {
+            idset.add(Integer.valueOf(id));
+        }
+        int count = collectedNewsService.publishForArchive(idset);
+        WebUtils.addSuccessFlashMessage(String.format("成功发布 <i>%d</i> 条记录", count));
+        
+        Category category = categoryService.find(categoryAlias);
+        return WebUtils.redirectUrl("/collectedNews/categories/" + category.getAlias() + ".html");
+    }
+    
+    @RequestMapping(value = "/collectedNews/categories/{categoryAlias}/ignore")
+    public String ignore(
+            @RequestParam("id[]") String[] ids,
+            @PathVariable("categoryAlias") String categoryAlias,
+            Model model) {
+        Set<Integer> idset = new HashSet<Integer>();
+        for (String id : ids) {
+            idset.add(Integer.valueOf(id));
+        }
+        int count = collectedNewsService.ignore(idset);
+        WebUtils.addSuccessFlashMessage(String.format("成功忽略 <i>%d</i> 条记录", count));
+        
+        Category category = categoryService.find(categoryAlias);
+        return WebUtils.redirectUrl("/collectedNews/categories/" + category.getAlias() + ".html");
+    }
+    
+    @RequestMapping(value = "/collectedNews/categories/{categoryAlias}/unprocess")
+    public String unprocess(
+            @RequestParam("id[]") String[] ids,
+            @PathVariable("categoryAlias") String categoryAlias,
+            Model model) {
+        Set<Integer> idset = new HashSet<Integer>();
+        for (String id : ids) {
+            idset.add(Integer.valueOf(id));
+        }
+        int count = collectedNewsService.unprocess(idset);
+        WebUtils.addSuccessFlashMessage(String.format("成功撤销忽略 <i>%d</i> 条记录", count));
+        
+        Category category = categoryService.find(categoryAlias);
+        return WebUtils.redirectUrl("/collectedNews/categories/" + category.getAlias() + "/ignored.html");
     }
     
     @RequestMapping(value = "/collectedNews/categories/{categoryAlias}/delete")
