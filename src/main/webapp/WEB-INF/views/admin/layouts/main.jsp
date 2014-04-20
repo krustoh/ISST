@@ -46,7 +46,7 @@
 
 						<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
-							<li><a href="#"> <i class="icon-key"></i> 修改密码 </a>
+							<li><a href="${baseUrl}password.html"> <i class="icon-key"></i> 修改密码 </a>
 							</li>
 
 							<li class="divider">&nbsp;</li>

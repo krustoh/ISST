@@ -16,7 +16,7 @@
 			<form action="" class="isst-table-form">
 				<fieldset>
 					<table class="table table-bordered bootstrap-datatable datatable dataTable">
-						<thead><tr style="font-weight:bold"><td colspan="6">基本信息</td></tr></thead>
+						<thead><tr style="font-weight:bold"><td colspan="6">基本信息&nbsp;&nbsp;(&nbsp;&nbsp;<i class="icon-check bigger-100 "></i>表示不公开&nbsp;&nbsp;)</td></tr></thead>
 						<tbody>
 							<tr>
 								<td class="center">学号</td><td>${alumnus.username}</td>
@@ -25,26 +25,26 @@
 							</tr>	
 							<tr>
 							  	<td class="center">年级</td><td>${alumnus.grade}</td>
-							  	<td class="center">班级</td><td>${alumnus.classId}</td>
+							  	<td class="center">班级</td><td>${alumnus.className}</td>
 								<td class="center">专业</td><td>${alumnus.major}</td>
 							</tr>
 							<tr>
-								<td class="center">QQ</td><td>${alumnus.qq}</td>
-							  	<td class="center">邮箱</td><td>${alumnus.email}</td>
-							  	<td class="center">联系电话</td><td>${alumnus.phone}</td>
+								<td class="center">QQ</td><td>${alumnus.qq}<c:if test="${alumnus.privateQQ}">&nbsp;&nbsp;<i class="icon-check bigger-100 "></i></c:if></td>
+							  	<td class="center">邮箱</td><td>${alumnus.email}<c:if test="${alumnus.privateEmail}">&nbsp;&nbsp;<i class="icon-check bigger-100 "></i></c:if></td>
+							  	<td class="center">联系电话</td><td>${alumnus.phone}<c:if test="${alumnus.privatePhone}">&nbsp;&nbsp;<i class="icon-check bigger-100 "></i></c:if></td>
 							</tr>
 						</tbody>
 						
-						<thead><tr style="font-weight:bold" ><td colspan="6">工作信息</td></tr></thead>
+						<thead><tr style="font-weight:bold" ><td colspan="6">工作信息&nbsp;&nbsp;(&nbsp;&nbsp;<i class="icon-check bigger-100 "></i>表示不公开&nbsp;&nbsp;)</td></tr></thead>
 						<tbody>
 							<tr>
-								<td class="center">工作单位</td><td colspan="5">${alumnus.company}</td>
+								<td class="center">工作单位</td><td colspan="5">${alumnus.company}<c:if test="${alumnus.privateCompany}">&nbsp;&nbsp;<i class="icon-check bigger-100 "></i></c:if></td>
 							</tr>	
 							<tr>
-							  	<td class="center">工作职务</td><td colspan="5">${alumnus.position}</td>
+							  	<td class="center">工作职务</td><td colspan="5">${alumnus.position}<c:if test="${alumnus.privatePosition}">&nbsp;&nbsp;<i class="icon-check bigger-100 "></i></c:if></td>
 							</tr>
 							<tr>
-								<td class="center">工作城市</td><td colspan="5">${alumnus.cityId}</td>
+								<td class="center">工作城市</td><td colspan="5">${alumnus.cityName}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -69,27 +69,5 @@
 		</div>
 	</div>
 </layout:override>
-
-<layout:override name="javascripts">
-	<script type="text/javascript">
-		jQuery(function($) {
-			$('#pictureFile').ace_file_input({
-				no_file : 'No File ...',
-				btn_choose : 'Choose',
-				btn_change : 'Change',
-				droppable : false,
-				onchange : null,
-				thumbnail : false
-			//| true | large
-			//whitelist:'gif|png|jpg|jpeg'
-			//blacklist:'exe|php'
-			//onchange:''
-			//
-			});
-		});
-	</script>
-</layout:override>
-
-
 
 <%@ include file="../layouts/main.jsp"%>

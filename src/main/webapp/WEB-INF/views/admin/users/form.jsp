@@ -141,6 +141,7 @@
 					<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">城市</label>
 					<div class="col-xs-12 col-sm-5">
 						<form:select  id="cityId" path="cityId" class="form-control">
+							<form:option value="0" label="其他"></form:option>
 							<form:options items="${cities}" itemValue="id" itemLabel="name"/>
 						</form:select>
 					</div>
@@ -187,27 +188,6 @@
 		</form:form>
 	</div>
 </layout:override>
-
-<layout:override name="javascripts">
-	<script type="text/javascript">
-		jQuery(function($) {
-			$('#pictureFile').ace_file_input({
-				no_file : 'No File ...',
-				btn_choose : 'Choose',
-				btn_change : 'Change',
-				droppable : false,
-				onchange : null,
-				thumbnail : false
-			//| true | large
-			//whitelist:'gif|png|jpg|jpeg'
-			//blacklist:'exe|php'
-			//onchange:''
-			//
-			});
-		});
-	</script>
-</layout:override>
-
 
 
 <%@ include file="../layouts/main.jsp"%>

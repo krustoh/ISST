@@ -30,7 +30,6 @@
 
 <layout:override name="content">
 	<div class="col-xs-12">
-		<%@ include file="../blocks/message.jsp"%>
 		<div class="table-responsive">
 			<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
 				<fieldset>
@@ -65,6 +64,17 @@
 					</div>
 					
 					<div class="col-xs-12 col-sm-12">
+					
+						<div class="form-group col-xs-12 col-sm-4">
+							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="major">专业</label> 
+							<div class="col-xs-12 col-sm-9">
+								<form:select  id="major" path="major">
+									<form:option value="" label="所有"/>
+									<form:options items="${majors}" itemValue="name" itemLabel="name"/>
+								</form:select> 
+							</div>
+						</div>
+						
 						<div class="form-group col-xs-12 col-sm-3">
 							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="gender">性别</label> 
 							<div class="col-xs-12 col-sm-9">
@@ -86,20 +96,10 @@
 							</div>
 						</div>
 						
-						<div class="form-group col-xs-12 col-sm-5">
-							<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="major">专业</label> 
-							<div class="col-xs-12 col-sm-9">
-								<form:select  id="major" path="major">
-									<form:option value="0" label="所有"/>
-									<form:options items="${majors}" itemValue="name" itemLabel="name"/>
-								</form:select> 
-							</div>
-						</div>
-						
 						<div class="form-group col-xs-12 col-sm-1">
 							<button type="submit" class="btn btn-purple btn-sm">
-								查找
 								<i class="icon-search icon-on-right bigger-110"></i>
+								查找
 							</button>
 						</div>	
 					</div>
