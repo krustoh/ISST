@@ -10,5 +10,5 @@ import cn.edu.zju.isst.entity.Administrator;
 @Target({ ElementType.TYPE, ElementType.METHOD })  
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequireAdministrator {
-    public int[] value() default { Administrator.ADMIN };
+    public int[] value() default { Administrator.ADMIN_BASE };
 }

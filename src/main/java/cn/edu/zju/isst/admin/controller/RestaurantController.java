@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.zju.isst.common.WebUtils;
+import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.entity.Restaurant;
 import cn.edu.zju.isst.form.RestaurantForm;
+import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.RestaurantService;
 
+@RequireAdministrator(Administrator.ADMIN)
 @Controller("adminRestaurantController")
 public class RestaurantController {
 	@Autowired

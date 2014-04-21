@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.zju.isst.common.WebUtils;
+import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.entity.Category;
 import cn.edu.zju.isst.entity.Job;
 import cn.edu.zju.isst.entity.JobComment;
+import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.CategoryService;
 import cn.edu.zju.isst.service.JobCommentService;
 import cn.edu.zju.isst.service.JobService;
 
+@RequireAdministrator(Administrator.ADMIN)
 @Controller("adminJobCommentController")
 public class JobCommentController {
     @Autowired

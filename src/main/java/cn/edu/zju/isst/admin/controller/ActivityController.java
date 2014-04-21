@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.ActivitySearchCondition;
 import cn.edu.zju.isst.entity.Activity;
+import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.form.ActivityForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.ActivityService;
 import cn.edu.zju.isst.service.CityService;
 
-@RequireAdministrator
+@RequireAdministrator(Administrator.ADMIN)
 @Controller("adminActivityController")
 public class ActivityController {
     @Autowired

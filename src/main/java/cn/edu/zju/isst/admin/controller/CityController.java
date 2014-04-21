@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.zju.isst.common.WebUtils;
+import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.entity.City;
 import cn.edu.zju.isst.entity.CitySearchCondition;
 import cn.edu.zju.isst.form.CityForm;
+import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.CityService;
 
+@RequireAdministrator(Administrator.ADMIN)
 @Controller("adminCityController")
 public class CityController {
     @Autowired

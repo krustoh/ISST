@@ -22,7 +22,6 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
     
     @Override
     public int doEndTag() throws JspException {
-        setDynamicAttribute(null, "href", href);
         String content = null == this.bodyContent ? null : this.bodyContent.getString();
         if (null == label) {
             label = content != null ? content.trim() : "";
@@ -30,32 +29,39 @@ public class NavigationLinkTag extends BodyTagSupport implements DynamicAttribut
             content = label;
         }
         
+        boolean hidden = false;
+        
         NavigationLink link = new NavigationLink(label, href);
         Navigation.addMenu(pageContext, key, link);
-        Tag parentTag = this.getParent();
-        NavigationItemTag parent = null;
-        if (null != parentTag && parentTag instanceof NavigationItemTag) {
-            parent = (NavigationItemTag) parentTag;
-            parent.setNavigationLink(link);
+        Tag parent = this.getParent();
+        NavigationItemTag parentItem = null;
+        if (null != parent && parent instanceof NavigationItemTag) {
+            parentItem = (NavigationItemTag) parent;
+            parentItem.setNavigationLink(link);
+            hidden = parentItem.isHidden();
         }
         
         String activeKey = Navigation.getNavigationActiveKey(pageContext);
         if (null != activeKey && activeKey.equals(key)) {
             if (null != parent) {
-                parent.setActive(true);
+                parentItem.setActive(true);
             }
         }
-        
-        StringBuilder sb = new StringBuilder();
-        for (String key : attributes.keySet()) {
-            sb.append(" ").append(key).append("=\"").append(attributes.get(key)).append("\"");
-        }
-        
-        JspWriter out = pageContext.getOut();
-        try {
-            out.append(String.format("<%s%s>%s</%s>", "a", sb.toString(), content, "a"));
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (!hidden) {
+            setDynamicAttribute(null, "href", href);
+            
+            StringBuilder sb = new StringBuilder();
+            for (String key : attributes.keySet()) {
+                sb.append(" ").append(key).append("=\"").append(attributes.get(key)).append("\"");
+            }
+            
+            JspWriter out = pageContext.getOut();
+            try {
+                out.append(String.format("<%s%s>%s</%s>", "a", sb.toString(), content, "a"));
+            } catch (IOException e) {
+                throw new JspException(e);
+            }
         }
         
         attributes = null;

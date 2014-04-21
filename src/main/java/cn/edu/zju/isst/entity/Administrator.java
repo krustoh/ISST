@@ -9,8 +9,9 @@ import cn.edu.zju.isst.dao.annotation.ID;
 @Entity("admins")
 public class Administrator {
     public static final int SUPER = 0xffffffff;
-    public static final int ADMIN_ALUMNI = 0x00000001;
-    public static final int ADMIN = 0x00000003;
+    public static final int ADMIN_BASE = 0x00000001;
+    public static final int ADMIN_ALUMNI = 0x00000003;
+    public static final int ADMIN = 0x00000007;
     
     @ID
     @Column

@@ -20,7 +20,10 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
     private boolean active;
     private NavigationLink navigationLink;
     
-    public int doEndTag() {
+    private boolean hidden = false;
+    
+    public int doEndTag() throws JspException {
+        
         if (active) {
             Navigation.addFirstBreadcrumb(pageContext, navigationLink);
             if (null == attributes) {
@@ -33,30 +36,39 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
                     attributes.put("class", activeCssClass);
                 }
             }
+        }
+
+        Tag parent = this.getParent();
+        if (null != parent && parent instanceof NavigationItemTag) {
+            NavigationItemTag parentItem = (NavigationItemTag) parent;
+            if (active) {
+                parentItem.setActive(true);
+            }
+            if (parentItem.isHidden()) {
+                hidden = true;
+            }
+        }
+        
+        if (!hidden) {
+            StringBuilder sb = new StringBuilder();
+            if (null != attributes) {
+                for (String key : attributes.keySet()) {
+                    sb.append(" ").append(key).append("=\"").append(attributes.get(key)).append("\"");
+                }
+            }
             
-            Tag parent = this.getParent();
-            if (null != parent && parent instanceof NavigationItemTag) {
-                ((NavigationItemTag)parent).setActive(true);
+            JspWriter out = pageContext.getOut();
+            try {
+                out.append(String.format("<%s%s>%s</%s>", tag, sb.toString(), null == this.bodyContent ? "" : this.bodyContent.getString(), tag));
+            } catch (IOException e) {
+                throw new JspException(e);
             }
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        if (null != attributes) {
-            for (String key : attributes.keySet()) {
-                sb.append(" ").append(key).append("=\"").append(attributes.get(key)).append("\"");
-            }
-        }
-        
-        JspWriter out = pageContext.getOut();
-        try {
-            out.append(String.format("<%s%s>%s</%s>", tag, sb.toString(), null == this.bodyContent ? "" : this.bodyContent.getString(), tag));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         
         attributes = null;
         navigationLink = null;
         active = false;
+        hidden = false;
         
         return EVAL_PAGE;
     }
@@ -83,5 +95,13 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
     
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public boolean isHidden() {
+        return hidden;
     }
 }

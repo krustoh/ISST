@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.zju.isst.common.WebUtils;
+import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.entity.Category;
 import cn.edu.zju.isst.entity.CollectedNews;
 import cn.edu.zju.isst.form.CollectedNewsForm;
+import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.CategoryService;
 import cn.edu.zju.isst.service.CollectedNewsService;
 
+@RequireAdministrator(Administrator.ADMIN)
 @Controller("adminCollectedNewsController")
 public class CollectedNewsController {
     @Autowired

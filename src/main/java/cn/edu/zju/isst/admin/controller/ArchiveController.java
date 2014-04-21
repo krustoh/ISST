@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.zju.isst.common.WebUtils;
+import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.ArchiveSearchCondition;
 import cn.edu.zju.isst.entity.Category;
@@ -23,7 +24,7 @@ import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.ArchiveService;
 import cn.edu.zju.isst.service.CategoryService;
 
-@RequireAdministrator
+@RequireAdministrator(Administrator.ADMIN)
 @Controller("adminArchiveController")
 public class ArchiveController {
     @Autowired

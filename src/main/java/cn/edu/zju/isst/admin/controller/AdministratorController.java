@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -52,14 +51,15 @@ public class AdministratorController {
             return "login";
         }
     }
-    
+
+    @RequireAdministrator
     @RequestMapping(value = "/password.html", method = RequestMethod.GET)
     public String changePassword(Model model) {
         model.addAttribute("administratorPasswordForm", new AdministratorPasswordForm());
         return "administrators/password";
     }
 
-    @RequireAdministrator(Administrator.ADMIN_ALUMNI)
+    @RequireAdministrator
     @RequestMapping(value = "/password.html", method = RequestMethod.POST)
     public String saveChangePassword(
             @Valid AdministratorPasswordForm form, 
@@ -74,11 +74,15 @@ public class AdministratorController {
         } else {
             if (!form.getNewPassword().equals(form.getConfirmPassword())) {
                 hasErrors = true;
-                result.addError(new ObjectError("confirmPassword", "确认密码与新密码不一致"));
+                result.rejectValue("confirmPassword", "confirmPassword.not_conformity", "确认密码与新密码不一致");
             }
         }
         
         Administrator administrator = (Administrator) session.getAttribute("administrator");
+        if (!Administrator.validatePassword(administrator.getPassword(), form.getOldPassword())) {
+            hasErrors = true;
+            result.rejectValue("oldPassword", "oldPassword.invalid", "原密码错误");
+        }
         
         if (hasErrors) {
             form.setConfirmPassword(null);
@@ -92,7 +96,7 @@ public class AdministratorController {
             return logout(request, response);
         }
     }
-    
+
     @RequireAdministrator
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response) {
