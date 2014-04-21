@@ -94,7 +94,7 @@ public class RestaurantController {
         if (confirm == 0) {
             model.addAttribute("entities", restaurantService.findAll(idset));
             model.addAttribute("navigationActiveKey", "restaurants");
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("restaurants.html"));
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/restaurants.html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {

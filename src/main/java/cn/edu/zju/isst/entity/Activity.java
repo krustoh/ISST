@@ -2,6 +2,7 @@ package cn.edu.zju.isst.entity;
 
 import java.util.Date;
 
+import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.dao.annotation.Column;
 import cn.edu.zju.isst.dao.annotation.Entity;
 import cn.edu.zju.isst.dao.annotation.ID;
@@ -27,8 +28,8 @@ public class Activity {
     @Column
     private String location;
     
-    @Column
-    private String picture;
+    @Column("picture_path")
+    private String picturePath;
 
     @Column
     private String description;
@@ -47,6 +48,10 @@ public class Activity {
 
     @Column
     private int status;
+    
+    private String cityName;
+    
+    private UserSummary user;
     
     public int getId() {
         return id;
@@ -80,12 +85,16 @@ public class Activity {
         this.title = title;
     }
     
-    public String getPicture() {
-        return picture;
+    public String getPicturePath() {
+        return picturePath;
     }
     
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
+    
+    public String getPicture() {
+        return WebUtils.parseUploadedUrl(picturePath);
     }
     
     public String getDescription() {
@@ -94,6 +103,15 @@ public class Activity {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public void setDescriptionFromContent(String content) {
+        if (null == content) {
+            this.description = "" ;
+        } else {
+            String filtered = content.replaceAll("\\&[a-zA-Z]{0,9};", "").replaceAll("<[^>]*>", "").replaceAll("\\s", "");
+            this.description = filtered.substring(0, filtered.length() < 50 ? filtered.length() : 50);
+        }
     }
     
     public String getContent() {
@@ -144,6 +162,22 @@ public class Activity {
         this.location = location;
     }
     
+    public UserSummary getUser() {
+        return user;
+    }
+
+    public void setUser(UserSummary user) {
+        this.user = user;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     public String toString() {
         return title;
     }

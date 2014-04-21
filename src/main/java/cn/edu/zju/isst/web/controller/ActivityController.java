@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cn.edu.zju.isst.entity.Activity;
+import cn.edu.zju.isst.entity.ActivitySearchCondition;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.ActivityService;
 
@@ -19,10 +21,11 @@ public class ActivityController {
 
     @RequestMapping(value = "/campus/activities.html", method = RequestMethod.GET)
     public String campusList(Model model,
-            @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords,
+            ActivitySearchCondition condition,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        model.addAttribute("campus", activityService.findAllOfCampus(keywords, pageSize, page));
+        condition.setStatus(Activity.STATUS_PUBLISHED);
+        model.addAttribute("campus", activityService.findAll(condition, pageSize, page));
         return "activities/campus/list";
     }
 

@@ -14,7 +14,7 @@ public class PaginationTag extends TagSupport  {
     private int total;
     private int size;
     private int page;
-    private int length = 5;
+    private int length = 4;
     private String cssClass = "pagination";
     private String key = "page";
     private String prevCssClass = "prev";
@@ -32,71 +32,73 @@ public class PaginationTag extends TagSupport  {
     
     @Override
     public int doEndTag () {
-        if (null == urlGenerator) {
-            urlGenerator = new UrlGenerator((HttpServletRequest) pageContext.getRequest());
-        }
-        
-        JspWriter out = pageContext.getOut();
-        int lastPage = (int) Math.ceil(total / size);
-        
-        page = Math.min(lastPage, page);
-        page = page < 0 ? 1 : page;
-        
-        int prevPage = page - 1;
-        int nextPage = (page == lastPage ? 0 : page + 1);
-
-        if (lastPage >= 1) {
-            try {
-                out.append(String.format("<ul class=\"%s\">", cssClass));
-                out.append(String.format(
-                        "<li class=\"%s%s\"><a href=\"%s\">%s</a></li>", 
-                        prevCssClass,
-                        prevPage > 0 ? "" : " " + disabledCssClass,
-                        prevPage > 0 ? generateUrl(prevPage) : "javascript:;", 
-                        prevLabel
-                ));
-
-                int startPage = ((page-1)>4) ? page-4 : 1;
-                int endPage = ((startPage + length)>lastPage) ? lastPage : (startPage + length);
-
-                if (lastPage == endPage){
-                    startPage = ((lastPage - length)>0) ? lastPage - length : 1;
-                }
-
-                if (startPage > 1) {
-                    out.append(String.format("<li><a href=\"%s\">%s</a></li><li><span>...</span></li>", generateUrl(1), 1));
-                }
-
-                for (int i = startPage; i <= endPage; i++) {
-                    out.append(String.format(
-                            "<li class=\"%s\"><a href=\"%s\">%s</a></li>", 
-                            i == page ? activeCssClass : "",
-                            generateUrl(i),
-                            i
-                    ));
-                }
-
-                if (endPage < lastPage) {
-                    out.append(String.format(
-                            "<li><span>...</span></li><li><a href=\"%s\">%s</a></li>",
-                            generateUrl(lastPage),
-                            lastPage
-                    ));
-                }
-
-                out.append(String.format(
-                        "<li class=\"%s%s\"><a href=\"%s\">%s</a></li>",
-                        nextCssClass,
-                        nextPage > 0 ? "" : (" " + disabledCssClass),
-                        nextPage > 0 ? generateUrl(nextPage) : "javascript:;",
-                        nextLabel
-                ));
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (size > 0) {
+            if (null == urlGenerator) {
+                urlGenerator = new UrlGenerator((HttpServletRequest) pageContext.getRequest());
             }
-        }
+            
+            JspWriter out = pageContext.getOut();
+            int lastPage = (int) Math.ceil(total / size);
+            
+            page = Math.min(lastPage, page);
+            page = page < 0 ? 1 : page;
+            
+            int prevPage = page - 1;
+            int nextPage = (page == lastPage ? 0 : page + 1);
 
-        urlGenerator = null;
+            if (lastPage >= 1) {
+                try {
+                    out.append(String.format("<ul class=\"%s\">", cssClass));
+                    out.append(String.format(
+                            "<li class=\"%s%s\"><a href=\"%s\">%s</a></li>", 
+                            prevCssClass,
+                            prevPage > 0 ? "" : " " + disabledCssClass,
+                            prevPage > 0 ? generateUrl(prevPage) : "javascript:;", 
+                            prevLabel
+                    ));
+
+                    int startPage = ((page-1)>4) ? page-4 : 1;
+                    int endPage = ((startPage + length)>lastPage) ? lastPage : (startPage + length);
+
+                    if (lastPage == endPage){
+                        startPage = ((lastPage - length)>0) ? lastPage - length : 1;
+                    }
+
+                    if (startPage > 1) {
+                        out.append(String.format("<li><a href=\"%s\">%s</a></li><li><span>...</span></li>", generateUrl(1), 1));
+                    }
+
+                    for (int i = startPage; i <= endPage; i++) {
+                        out.append(String.format(
+                                "<li class=\"%s\"><a href=\"%s\">%s</a></li>", 
+                                i == page ? activeCssClass : "",
+                                generateUrl(i),
+                                i
+                        ));
+                    }
+
+                    if (endPage < lastPage) {
+                        out.append(String.format(
+                                "<li><span>...</span></li><li><a href=\"%s\">%s</a></li>",
+                                generateUrl(lastPage),
+                                lastPage
+                        ));
+                    }
+
+                    out.append(String.format(
+                            "<li class=\"%s%s\"><a href=\"%s\">%s</a></li>",
+                            nextCssClass,
+                            nextPage > 0 ? "" : (" " + disabledCssClass),
+                            nextPage > 0 ? generateUrl(nextPage) : "javascript:;",
+                            nextLabel
+                    ));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            urlGenerator = null;
+        }
         
         return EVAL_PAGE;
     }

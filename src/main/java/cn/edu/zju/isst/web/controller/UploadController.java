@@ -24,6 +24,9 @@ public class UploadController {
             fileName = pathInfo.substring(12);
         }
         File file = new File(AppConfig.UPLOAD_BASE_PATH + fileName);
+        if (!file.exists()) {
+            return null;
+        }
         return new FileSystemResource(file); 
     }
 }

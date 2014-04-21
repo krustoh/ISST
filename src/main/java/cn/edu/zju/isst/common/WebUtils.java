@@ -17,7 +17,7 @@ public class WebUtils {
     public static final String RETURN_URL_KEY = "returnUrl";
     
     public static String createUrl(String path) {
-        if (null != path && (path.startsWith("http://") || path.startsWith("https://"))) {
+        if (null != path && (path.equals("#") || path.startsWith("http://") || path.startsWith("https://"))) {
             return path;
         } else if (null == path) {
             return baseUrl();
