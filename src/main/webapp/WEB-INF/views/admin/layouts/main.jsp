@@ -111,7 +111,7 @@
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="#" key="activities" label="在校活动">
+								<navigation:link href="/campus/activities.html" key="activities" label="在校活动">
 									在校活动
 								</navigation:link>
 							</navigation:item>
@@ -173,29 +173,10 @@
 					</navigation:item>
 					
 					<navigation:item>
-						<navigation:link key="cities" href="#" label="城市" class="dropdown-toggle">
+						<navigation:link key="cities" href="/cities.html" label="同城" class="dropdown-toggle">
 							<i class="icon-globe" ></i>
-							<span class="menu-text">城市</span>
+							<span class="menu-text">同城</span>
 						</navigation:link>
-						<ul class="submenu">
-							<navigation:item>
-								<navigation:link key="cities_leader" href="#" label="城主">
-									城主
-								</navigation:link>
-							</navigation:item>
-							
-							<navigation:item>
-								<navigation:link href="#" key="cities_activities" label="活动">
-									活动
-								</navigation:link>
-							</navigation:item>
-							
-							<navigation:item>
-								<navigation:link href="#" key="cities_alumni" label="校友">
-									校友
-								</navigation:link>
-							</navigation:item>
-						</ul>
 					</navigation:item>
 				</ul>
 			

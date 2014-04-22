@@ -95,6 +95,7 @@ $(function() {
 			<button type="button" class="close" data-dismiss="alert">
 				<i class="icon-remove"></i>
 			</button>
+			<i class="icon-spinner icon-spin orange bigger-125"></i>
 			<strong>已采集到 <em class="newsCollectTotal"></em> 条 </strong> <br />
 			<p id="newsCollectShow" style="display:none;">
 				<strong>正在采集：<em id="newsCollectCurrent"></em> / <em class="newsCollectTotal"></em></strong> &nbsp; &nbsp;
@@ -140,14 +141,14 @@ $(function() {
 										<td class="data-news-time"></td>
 										<td>
 											<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-												<a class="btn btn-xs btn-info data-news-edit" href="" title="编辑"> 
+												<a class="btn btn-xs btn-info data-news-edit" href="#" title="编辑"> 
 													<i class="icon-edit bigger-120"></i> 
 												</a> 
-												<a class="btn btn-xs btn-info data-news-publish" href="" title="发布"> 
-													<i class="icon-edit bigger-120"></i> 
+												<a class="btn btn-xs btn-success data-news-publish" href="" title="发布"> 
+													<i class="icon-share-alt bigger-120"></i> 
 												</a> 
-												<a class="btn btn-xs btn-danger data-news-ignore" href="" title="忽略"> 
-													<i class="icon-trash bigger-120"></i>
+												<a class="btn btn-xs btn-inverse data-news-ignore" href="" title="忽略"> 
+													<i class="icon-eye-close bigger-120"></i>
 												</a>
 												<a class="btn btn-xs btn-danger data-news-delete" href="" title="删除"> 
 													<i class="icon-trash bigger-120"></i>
@@ -162,22 +163,22 @@ $(function() {
 													<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 
 														<li>
-															<a href="" class="tooltip-success data-news-edit" data-rel="tooltip" title="编辑"> 
+															<a href="#" class="tooltip-success data-news-edit" data-rel="tooltip" title="编辑"> 
 																<span class="green"> <i class="icon-edit bigger-120"></i> </span>
 															</a>
 														</li>
 														<li>
-															<a href="" class="tooltip-error" data-rel="tooltip  data-news-publish" title="发布"> 
-																<span class="red"> <i class="icon-trash bigger-120"></i> </span> 
+															<a href="" class="tooltip-error data-news-publish" data-rel="tooltip" title="发布"> 
+																<span class="red"> <i class="icon-share-alt bigger-120"></i> </span> 
 															</a>
 														</li>
 														<li>
-															<a href="" class="tooltip-error" data-rel="tooltip data-news-ignore" title="忽略"> 
-																<span class="red"> <i class="icon-trash bigger-120"></i> </span> 
+															<a href="" class="tooltip-error data-news-ignore" data-rel="tooltip" title="忽略"> 
+																<span class="red"> <i class="icon-eye-close bigger-120"></i> </span> 
 															</a>
 														</li>
 														<li>
-															<a href="" class="tooltip-error" data-rel="tooltip data-news-delete" title="删除"> 
+															<a href="" class="tooltip-error data-news-delete" data-rel="tooltip" title="删除"> 
 																<span class="red"> <i class="icon-trash bigger-120"></i> </span> 
 															</a>
 														</li>
@@ -202,14 +203,14 @@ $(function() {
 
 											<td>
 												<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-													<a class="btn btn-xs btn-info" href="<utils:url url="/collectedNews/${item.id}.html" />" title="编辑"> 
+													<a class="btn btn-xs btn-info" href="<utils:url url="/collectedNews/categories/${category.alias}.html/#" />" title="编辑"> 
 														<i class="icon-edit bigger-120"></i> 
 													</a> 
-													<a class="btn btn-xs btn-info" href="<utils:url url="/collectedNews/categories/${category.alias}/publish/archive?id[]=${item.id}" />" title="发布"> 
-														<i class="icon-edit bigger-120"></i> 
+													<a class="btn btn-xs btn-success" href="<utils:url url="/collectedNews/categories/${category.alias}/publish/archive?id[]=${item.id}" />" title="发布"> 
+														<i class="icon-share-alt bigger-120"></i> 
 													</a> 
-													<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/ignore?id[]=${item.id}" />" title="忽略"> 
-														<i class="icon-trash bigger-120"></i> 
+													<a class="btn btn-xs btn-inverse" href="<utils:url url="/collectedNews/categories/${category.alias}/ignore?id[]=${item.id}" />" title="忽略"> 
+														<i class="icon-eye-close bigger-120"></i> 
 													</a>
 													<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/delete?id[]=${item.id}" />" title="删除"> 
 														<i class="icon-trash bigger-120"></i> 
@@ -224,18 +225,18 @@ $(function() {
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 
 															<li>
-																<a href="<utils:url url="/collectedNews/${item.id}.html" />" class="tooltip-success" data-rel="tooltip" title="编辑"> 
-																<span class="green"> <i class="icon-edit bigger-120"></i></span> 
+																<a href="<utils:url url="/collectedNews/categories/${category.alias}.html/#" />" class="tooltip-success" data-rel="tooltip" title="编辑"> 
+																<span class="blue"> <i class="icon-edit bigger-120"></i></span> 
 																</a>
 															</li>
 															<li>
 																<a href="<utils:url url="/collectedNews/categories/${category.alias}/publish/archive?id[]=${item.id}" />" class="tooltip-error" data-rel="tooltip" title="发布"> 
-																	<span class="red"><i class="icon-trash bigger-120"></i> </span> 
+																	<span class="green"><i class="icon-share-alt bigger-120"></i> </span> 
 																</a>
 															</li>
 															<li>
 																<a href="<utils:url url="/collectedNews/categories/${category.alias}/ignore?id[]=${item.id}" />" class="tooltip-error" data-rel="tooltip" title="忽略"> 
-																	<span class="red"><i class="icon-trash bigger-120"></i> </span> 
+																	<span class="black"><i class="icon-eye-close bigger-120"></i> </span> 
 																</a>
 															</li>
 															<li>

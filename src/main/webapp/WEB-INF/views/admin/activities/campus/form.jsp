@@ -7,13 +7,13 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<c:set var="navigationActiveKey" value="cities" scope="request"></c:set>
+<c:set var="navigationActiveKey" value="activities" scope="request"></c:set>
 <navigation:setPageTitle label="${activityForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
 			<div class="col-xs-12">
 				<form:form class="form-horizontal isst-form" modelAttribute="activityForm" method="POST">
-					<form:hidden path="categoryId"/>
+					
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
 							<label for="inputtitle" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
@@ -97,7 +97,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="<utils:returnUrl url="/cities/${city.id}/activities.html" />">
+								<a class="btn" href="<utils:returnUrl url="/campus/activities.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>
@@ -113,10 +113,14 @@
 <script type="text/javascript">
 jQuery(function($){
 	$("#content").isst_wysiwyg();
+	
+	$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+		$(this).prev().focus();
+	});
 });
 </script>
 </layout:override>
 
 
 
-<%@ include file="../layouts/main.jsp"%>
+<%@ include file="../../layouts/main.jsp"%>

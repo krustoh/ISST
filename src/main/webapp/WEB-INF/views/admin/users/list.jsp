@@ -19,9 +19,9 @@
 			</button>
 		
 			<ul class="dropdown-menu">
-				<li><a href="<utils:url url="/archives/categories/${category.alias}/delete" />">单个添加</a></li>
+				<li><a href="<utils:url url="/alumni.html/#" />">单个添加</a></li>
 
-				<li><a href="<utils:url url="/archives/categories/${category.alias}/publish" />">批量添加</a></li>
+				<li><a href="<utils:url url="/alumni.html/#" />">批量添加</a></li>
 			</ul>
 		</div>
 	</div>

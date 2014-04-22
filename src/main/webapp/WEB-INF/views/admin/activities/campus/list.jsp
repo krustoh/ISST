@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="${category.alias=='experience' ? 'job_' : 'archive_'}${category.alias}"/>
+<navigation:setNavigationActiveKey key="activities"/>
 
 <layout:override name="page-header">
 	<div class="pull-right" style="margin-right: 5%;">
@@ -19,9 +19,9 @@
 			</button>
 		
 			<ul class="dropdown-menu">
-				<li><a href="<utils:url url="/archives/categories/${category.alias}/add.html" />">单个添加</a></li>
+				<li><a href="<utils:url url="/campus/activities/add.html" />">单个添加</a></li>
 
-				<li><a href="<utils:url url="/collectedNews/categories/${category.alias}.html" />">批量采集</a></li>
+				<li><a href="<utils:url url="/campus/activities.html/#" />">批量采集</a></li>
 			</ul>
 		</div>
 	</div>
@@ -35,13 +35,33 @@
 					<fieldset>
 						<div class="col-xs-12 col-sm-12">
 							
-							<div class="form-group col-xs-12 col-sm-4">
+							<div class="form-group col-xs-12 col-sm-2">
 								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="status">状态</label> 
 								<div class="col-xs-12 col-sm-9">
-									<form:select  id="status" path="status" class="form-control">
+									<form:select  id="status" path="status">
 										<form:option value="-1" label="所有"/>
 										<form:option value="0" label="隐藏"/>
 										<form:option value="1" label="发布"/>
+									</form:select> 
+								</div>
+							</div>
+							
+							<div class="form-group col-xs-12 col-sm-2">
+								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="cityId">城市</label> 
+								<div class="col-xs-12 col-sm-9">
+									<form:select  id="cityId" path="cityId">
+										<form:option value="0" label="所有"/>
+										<form:options items="${cities}" itemValue="id" itemLabel="name"/>
+									</form:select> 
+								</div>
+							</div>
+							
+							<div class="form-group col-xs-12 col-sm-2">
+								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="userId">发起人</label> 
+								<div class="col-xs-12 col-sm-9">
+									<form:select  id="userId" path="userId">
+										<form:option value="0" label="所有"/>
+										<form:options items="${cities}" itemValue="id" itemLabel="name"/>
 									</form:select> 
 								</div>
 							</div>
@@ -53,7 +73,7 @@
 								</div>
 							</div>
 							
-							<div class="form-group col-xs-12 col-sm-4">
+							<div class="form-group col-xs-12 col-sm-2">
 								<button type="submit" class="btn btn-purple btn-sm">
 									<i class="icon-search icon-on-right bigger-110"></i>
 									查找
@@ -82,27 +102,27 @@
 						</thead>
 						
 						<tbody>
-							<c:forEach items="${archives.items}" var="archive">
+							<c:forEach items="${activities.items}" var="activity">
 							<tr>
 								<td class="center">
 								<label>
-								<input type="checkbox" class="ace" name="id[]" value="${archive.id}"/> <span class="lbl"></span> </label>
+								<input type="checkbox" class="ace" name="id[]" value="${activity.id}"/> <span class="lbl"></span> </label>
 								</td>
-								<td>${archive.id}</td>
+								<td>${activity.id}</td>
 								<td>
-									<a href="<utils:url url="/archives/${archive.id}.html" />">${archive.title}</a>
-									<c:if test="${archive.status==0}">
+									<a href="<utils:url url="/campus/activities/${activity.id}.html" />">${activity.title}</a>
+									<c:if test="${activity.status==0}">
 										<span class="label label-sm label-warning">隐藏</span>
 									</c:if>  
 								</td>
 								<td>
-								<fmt:formatDate value="${archive.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
 								
 								</td>
 								<td>
 								<c:choose>
-									<c:when test="${archive.userId>0}">
-										<a href="<utils:url url="/alumni/${archive.user.id}/view.html" returned="true"/>">${archive.user.name}</a>
+									<c:when test="${activity.userId>0}">
+										<a href="<utils:url url="/alumni/${activity.user.id}/view.html" returned="true"/>">${activity.user.name}</a>
 									</c:when>
 									<c:otherwise>
 										管理员
@@ -113,11 +133,11 @@
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/archives/${archive.id}.html" />">
+										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/campus/activities/${activity.id}.html" />">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/archives/categories/${category.alias}/delete?id[]=${archive.id}" />">
+										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/campus/activities/delete?id[]=${activity.id}" />">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -131,11 +151,11 @@
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												
-												<li><a href="<utils:url url="/archives/${archive.id}.html" />" class="tooltip-success"
+												<li><a href="<utils:url url="/campus/activities/${activity.id}.html" />" class="tooltip-success"
 													data-rel="tooltip" title="编辑"> <span class="green">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 
-												<li><a href="<utils:url url="/archives/categories/${category.alias}/delete?id[]=${archive.id}" />" class="tooltip-error"
+												<li><a href="<utils:url url="/campus/activities/delete?id[]=${activity.id}" />" class="tooltip-error"
 													data-rel="tooltip" title="删除"> <span class="red">
 															<i class="icon-trash bigger-120"></i> </span> </a></li>
 											</ul>
@@ -156,11 +176,11 @@
 								<i class="icon-angle-up icon-on-right"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="<utils:url url="/archives/categories/${category.alias}/delete" />">批量删除</a></li>
+								<li><a href="<utils:url url="/campus/activities/delete" />">批量删除</a></li>
 
-								<li><a href="<utils:url url="/archives/categories/${category.alias}/publish" />">批量发布</a></li>
+								<li><a href="<utils:url url="/campus/activities/publish" />">批量发布</a></li>
 
-								<li><a href="<utils:url url="/archives/categories/${category.alias}/hide" />">批量隐藏</a></li>
+								<li><a href="<utils:url url="/campus/activities/hide" />">批量隐藏</a></li>
 
 							</ul>
 						</div>				
@@ -168,7 +188,7 @@
 						<div class="col-sm-8 col-xs-9">
 							<!-- pager -->
 							<div id="pager" class="pull-right" style="margin-right: 80px;">
-								<pagination:paging page="${archives.page}" total="${archives.total}" size="${archives.pageSize}" />
+								<pagination:paging page="${activities.page}" total="${activities.total}" size="${activities.pageSize}" />
 							</div>
 							<!-- end pager -->
 						</div>
@@ -178,4 +198,4 @@
 			</div>
 </layout:override>
 
-<%@ include file="../layouts/main.jsp"%>
+<%@ include file="../../layouts/main.jsp"%>
