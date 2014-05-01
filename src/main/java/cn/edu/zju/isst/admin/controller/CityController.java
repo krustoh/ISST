@@ -40,7 +40,7 @@ public class CityController {
     }
     
     @RequestMapping(value = "/cities/{id}.html", method = RequestMethod.GET)
-    public String edit(Model model, @PathVariable("cityId") int cityId, @PathVariable("id") int id) {
+    public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("cityForm", new CityForm(cityService.find(id)));
         return "cities/form";
     }

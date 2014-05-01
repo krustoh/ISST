@@ -5,6 +5,7 @@ public class ActivitySearchCondition {
     private int userId;
     private int status = -1;
     private String keywords;
+    private String poster;
     
     public int getCityId() {
         return cityId;
@@ -36,5 +37,13 @@ public class ActivitySearchCondition {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

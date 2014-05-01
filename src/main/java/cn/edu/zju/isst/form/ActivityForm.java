@@ -3,6 +3,7 @@ package cn.edu.zju.isst.form;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.edu.zju.isst.common.WebUtils;
@@ -20,10 +21,13 @@ public class ActivityForm {
     private String picture;
     private String content;
     @NotBlank(message = "活动开始时间不能为空")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
     @NotBlank(message = "活动截止时间不能为空")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expireTime;
     private int status = Activity.STATUS_PUBLISHED;
+    private String poster;
     
     public ActivityForm() {
         
@@ -151,5 +155,13 @@ public class ActivityForm {
     
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

@@ -119,4 +119,9 @@ public class UserServiceImpl implements UserService {
     public String changePassword(int id, String password) {
         return studentDao.changePassword(id, password);
     }
+
+    @Override
+    public int findLike(String word) {
+        return studentDao.findLike(word);
+    }
 }

@@ -22,6 +22,7 @@ import cn.edu.zju.isst.form.ActivityForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.ActivityService;
 import cn.edu.zju.isst.service.CityService;
+import cn.edu.zju.isst.service.UserService;
 
 @RequireAdministrator(Administrator.ADMIN)
 @Controller("adminActivityController")
@@ -30,6 +31,8 @@ public class ActivityController {
     private ActivityService activityService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/campus/activities.html")
     public String campusList(
@@ -40,7 +43,7 @@ public class ActivityController {
         condition.setUserId(0);
         model.addAttribute("condition", condition);
         model.addAttribute("activities", activityService.findAll(condition, 10, page));
-        
+        model.addAttribute("cities", cityService.findAllForSelect());
         return "activities/campus/list";
     }
     
@@ -54,6 +57,7 @@ public class ActivityController {
         model.addAttribute("condition", condition);
         model.addAttribute("activities", activityService.findAll(condition, 10, page));
         model.addAttribute("city", cityService.find(cityId));
+        model.addAttribute("cities", cityService.findAllForSelect());
         
         return "activities/list";
     }
@@ -71,22 +75,38 @@ public class ActivityController {
     }
     
     private String save(ActivityForm form, BindingResult result, Model model, String template, String redirectUrl) {
+        if (!result.hasErrors()) {
+            if (null != form.getPoster()) {
+                String poster = form.getPoster().trim();
+                if (poster.length() > 0) {
+                    int userId = userService.findLike(poster);
+                    if (userId > 0) {
+                        form.setUserId(userId);
+                    } else {
+                        result.rejectValue("poster", "poster.not_exists", "发布者不存在");
+                    }
+                } else {
+                    result.rejectValue("poster", "poster.blank", "发布者不能为空");
+                }
+            }
+        }
+        
         if (result.hasErrors()) {
             model.addAttribute("activityForm", form);
             return template;
-        } else {
-            Activity activity;
-            if (form.getId() > 0) {
-                activity = activityService.find(form.getId());
-                form.bind(activity);
-            } else {
-                activity = form.build();
-            }
-            
-            activityService.save(activity);
-            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", activity));
-            return WebUtils.redirectUrl(redirectUrl);
         }
+        
+        Activity activity;
+        if (form.getId() > 0) {
+            activity = activityService.find(form.getId());
+            form.bind(activity);
+        } else {
+            activity = form.build();
+        }
+        
+        activityService.save(activity);
+        WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", activity));
+        return WebUtils.redirectUrl(redirectUrl);
     }
 
     @RequestMapping(value = "/campus/activities/{id}.html", method = RequestMethod.POST)

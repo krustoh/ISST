@@ -53,7 +53,7 @@ public class CityDaoImpl extends AbstractDao<City> implements CityDao {
             String keywords = condition.getKeywords().trim();
             if (keywords.length() > 0) {
                 for (String word : keywords.split(" ")) {
-                    select.like(word, "name");
+                    select.like("name", word);
                 }
             }
         }

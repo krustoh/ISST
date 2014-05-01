@@ -31,4 +31,12 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
         jdbcTemplate.getJdbcOperations().update(sql, encryptedPassword, id);
         return encryptedPassword;
     }
+
+    @Override
+    public int findLike(String word) {
+        SelectSQLBuilder select = select("id");
+        select.like(word, "username", "name");
+        Integer userId = jdbcTemplate.getJdbcOperations().queryForObject(select.toSQL(), Integer.class);
+        return null == userId ? 0 : userId.intValue();
+    }
 }

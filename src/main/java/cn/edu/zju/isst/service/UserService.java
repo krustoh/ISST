@@ -32,4 +32,5 @@ public interface UserService {
     public Klass findClass(int id);
     public Major findMajor(int id);
     public String changePassword(int id, String password);
+    public int findLike(String word);
 }

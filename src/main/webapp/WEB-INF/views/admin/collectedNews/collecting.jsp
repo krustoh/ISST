@@ -46,7 +46,7 @@ $(function() {
 				collectDetailRecursion(i + 1);
 			});
 		} else {
-			$("#newsCollectTitle").html("");
+			$("#newsCollectTitle").html("采集完成！");
 		}
 	};
 	
@@ -95,8 +95,7 @@ $(function() {
 			<button type="button" class="close" data-dismiss="alert">
 				<i class="icon-remove"></i>
 			</button>
-			<i class="icon-spinner icon-spin orange bigger-125"></i>
-			<strong>已采集到 <em class="newsCollectTotal"></em> 条 </strong> <br />
+			<strong>已采集到 <em class="newsCollectTotal"><i class="icon-spinner icon-spin orange bigger-125"></i></em> 条 </strong> <br />
 			<p id="newsCollectShow" style="display:none;">
 				<strong>正在采集：<em id="newsCollectCurrent"></em> / <em class="newsCollectTotal"></em></strong> &nbsp; &nbsp;
 				<em id="newsCollectTitle"></em>

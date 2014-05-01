@@ -21,7 +21,7 @@ public class ActivityDaoImpl extends AbstractDao<Activity> implements ActivityDa
     @Override
     public PaginationList<Activity> findAll(ActivitySearchCondition condition, int pageSize, int page) {
         SelectSQLBuilder select = select("a.id, a.title, a.location, a.city_id, a.user_id, a.status, a.picture_path, a.description, a.start_time, a.expire_time, a.updated_at", "a")
-                .leftJoin("city c", "c.id=a.city_id", "c.name city_name")
+                .leftJoin("cities c", "c.id=a.city_id", "c.name city_name")
                 .orderBy("a.updated_at DESC");
         
         parseSearchCondition(condition, select);
@@ -41,22 +41,28 @@ public class ActivityDaoImpl extends AbstractDao<Activity> implements ActivityDa
     
     private void parseSearchCondition(ActivitySearchCondition condition, SelectSQLBuilder select) {
         if (condition.getCityId() >= 0) {
-            select.where("city_id=:cityId").addParam("cityId", condition.getCityId());
+            select.where("a.city_id=:cityId").addParam("cityId", condition.getCityId());
         }
         
         if (condition.getUserId() >= 0) {
-            select.where("user_id=:userId").addParam("userId", condition.getUserId());
+            select.where("a.user_id=:userId").addParam("userId", condition.getUserId());
+        } else if (null != condition.getPoster()) {
+            String poster = condition.getPoster().trim();
+            if (poster.length() > 0) {
+                select.leftJoin("students s", "s.id=a.user_id");
+                select.like(poster, "s.username", "s.name");
+            }
         }
         
         if (condition.getStatus() >= 0) {
-            select.where("status=:status").addParam("status", condition.getStatus());
+            select.where("a.status=:status").addParam("status", condition.getStatus());
         }
         
         if (null != condition.getKeywords()) {
             String keywords = condition.getKeywords().trim();
             if (keywords.length() > 0) {
                 for (String word : keywords.split(" ")) {
-                    select.like(word, "title", "location", "description");
+                    select.like(word, "a.title", "a.location", "a.description");
                 }
             }
         }
