@@ -7,13 +7,12 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<c:set var="navigationActiveKey" value="cities" scope="request"></c:set>
+<navigation:setNavigationActiveKey key="cities"/>
 <navigation:setPageTitle label="${cityForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
 			<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="jobForm" method="POST">
-					<form:hidden path="categoryId"/>
+				<form:form class="form-horizontal isst-form" modelAttribute="cityForm" method="POST">
 					<fieldset>
 						<field:wrapper class="form-group" path="name">
 							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
@@ -26,14 +25,14 @@
 							</form:errors>
 						</field:wrapper>
 						
-						<field:wrapper class="form-group" path="userId">
-							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+						<field:wrapper class="form-group" path="principal">
+							<label for="principal" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							城主
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputError" class="width-100" path="userId" />
+								<form:input id="principal" class="width-100" path="principal" placeholder="学号" />
 							</div>
-							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="userId">
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="principal">
 							</form:errors>
 						</field:wrapper>
 						

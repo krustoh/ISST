@@ -86,14 +86,16 @@
 									</c:if>  
 								</td>
 								<td>
-									<a href="<utils:url url="/alumni/${city.userId}/view.html" returned="true"/>">${city.userId}</a> 
+									<c:if test="${city.userId>0}">
+									<a href="<utils:url url="/alumni/${city.userId}/view.html" returned="true"/>">${city.user.name}</a> 
+									</c:if>
 								</td>
 								<td>
 									<a href="<utils:url url="/cities/${city.id}/activities.html" returned="true"/>">活动详情>></a>
 								</td>
 								
 								<td>
-									<a href="<utils:url url="#" returned="true"/>">同城校友详情>></a>
+									<a href="<utils:url url="/alumni.html?cityId=${city.id}" />">同城校友详情>></a>
 								</td>
 								
 								<td>

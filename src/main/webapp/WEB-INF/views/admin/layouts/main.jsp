@@ -177,6 +177,14 @@
 							<i class="icon-globe" ></i>
 							<span class="menu-text">同城</span>
 						</navigation:link>
+
+						<!--<ul class="submenu">-->
+							<navigation:item hidden="true">
+								<navigation:link href="/cities/${cityId}/activities.html" key="city_activity" label="同城活动">
+											同城活动
+								</navigation:link>
+							</navigation:item>
+						<!--</ul>-->
 					</navigation:item>
 				</ul>
 			

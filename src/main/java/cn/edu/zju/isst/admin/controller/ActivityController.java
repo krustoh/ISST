@@ -20,6 +20,7 @@ import cn.edu.zju.isst.entity.Activity;
 import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.form.ActivityForm;
+import cn.edu.zju.isst.form.CityActivityForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.ActivityService;
 import cn.edu.zju.isst.service.CityService;
@@ -59,6 +60,7 @@ public class ActivityController {
         model.addAttribute("activities", activityService.findAll(condition, 10, page));
         model.addAttribute("city", cityService.find(cityId));
         model.addAttribute("cities", cityService.findAllForSelect());
+        model.addAttribute("cityId", cityId);
         
         return "activities/list";
     }
@@ -70,26 +72,46 @@ public class ActivityController {
     }
     
     @RequestMapping(value = "/activities/{id}.html", method = RequestMethod.GET)
-    public String edit(Model model, @PathVariable("cityId") int cityId, @PathVariable("id") int id) {
-        model.addAttribute("activityForm", new ActivityForm(activityService.find(id)));
+    public String edit(Model model, @PathVariable("id") int id) {
+        Activity activity = activityService.find(id);
+        model.addAttribute("cityActivityForm", new CityActivityForm(activity));
+        model.addAttribute("cities", cityService.findAllForSelect());
+        model.addAttribute("city", cityService.find(activity.getCityId()));
+        model.addAttribute("cityId", activity.getCityId());
         return "activities/form";
     }
     
-    private String save(ActivityForm form, BindingResult result, Model model, String template, String redirectUrl) {
+    private String saveCityActivity(CityActivityForm form, BindingResult result, Model model, String template, String redirectUrl) {
         if (!result.hasErrors()) {
-            if (null != form.getPoster()) {
-                String poster = form.getPoster().trim();
-                if (poster.length() > 0) {
-                    StudentUser user = userService.find(poster);
-                    if (null != user) {
-                        form.setUserId(user.getId());
-                    } else {
-                        result.rejectValue("poster", "poster.not_exists", "发布者不存在");
-                    }
-                } else {
-                    result.rejectValue("poster", "poster.blank", "发布者不能为空");
-                }
+            form.validate(result);
+        }
+        
+        if (!result.hasErrors()) {
+            String poster = form.getPoster().trim();
+            StudentUser user = userService.find(poster);
+            if (null != user) {
+                form.setUserId(user.getId());
+            } else {
+                result.rejectValue("poster", "poster.not_exists", "发布者不存在");
             }
+        }
+        
+        if (result.hasErrors()) {
+            model.addAttribute("cities", cityService.findAllForSelect());
+            model.addAttribute("cityId", form.getCityId());
+            model.addAttribute("city", cityService.find(form.getCityId()));
+            model.addAttribute("cityActivityForm", form);
+            return template;
+        }
+
+        save(form);
+        
+        return WebUtils.redirectUrl(redirectUrl);
+    }
+    
+    private String saveCampusActivity(ActivityForm form, BindingResult result, Model model, String template, String redirectUrl) {
+        if (!result.hasErrors()) {
+            form.validate(result);
         }
         
         if (result.hasErrors()) {
@@ -97,6 +119,12 @@ public class ActivityController {
             return template;
         }
         
+        save(form);
+        
+        return WebUtils.redirectUrl(redirectUrl);
+    }
+    
+    private void save(ActivityForm form) {
         Activity activity;
         if (form.getId() > 0) {
             activity = activityService.find(form.getId());
@@ -107,7 +135,16 @@ public class ActivityController {
         
         activityService.save(activity);
         WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", activity));
-        return WebUtils.redirectUrl(redirectUrl);
+    }
+
+    @RequestMapping(value = "/activities/{id}.html", method = RequestMethod.POST)
+    public String saveEdit(
+            @Valid CityActivityForm form, 
+            BindingResult result, 
+            Model model, 
+            @PathVariable("id") int id) {
+        form.setId(id);
+        return saveCityActivity(form, result, model, "activities/form", "/cities/" + form.getCityId() + "/activities.html");
     }
 
     @RequestMapping(value = "/campus/activities/{id}.html", method = RequestMethod.POST)
@@ -117,7 +154,7 @@ public class ActivityController {
             Model model, 
             @PathVariable("id") int id) {
         form.setId(id);
-        return save(form, result, model, "activities/campus/form", "/campus/activitis.html");
+        return saveCampusActivity(form, result, model, "activities/campus/form", "/campus/activities.html");
     }
     
     @RequestMapping(value = "/campus/activities/add.html", method = RequestMethod.GET)
@@ -128,9 +165,12 @@ public class ActivityController {
     
     @RequestMapping(value = "/cities/{cityId}/activities/add.html", method = RequestMethod.GET)
     public String Add(Model model, @PathVariable("cityId") int cityId) {
-        ActivityForm form = new ActivityForm();
+        CityActivityForm form = new CityActivityForm();
         form.setCityId(cityId);
-        model.addAttribute("activityForm", form);
+        model.addAttribute("cityActivityForm", form);
+        model.addAttribute("cities", cityService.findAllForSelect());
+        model.addAttribute("city", cityService.find(cityId));
+        model.addAttribute("cityId", cityId);
         return "activities/form";
     }
 
@@ -139,17 +179,17 @@ public class ActivityController {
             @Valid ActivityForm form, 
             BindingResult result, 
             Model model) {
-        return save(form, result, model, "activities/campus/form", "/campus/activitis.html");
+        return saveCampusActivity(form, result, model, "activities/campus/form", "/campus/activities.html");
     }
 
     @RequestMapping(value = "/cities/{cityId}/activities/add.html", method = RequestMethod.POST)
     public String saveAdd(
-            @Valid ActivityForm form, 
+            @Valid CityActivityForm form, 
             BindingResult result, 
             Model model, 
             @PathVariable("cityId") int cityId) {
         form.setCityId(cityId);
-        return save(form, result, model, "activities/form", "/cities/" + cityId + "/activitis.html");
+        return saveCityActivity(form, result, model, "activities/form", "/cities/" + cityId + "/activities.html");
     }
     
     @RequestMapping(value = "/campus/activities/delete")

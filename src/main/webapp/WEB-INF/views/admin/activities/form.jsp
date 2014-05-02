@@ -7,30 +7,54 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<c:set var="navigationActiveKey" value="cities" scope="request"></c:set>
-<navigation:setPageTitle label="${activityForm.id>0?'编辑':'添加'}"/>
+<navigation:setNavigationActiveKey key="city_activity"/>
+<navigation:setPageTitle label="${cityActivityForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
 			<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="activityForm" method="POST">
+				<form:form class="form-horizontal isst-form" modelAttribute="cityActivityForm" method="POST">
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
-							<label for="inputtitle" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="title" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							标题
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputtitle" class="width-100" path="title" />
+								<form:input class="width-100" path="title" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
 							</form:errors>
 						</field:wrapper>
 						
+						<field:wrapper class="form-group" path="poster">
+							<label for="poster" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							发布者
+							</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:input id="poster" class="width-100" path="poster" placeholder="学号" />
+							</div>
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="poster">
+							</form:errors>
+						</field:wrapper>
+						
+						<field:wrapper class="form-group" path="cityId">
+							<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							城市
+							</label>
+							<div class="col-xs-12 col-sm-5">
+								<form:select  id="cityId" path="cityId">
+									<form:options items="${cities}" itemValue="id" itemLabel="name"/>
+								</form:select>
+							</div>
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="cityId">
+							</form:errors>
+						</field:wrapper>
+						
 						<field:wrapper class="form-group" path="location">
-							<label for="inputtitle" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="location" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							地点
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputtitle" class="width-100" path="location" />
+								<form:input class="width-100" path="location" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="location">
 							</form:errors>

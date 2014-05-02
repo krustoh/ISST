@@ -1,8 +1,8 @@
 package cn.edu.zju.isst.entity;
 
 public class ActivitySearchCondition {
-    private int cityId;
-    private int userId;
+    private int cityId = -1;
+    private int userId = -1;
     private int status = -1;
     private String keywords;
     private String poster;

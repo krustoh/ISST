@@ -66,7 +66,7 @@ public class CityController {
     }
     
     @RequestMapping(value = "/cities/add.html", method = RequestMethod.GET)
-    public String Add(Model model, @PathVariable("cityId") int cityId) {
+    public String Add(Model model) {
         CityForm form = new CityForm();
         model.addAttribute("cityForm", form);
         return "cities/form";

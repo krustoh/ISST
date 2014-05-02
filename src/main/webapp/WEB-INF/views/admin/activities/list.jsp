@@ -7,8 +7,8 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="cities"/>
-<navigation:setPageTitle label="同城活动"/>
+<navigation:setNavigationActiveKey key="city_activity"/>
+<navigation:setPageTitle label="${city.name}活动"/>
 
 <layout:override name="page-header">
 		<div class="pull-right" style="margin-right: 6%;">
@@ -41,7 +41,7 @@
 								<label class="col-xs-12 col-sm-4 col-md-4 control-label no-padding-right" for="cityId">城市</label> 
 								<div class="col-xs-12 col-sm-8">
 									<form:select  id="cityId" path="cityId">
-										<form:option value="0" label="所有"/>
+										<form:option value="-1" label="所有"/>
 										<form:options items="${cities}" itemValue="id" itemLabel="name"/>
 									</form:select> 
 								</div>
@@ -121,7 +121,7 @@
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/cities/${city.id}/activities/${activity.id}.html" />">
+										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/activities/${activity.id}.html" />">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
@@ -139,7 +139,7 @@
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												
-												<li><a href="<utils:url url="/cities/${city.id}/activities/${activity.id}.html" />" class="tooltip-success"
+												<li><a href="<utils:url url="/activities/${activity.id}.html" />" class="tooltip-success"
 													data-rel="tooltip" title="编辑"> <span class="green">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 

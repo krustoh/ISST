@@ -35,6 +35,7 @@ $(function() {
 			collectDetail(news.id, function(data) {
 				var $template = $newsTemplate.clone(true);
 				$template.find("input.data-news-id").val(data.id);
+				$template.find("input.data-news-id").attr("name", "id[]");
 				$template.find("td.data-news-id").html(data.id);
 				$template.find("td.data-news-title").html(data.title);
 				$template.find("td.data-news-time").html(new Date(data.postTime).format("yyyy-MM-dd hh:mm:ss"));
@@ -131,7 +132,7 @@ $(function() {
 								<tbody>
 									<tr class="data-news" style="display:none;">
 										<td class="center">
-											<label> <input type="checkbox" class="ace data-news-id" name="id[]" value="" /> 
+											<label> <input type="checkbox" class="ace data-news-id" value="" /> 
 											<span class="lbl"></span> 
 											</label>
 										</td>

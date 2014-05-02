@@ -1,5 +1,6 @@
 package cn.edu.zju.isst.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +44,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public void save(Activity activity) {
+        activity.setUpdatedAt(new Date());
         activityDao.save(activity);
     }
 
