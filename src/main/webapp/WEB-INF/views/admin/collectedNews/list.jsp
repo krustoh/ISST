@@ -49,29 +49,29 @@
 												<label> <input type="checkbox" class="ace" name="id[]" value="${item.id}" /> <span class="lbl"></span> </label>
 											</td>
 											<td>${item.id}</td>
-											<td>${item.title}</td>
+											<td>
+												<a href="<utils:url url="/collectedNews/${item.id}.html" returned="true"/>">
+													${item.title}
+												</a>
+											</td>
 											<td>
 												<fmt:formatDate value="${item.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" />
 											</td>
 
 											<td>
 												<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-													<a class="btn btn-xs btn-info" href="<utils:url url="/collectedNews/${item.id}.html" />" title="编辑"> 
+													<a class="btn btn-xs btn-info" href="<utils:url url="/collectedNews/${item.id}.html" returned="true"/>" title="编辑"> 
 														<i class="icon-edit bigger-120"></i> 
 													</a> 
-													<c:choose>
-														<c:when test="${status=='ignored'}">
-														<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/unprocessed?id[]=${item.id}" />" title="忽略"> 
-															<i class="icon-trash bigger-120"></i> 
-														</a>
-														</c:when>
+													<c:if test="${status=='ignored'}">
+													<a class="btn btn-xs btn-success" href="<utils:url url="/collectedNews/categories/${category.alias}/unprocessed?id[]=${item.id}" />" title="撤销忽略"> 
+														<i class="icon-eye-open bigger-120"></i> 
+													</a>
+													</c:if>
 														
-														<c:otherwise>
-														<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/delete?id[]=${item.id}" />" title="删除"> 
-															<i class="icon-trash bigger-120"></i> 
-														</a>
-														</c:otherwise>
-													</c:choose>
+													<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/delete?id[]=${item.id}" />" title="删除"> 
+														<i class="icon-trash bigger-120"></i> 
+													</a>
 												</div>
 												
 												<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -83,14 +83,14 @@
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 
 															<li>
-																<a href="<utils:url url="/collectedNews/${item.id}.html" />" class="tooltip-success" data-rel="tooltip" title="编辑"> 
-																<span class="green"> <i class="icon-edit bigger-120"></i></span> 
+																<a href="<utils:url url="/collectedNews/${item.id}.html" returned="true"/>" class="tooltip-success" data-rel="tooltip" title="编辑"> 
+																<span class="blue"> <i class="icon-edit bigger-120"></i></span> 
 																</a>
 															</li>
 															<c:if test="${status=='ignored'}">
 															<li>
-																<a href="<utils:url url="/collectedNews/categories/${category.alias}/unprocessed?id[]=${item.id}" />" class="tooltip-error" data-rel="tooltip" title="忽略"> 
-																	<span class="red"><i class="icon-trash bigger-120"></i> </span> 
+																<a href="<utils:url url="/collectedNews/categories/${category.alias}/unprocessed?id[]=${item.id}" />" class="tooltip-error" data-rel="tooltip" title="撤销忽略"> 
+																	<span class="green"><i class="icon-eye-open bigger-120"></i> </span> 
 																</a>
 															</li>
 															</c:if>

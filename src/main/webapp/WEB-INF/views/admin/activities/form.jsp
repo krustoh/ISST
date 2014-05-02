@@ -30,7 +30,7 @@
 							发布者
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="poster" class="width-100" path="poster" placeholder="学号" />
+								<form:input class="width-100" path="poster" placeholder="学号" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="poster">
 							</form:errors>
@@ -41,7 +41,7 @@
 							城市
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:select  id="cityId" path="cityId">
+								<form:select  path="cityId">
 									<form:options items="${cities}" itemValue="id" itemLabel="name"/>
 								</form:select>
 							</div>
@@ -61,12 +61,12 @@
 						</field:wrapper>
 						
 						<field:wrapper class="form-group " path="startTime">
-							<label for="inputstartTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="startTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							开始时间
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker" id="inputstartTime" path="startTime" type="text" data-date-format="yyyy-mm-dd" />
+								<form:input class="form-control date-picker" path="startTime" type="text" data-date-format="yyyy-mm-dd" />
 								<span class="input-group-addon">
 									<i class="icon-calendar bigger-110"></i>
 								</span>
@@ -77,12 +77,12 @@
 						</field:wrapper>
 						
 						<field:wrapper class="form-group " path="expireTime">
-							<label for="inputexpireTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="expireTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							截止时间
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker" id="inputexpireTime" path="expireTime" type="text" data-date-format="yyyy-mm-dd" />
+								<form:input class="form-control date-picker" path="expireTime" type="text" data-date-format="yyyy-mm-dd" />
 								<span class="input-group-addon">
 									<i class="icon-calendar bigger-110"></i>
 								</span>
@@ -95,7 +95,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
 						<div class="col-sm-9">
-							<form:select  id="status" path="status">
+							<form:select  path="status">
 								<form:option value="0" label="隐藏"/>
 								<form:option value="1" label="发布"/>
 							</form:select>

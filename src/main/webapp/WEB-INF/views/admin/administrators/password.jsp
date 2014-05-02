@@ -15,7 +15,7 @@
 					<label for="oldPassword" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">原密码 </label>
 					
 					<div class="col-xs-12 col-sm-5">
-						<form:password id="oldPassword" class="form-control" path="oldPassword" />
+						<form:password class="form-control" path="oldPassword" />
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="oldPassword">
 					</form:errors>
@@ -25,7 +25,7 @@
 					<label for="newPassword" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">新密码 </label>
 					
 					<div class="col-xs-12 col-sm-5">
-						<form:password id="newPassword" class="form-control" path="newPassword" />
+						<form:password class="form-control" path="newPassword" />
 					</div>
 					
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="newPassword">
@@ -35,7 +35,7 @@
 				<field:wrapper class="form-group" path="confirmPassword">
 					<label for="confirmPassword" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">确认密码</label>
 					<div class="col-xs-12 col-sm-5">
-						<form:password id="confirmPassword" class="form-control" path="confirmPassword" />
+						<form:password class="form-control" path="confirmPassword" />
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="confirmPassword">
 					</form:errors>

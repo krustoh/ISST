@@ -15,11 +15,11 @@
 				<form:form class="form-horizontal isst-form" modelAttribute="cityForm" method="POST">
 					<fieldset>
 						<field:wrapper class="form-group" path="name">
-							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="name" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							城市
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputError" class="width-100" path="name" />
+								<form:input class="width-100" path="name" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="name">
 							</form:errors>

@@ -14,50 +14,50 @@
 		<form:form class="form-horizontal isst-form" modelAttribute="restaurantForm" enctype="multipart/form-data">
 			<fieldset>
 				<field:wrapper class="form-group" path="name">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 餐馆名称 </label>
+					<label for="name" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 餐馆名称 </label>
 					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="name" />
+						<form:input id="name" class="form-control" path="name" />
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="name">
 					</form:errors>
 				</field:wrapper>
 
 				<field:wrapper class="form-group" path="hotline">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 订餐电话 </label>
+					<label for="hotline" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 订餐电话 </label>
 					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="hotline" />
+						<form:input id="hotline" class="form-control" path="hotline" />
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="hotline">
 					</form:errors>
 				</field:wrapper>
 
 				<field:wrapper class="form-group" path="businessHours">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 营业时间 </label>
+					<label for="businessHours" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 营业时间 </label>
 					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="businessHours" />
+						<form:input id="businessHours" class="form-control" path="businessHours" />
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="businessHours">
 					</form:errors>
 				</field:wrapper>
 
 				<field:wrapper class="form-group" path="address">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 地址 </label>
+					<label for="address" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 地址 </label>
 					<div class="col-xs-12 col-sm-5">
-						<form:input id="inputError" class="form-control" path="address" />
+						<form:input id="address" class="form-control" path="address" />
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="address">
 					</form:errors>
 				</field:wrapper>
 
 				<field:wrapper class="form-group" path="description">
-					<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 餐馆描述 </label>
+					<label for="description" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 餐馆描述 </label>
 					<div class="col-xs-12 col-sm-5">
 						<form:textarea path="description" id="description" class="form-control"></form:textarea>
 					</div>
 				</field:wrapper>
 
 				<div class="form-group">
-					<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="form-field-1">餐馆图标</label>
+					<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="pictureFile">餐馆图标</label>
 					<div class="col-xs-12 col-sm-5">
 						<form:input type="file" id="pictureFile" path="pictureFile" />
 						

@@ -52,6 +52,9 @@
 					</fieldset>
 				</form:form>	
 		
+		
+		<c:choose>
+		<c:when test="${jobs.total>0}">
 			<form action="" class="isst-table-form">		
 				<table class="table table-striped table-bordered table-hover">
 						<thead>
@@ -141,7 +144,7 @@
 												</c:if>
 												
 												<li><a href="<utils:url url="/jobs/${job.id}.html" />" class="tooltip-success"
-													data-rel="tooltip" title="编辑"> <span class="green">
+													data-rel="tooltip" title="编辑"> <span class="blue">
 												<i class="icon-edit bigger-120"></i> </span> </a></li>
 
 												<li><a href="<utils:url url="/jobs/categories/${category.alias}/delete?id[]=${job.id}" />" class="tooltip-error"
@@ -183,6 +186,19 @@
 						</div>
 					</div>
 					</form>
+				</c:when>
+					
+				<c:otherwise>
+					<div class="alert alert-warning">
+						<button type="button" class="close" data-dismiss="alert">
+						<i class="icon-remove"></i>
+						</button>
+						<strong>查询结果不存在，请重新输入查询条件！</strong>
+						<br />
+						<br />
+					</div>
+				</c:otherwise>
+				</c:choose>
 				</div>
 			</div>
 </layout:override>

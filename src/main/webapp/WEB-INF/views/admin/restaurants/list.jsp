@@ -63,7 +63,7 @@
 											</button>
 
 											<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-												<li><a href="<utils:url url="/restaurants/${restaurant.id}.html" />" class="tooltip-success" data-rel="tooltip" title="编辑"> <span class="green"> <i class="icon-edit bigger-120"></i>
+												<li><a href="<utils:url url="/restaurants/${restaurant.id}.html" />" class="tooltip-success" data-rel="tooltip" title="编辑"> <span class="blue"> <i class="icon-edit bigger-120"></i>
 													</span> </a>
 												</li>
 

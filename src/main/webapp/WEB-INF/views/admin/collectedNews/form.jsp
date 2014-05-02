@@ -7,13 +7,12 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="${category.alias=='experience'?'job_':'archive_'}${category.alias}"/>
-<navigation:setPageTitle label="${archiveForm.id>0?'编辑':'添加'}"/>
+<navigation:setNavigationActiveKey key="archive_${category.alias}"/>
+<navigation:setPageTitle label="编辑"/>
 
 <layout:override name="content">
 			<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="archiveForm" method="POST">
-					<form:hidden path="categoryId"/>
+				<form:form class="form-horizontal isst-form" modelAttribute="collectedNewsForm" method="POST">
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
 							<label for="inputtitle" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
@@ -26,16 +25,6 @@
 							</form:errors>
 						</field:wrapper>
 						
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
-						<div class="col-sm-9">
-							<form:select  id="status" path="status">
-								<form:option value="0" label="隐藏"/>
-								<form:option value="1" label="发布"/>
-							</form:select>
-						</div>
-					</div>
-
 					<div class="space-4"></div>
 					
 					<div class="row">

@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<c:set var="navigationActiveKey" value="activities" scope="request"></c:set>
+<navigation:setNavigationActiveKey key="activities"/>
 <navigation:setPageTitle label="${activityForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
@@ -16,34 +16,34 @@
 					
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
-							<label for="inputtitle" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="title" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							标题
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputtitle" class="width-100" path="title" />
+								<form:input class="width-100" path="title" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
 							</form:errors>
 						</field:wrapper>
 						
 						<field:wrapper class="form-group" path="location">
-							<label for="inputtitle" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="location" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							地点
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputtitle" class="width-100" path="location" />
+								<form:input class="width-100" path="location" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="location">
 							</form:errors>
 						</field:wrapper>
 						
 						<field:wrapper class="form-group " path="startTime">
-							<label for="inputstartTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="startTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							开始时间
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker" id="inputstartTime" path="startTime" type="text" data-date-format="yyyy-mm-dd" />
+								<form:input class="form-control date-picker"  path="startTime" type="text" data-date-format="yyyy-mm-dd" />
 								<span class="input-group-addon">
 									<i class="icon-calendar bigger-110"></i>
 								</span>
@@ -54,12 +54,12 @@
 						</field:wrapper>
 						
 						<field:wrapper class="form-group " path="expireTime">
-							<label for="inputexpireTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="expireTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							截止时间
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker" id="inputexpireTime" path="expireTime" type="text" data-date-format="yyyy-mm-dd" />
+								<form:input class="form-control date-picker" path="expireTime" type="text" data-date-format="yyyy-mm-dd" />
 								<span class="input-group-addon">
 									<i class="icon-calendar bigger-110"></i>
 								</span>

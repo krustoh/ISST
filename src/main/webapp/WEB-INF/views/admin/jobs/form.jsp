@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<c:set var="navigationActiveKey" value="job_${category.alias}" scope="request"></c:set>
+<navigation:setNavigationActiveKey key="job_${category.alias}"/>
 <navigation:setPageTitle label="${jobForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
@@ -16,40 +16,40 @@
 					<form:hidden path="categoryId"/>
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
-							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="title" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							标题
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputError" class="width-100" path="title" />
+								<form:input id="title" class="width-100" path="title" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
 							</form:errors>
 						</field:wrapper>
 						
 						<field:wrapper class="form-group" path="company">
-							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="company" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							公司
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputError" class="width-100" path="company" />
+								<form:input id="company" class="width-100" path="company" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="company">
 							</form:errors>
 						</field:wrapper>
 						
 						<field:wrapper class="form-group" path="position">
-							<label for="inputPosition" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="position" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							职务
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputPosition" class="width-100" path="position" />
+								<form:input id="position" class="width-100" path="position" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="position">
 							</form:errors>
 						</field:wrapper>
 						
 						<field:wrapper class="form-group" path="cityId">
-							<label for="inputError" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							城市
 							</label>
 							<div class="col-sm-9">

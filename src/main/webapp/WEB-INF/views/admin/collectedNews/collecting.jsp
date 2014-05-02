@@ -141,7 +141,7 @@ $(function() {
 										<td class="data-news-time"></td>
 										<td>
 											<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-												<a class="btn btn-xs btn-info data-news-edit" href="#" title="编辑"> 
+												<a class="btn btn-xs btn-info data-news-edit" href="" title="编辑"> 
 													<i class="icon-edit bigger-120"></i> 
 												</a> 
 												<a class="btn btn-xs btn-success data-news-publish" href="" title="发布"> 
@@ -163,7 +163,7 @@ $(function() {
 													<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 
 														<li>
-															<a href="#" class="tooltip-success data-news-edit" data-rel="tooltip" title="编辑"> 
+															<a href="" class="tooltip-success data-news-edit" data-rel="tooltip" title="编辑"> 
 																<span class="green"> <i class="icon-edit bigger-120"></i> </span>
 															</a>
 														</li>
@@ -193,7 +193,7 @@ $(function() {
 											</td>
 											<td>${item.id}</td>
 											<td>
-											${item.title}
+											<a href="<utils:url url="/collectedNews/${item.id}.html" returned="true"/>">${item.title}</a>
 											<c:if test="${item.status==0}">
 											<a href="javascript:;" class="newsReCollect" data-news-id="${item.id}">重试</a>
 											</c:if>
@@ -203,7 +203,7 @@ $(function() {
 
 											<td>
 												<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-													<a class="btn btn-xs btn-info" href="<utils:url url="/collectedNews/categories/${category.alias}.html/#" />" title="编辑"> 
+													<a class="btn btn-xs btn-info" href="<utils:url url="/collectedNews/${item.id}.html" returned="true"/>" title="编辑"> 
 														<i class="icon-edit bigger-120"></i> 
 													</a> 
 													<a class="btn btn-xs btn-success" href="<utils:url url="/collectedNews/categories/${category.alias}/publish/archive?id[]=${item.id}" />" title="发布"> 
@@ -225,7 +225,7 @@ $(function() {
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 
 															<li>
-																<a href="<utils:url url="/collectedNews/categories/${category.alias}.html/#" />" class="tooltip-success" data-rel="tooltip" title="编辑"> 
+																<a href="<utils:url url="/collectedNews/${item.id}.html" returned="true"/>" class="tooltip-success" data-rel="tooltip" title="编辑"> 
 																<span class="blue"> <i class="icon-edit bigger-120"></i></span> 
 																</a>
 															</li>

@@ -37,7 +37,7 @@
 				
 				<c:if test="${studentUserForm.id==0}">
 				<field:wrapper class="form-group" path="password">
-					<label for="name" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">密码 </label>
+					<label for="password" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">密码 </label>
 					
 					<div class="col-xs-12 col-sm-5">
 						<form:input id="password" class="form-control" path="password" />

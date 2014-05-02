@@ -52,6 +52,8 @@
 					</fieldset>
 				</form:form>	
 		
+		<c:choose>
+		<c:when test="${cities.total>0}">
 			<form action="" class="isst-table-form">		
 				<table class="table table-striped table-bordered table-hover">
 						<thead>
@@ -118,7 +120,7 @@
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												<li><a href="<utils:url url="/cities/${city.id}.html" />" class="tooltip-success"
-													data-rel="tooltip" title="编辑"> <span class="green">
+													data-rel="tooltip" title="编辑"> <span class="blue">
 												<i class="icon-edit bigger-120"></i> </span> </a></li>
 
 												<li><a href="<utils:url url="/cities/delete?id[]=${city.id}" />" class="tooltip-error"
@@ -160,6 +162,20 @@
 						</div>
 					</div>
 					</form>
+				</c:when>
+				
+				<c:otherwise>
+				<div class="alert alert-warning">
+					<button type="button" class="close" data-dismiss="alert">
+						<i class="icon-remove"></i>
+					</button>
+					<strong>查询结果不存在，请重新输入查询条件！</strong>
+					<br />
+					<br />
+				</div>
+				</c:otherwise>
+				
+				</c:choose>
 				</div>
 			</div>
 </layout:override>

@@ -26,23 +26,13 @@
 					<fieldset>
 						<div class="col-xs-12 col-sm-12">
 							
-							<div class="form-group col-xs-12 col-sm-2">
+							<div class="form-group col-xs-12 col-sm-3">
 								<label class="col-xs-12 col-sm-4 col-md-4 control-label no-padding-right" for="status">状态</label> 
 								<div class="col-xs-12 col-sm-8">
 									<form:select  id="status" path="status">
 										<form:option value="-1" label="所有"/>
 										<form:option value="0" label="隐藏"/>
 										<form:option value="1" label="发布"/>
-									</form:select> 
-								</div>
-							</div>
-							
-							<div class="form-group col-xs-12 col-sm-2">
-								<label class="col-xs-12 col-sm-4 col-md-4 control-label no-padding-right" for="cityId">城市</label> 
-								<div class="col-xs-12 col-sm-8">
-									<form:select  id="cityId" path="cityId">
-										<form:option value="-1" label="所有"/>
-										<form:options items="${cities}" itemValue="id" itemLabel="name"/>
 									</form:select> 
 								</div>
 							</div>
@@ -71,6 +61,8 @@
 					</fieldset>
 				</form:form>
 				
+			<c:choose>
+			<c:when test="${activities.total>0}">
 				<form action="" class="isst-table-form">
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
@@ -140,7 +132,7 @@
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												
 												<li><a href="<utils:url url="/activities/${activity.id}.html" />" class="tooltip-success"
-													data-rel="tooltip" title="编辑"> <span class="green">
+													data-rel="tooltip" title="编辑"> <span class="blue">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 
 												<li><a href="<utils:url url="/cities/${city.id}/activities/delete?id[]=${activity.id}" />" class="tooltip-error"
@@ -182,6 +174,20 @@
 						</div>
 					</div>
 					</form>
+				</c:when>
+				
+				
+				<c:otherwise>
+				<div class="alert alert-warning">
+					<button type="button" class="close" data-dismiss="alert">
+						<i class="icon-remove"></i>
+					</button>
+					<strong>查询结果不存在，请重新输入查询条件！</strong>
+				<br />
+				<br />
+				</div>
+				</c:otherwise>
+				</c:choose>
 				</div>
 			</div>
 </layout:override>
