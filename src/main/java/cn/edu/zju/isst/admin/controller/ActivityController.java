@@ -18,6 +18,7 @@ import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.ActivitySearchCondition;
 import cn.edu.zju.isst.entity.Activity;
 import cn.edu.zju.isst.entity.Administrator;
+import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.form.ActivityForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.ActivityService;
@@ -79,9 +80,9 @@ public class ActivityController {
             if (null != form.getPoster()) {
                 String poster = form.getPoster().trim();
                 if (poster.length() > 0) {
-                    int userId = userService.findLike(poster);
-                    if (userId > 0) {
-                        form.setUserId(userId);
+                    StudentUser user = userService.find(poster);
+                    if (null != user) {
+                        form.setUserId(user.getId());
                     } else {
                         result.rejectValue("poster", "poster.not_exists", "发布者不存在");
                     }

@@ -44,6 +44,9 @@ public class ActivityForm {
         expireTime = activity.getExpireTime();
         status = activity.getStatus();
         picture = activity.getPicture();
+        if (null != activity.getUser()) {
+            poster = activity.getUser().getUsername();
+        }
     }
     
     public Activity build() {

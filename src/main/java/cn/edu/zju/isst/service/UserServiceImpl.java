@@ -57,6 +57,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public StudentUser find(String username) {
+        return studentUserDao.find(username);
+    }
+
+    @Override
     public void updateLoginLocation(StudentUser user, double longitude, double latitude) {
         userDao.updateLoginLocation(user.getId(), longitude, latitude);
     }

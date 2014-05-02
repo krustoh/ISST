@@ -17,6 +17,7 @@ import cn.edu.zju.isst.form.UserLoginForm;
 
 public interface UserService {
     public StudentUser find(int id);
+    public StudentUser find(String username);
     public StudentUser findAlumnus(int id);
     public StudentUser login(HttpServletRequest request, HttpServletResponse response, UserLoginForm form, BindingResult result);
     public void updateLoginLocation(StudentUser user, double longitude, double latitude);

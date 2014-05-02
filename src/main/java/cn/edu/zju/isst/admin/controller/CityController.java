@@ -18,15 +18,19 @@ import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.entity.City;
 import cn.edu.zju.isst.entity.CitySearchCondition;
+import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.form.CityForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.CityService;
+import cn.edu.zju.isst.service.UserService;
 
 @RequireAdministrator(Administrator.ADMIN)
 @Controller("adminCityController")
 public class CityController {
     @Autowired
     private CityService cityService;
+    @Autowired
+    private UserService userService;
     
     @RequestMapping("/cities.html")
     public String list(
@@ -41,7 +45,14 @@ public class CityController {
     
     @RequestMapping(value = "/cities/{id}.html", method = RequestMethod.GET)
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("cityForm", new CityForm(cityService.find(id)));
+        CityForm form = new CityForm(cityService.find(id));
+        if (form.getUserId() > 0) {
+            StudentUser user = userService.find(form.getUserId());
+            if (null != user) {
+                form.setPrincipal(user.getUsername());
+            }
+        }
+        model.addAttribute("cityForm", form);
         return "cities/form";
     }
     
@@ -70,22 +81,36 @@ public class CityController {
     }
     
     private String save(CityForm form, BindingResult result, Model model) {
+        if (!result.hasErrors()) {
+            if (null == form.getPrincipal() || form.getPrincipal().isEmpty()) {
+                form.setUserId(0);
+            } else {
+                StudentUser user = userService.find(form.getPrincipal());
+                if (null != user) {
+                    form.setUserId(user.getId());
+                } else {
+                    result.rejectValue("principal", "principal.not_exists", "城主不存在");
+                }
+            }
+        }
+        
         if (result.hasErrors()) {
             model.addAttribute("activityForm", form);
             return "cities/form";
-        } else {
-            City city;
-            if (form.getId() > 0) {
-                city = cityService.find(form.getId());
-                form.bind(city);
-            } else {
-                city = form.build();
-            }
-            
-            cityService.save(city);
-            WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", city));
-            return WebUtils.redirectUrl("/cities.html");
         }
+
+        City city;
+        
+        if (form.getId() > 0) {
+            city = cityService.find(form.getId());
+            form.bind(city);
+        } else {
+            city = form.build();
+        }
+        
+        cityService.save(city);
+        WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", city));
+        return WebUtils.redirectUrl("/cities.html");
     }
     
     @RequestMapping(value = "/cities/delete")

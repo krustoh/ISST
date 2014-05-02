@@ -87,6 +87,7 @@ public class StudentUser implements PrivateProfile {
         student.setName(name);
         student.setPhone(phone);
         student.setUsername(username);
+        student.setPassword(password);
     }
     
     public int getId() {

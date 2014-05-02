@@ -14,6 +14,8 @@ public class CityForm {
     
     private int status = City.STATUS_PUBLISHED;
 
+    private String principal;
+    
     public CityForm() {
         
     }
@@ -68,5 +70,13 @@ public class CityForm {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
     }
 }

@@ -21,9 +21,7 @@ public class StudentUserForm extends AlumniForm {
     
     public StudentUserForm(StudentUser user) {
         super(user);
-
         username = user.getUsername();
-        password = user.getPassword();
         name = user.getName();
         major = user.getMajor();
         gender = user.getGender();
@@ -34,7 +32,9 @@ public class StudentUserForm extends AlumniForm {
     public void bind(StudentUser user) {
         super.bind(user);
         user.setUsername(username);
-        user.setPassword(password);
+        if (null != password && password.length() > 0) {
+            user.setPassword(StudentUser.encryptPassword(password));
+        }
         user.setGrade(grade);
         user.setClassId(classId);
         user.setMajor(major);

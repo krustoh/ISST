@@ -72,6 +72,7 @@ public class StudentUserDaoImpl implements StudentUserDao {
             public UserSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
                 UserSummary summary = new UserSummary();
                 summary.setId(rs.getInt("id"));
+                summary.setUsername(rs.getString("username"));
                 summary.setName(rs.getString("name"));
                 parsePrivateProfile(summary, rs);
                 return summary;

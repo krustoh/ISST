@@ -52,6 +52,16 @@ public class UserController {
         return "users/form";
     }
     
+    @RequestMapping(value = "/alumni/add.html", method = RequestMethod.GET)
+    public String add(Model model) {
+        model.addAttribute("classes", userService.findAllClasses());
+        model.addAttribute("majors", userService.findAllMajors());
+        model.addAttribute("cities", cityService.findAllForSelect());
+        model.addAttribute("studentUserForm", new StudentUserForm());
+        
+        return "users/form";
+    }
+    
     @RequestMapping(value = "/alumni/{id}.html", method = RequestMethod.POST)
     public String saveEdit(
             @Valid StudentUserForm form, 
@@ -59,26 +69,41 @@ public class UserController {
             @PathVariable("id") int id, 
             Model model) {
         form.setId(id);
-        boolean hasErrors = false;
-        
-        if (result.hasErrors()) {
-            hasErrors = true;
-        } else {
+        return save(form, result, model);
+    }
+    
+    @RequestMapping(value = "/alumni/add.html", method = RequestMethod.POST)
+    public String saveAdd(
+            @Valid StudentUserForm form, 
+            BindingResult result, 
+            Model model) {
+        return save(form, result, model);
+    }
+    
+    private String save(StudentUserForm form, BindingResult result, Model model) {
+        if (!result.hasErrors()) {
             if (userService.checkUsername(form.getUsername(), form.getId())) {
                 result.rejectValue("username", "username.exists", "学号已经存在");
-                hasErrors = true;
+            }
+        }
+        StudentUser user = null;
+        if (form.getId() > 0) {
+            user = userService.find(form.getId());
+            form.bind(user);
+        } else {
+            user = form.build();
+            if (null == user.getPassword() || user.getPassword().trim().length() == 0) {
+                result.rejectValue("password", "password.blank", "密码不能为空");
             }
         }
         
-        if (hasErrors) {
+        if (result.hasErrors()) {
             model.addAttribute("classes", userService.findAllClasses());
             model.addAttribute("majors", userService.findAllMajors());
             model.addAttribute("cities", cityService.findAllForSelect());
             model.addAttribute("studentUserForm", form);
             return "users/form";
         } else {
-            StudentUser user = userService.find(id);
-            form.bind(user);
             userService.save(user);
             WebUtils.addSuccessFlashMessage(String.format("校友 <i>%s</i> 的帐号信息保存成功", form.getName()));
             return WebUtils.redirectUrl("/alumni.html");

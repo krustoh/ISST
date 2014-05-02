@@ -2,6 +2,7 @@ package cn.edu.zju.isst.entity;
 
 public class UserSummary implements PrivateProfile {
     private int id;
+    private String username;
     private String name;
     private String email;
     private String phone;
@@ -17,6 +18,14 @@ public class UserSummary implements PrivateProfile {
         this.id = id;
     }
     
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getName() {
         return name;
     }
