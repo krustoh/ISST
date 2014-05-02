@@ -59,15 +59,21 @@
 													<a class="btn btn-xs btn-info" href="<utils:url url="/collectedNews/${item.id}.html" />" title="编辑"> 
 														<i class="icon-edit bigger-120"></i> 
 													</a> 
-													<c:if test="${status=='ignored'}">
-													<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/unprocessed?id[]=${item.id}" />" title="忽略"> 
-														<i class="icon-trash bigger-120"></i> 
-													</a>
-													</c:if>
-													<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/delete?id[]=${item.id}" />" title="删除"> 
-														<i class="icon-trash bigger-120"></i> 
-													</a>
+													<c:choose>
+														<c:when test="${status=='ignored'}">
+														<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/unprocessed?id[]=${item.id}" />" title="忽略"> 
+															<i class="icon-trash bigger-120"></i> 
+														</a>
+														</c:when>
+														
+														<c:otherwise>
+														<a class="btn btn-xs btn-danger" href="<utils:url url="/collectedNews/categories/${category.alias}/delete?id[]=${item.id}" />" title="删除"> 
+															<i class="icon-trash bigger-120"></i> 
+														</a>
+														</c:otherwise>
+													</c:choose>
 												</div>
+												
 												<div class="visible-xs visible-sm hidden-md hidden-lg">
 													<div class="inline position-relative">
 														<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -104,7 +110,7 @@
 							</table>
 
 							<div class="row">
-								<div class="col-sm-4 isst-table-form-actions">
+								<div class="col-xs-12 col-sm-4 isst-table-form-actions">
 									<div class="btn-group dropup">
 										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 											批量操作 <i class="icon-angle-up icon-on-right"></i>
@@ -120,9 +126,9 @@
 									</div>
 								</div>
 
-								<div class="col-sm-8">
+								<div class="col-xs-12 col-sm-8">
 									<!-- pager -->
-									<div id="pager" class="pull-right" style="margin-right: 100px;">
+									<div id="pager" class="pull-right">
 										<pagination:paging page="${news.page}" total="${news.total}" size="${news.pageSize}" />
 									</div>
 									<!-- end pager -->

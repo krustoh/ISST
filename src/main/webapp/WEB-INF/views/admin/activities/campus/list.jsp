@@ -10,21 +10,12 @@
 <navigation:setNavigationActiveKey key="activities"/>
 
 <layout:override name="page-header">
-	<div class="pull-right" style="margin-right: 5%;">
-		<div class="btn-group">
-			<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-				<i class="icon-plus align-top bigger-125"></i> 
-				添加 
-				<i class="icon-angle-down icon-on-right"></i>
-			</button>
-		
-			<ul class="dropdown-menu">
-				<li><a href="<utils:url url="/campus/activities/add.html" />">单个添加</a></li>
-
-				<li><a href="<utils:url url="/campus/activities.html/#" />">批量采集</a></li>
-			</ul>
+		<div class="pull-right" style="margin-right: 6%;">
+			<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/campus/activities/add.html" />">
+				<i class="icon-plus align-top bigger-125"></i>
+				添加
+			</a>
 		</div>
-	</div>
 	
 </layout:override>
 
@@ -35,7 +26,7 @@
 					<fieldset>
 						<div class="col-xs-12 col-sm-12">
 							
-							<div class="form-group col-xs-12 col-sm-2">
+							<div class="form-group col-xs-12 col-sm-3">
 								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="status">状态</label> 
 								<div class="col-xs-12 col-sm-9">
 									<form:select  id="status" path="status">
@@ -46,20 +37,10 @@
 								</div>
 							</div>
 							
-							<div class="form-group col-xs-12 col-sm-2">
+							<div class="form-group col-xs-12 col-sm-3">
 								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="cityId">城市</label> 
 								<div class="col-xs-12 col-sm-9">
 									<form:select  id="cityId" path="cityId">
-										<form:option value="0" label="所有"/>
-										<form:options items="${cities}" itemValue="id" itemLabel="name"/>
-									</form:select> 
-								</div>
-							</div>
-							
-							<div class="form-group col-xs-12 col-sm-2">
-								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="userId">发起人</label> 
-								<div class="col-xs-12 col-sm-9">
-									<form:select  id="userId" path="userId">
 										<form:option value="0" label="所有"/>
 										<form:options items="${cities}" itemValue="id" itemLabel="name"/>
 									</form:select> 
@@ -169,7 +150,7 @@
 					</table>
 					
 					<div class="row">
-						<div class="col-sm-4 col-xs-3 isst-table-form-actions" >
+						<div class="col-sm-4 col-xs-12 isst-table-form-actions" >
 						<div class="btn-group dropup">
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 								批量操作
@@ -185,9 +166,9 @@
 							</ul>
 						</div>				
 						</div>
-						<div class="col-sm-8 col-xs-9">
+						<div class="col-sm-8 col-xs-12">
 							<!-- pager -->
-							<div id="pager" class="pull-right" style="margin-right: 80px;">
+							<div id="pager" class="pull-right">
 								<pagination:paging page="${activities.page}" total="${activities.total}" size="${activities.pageSize}" />
 							</div>
 							<!-- end pager -->

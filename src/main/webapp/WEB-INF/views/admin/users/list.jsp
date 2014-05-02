@@ -19,7 +19,7 @@
 			</button>
 		
 			<ul class="dropdown-menu">
-				<li><a href="<utils:url url="/alumni.html/#" />">单个添加</a></li>
+				<li><a href="<utils:url url="/alumni/add.html" />">单个添加</a></li>
 
 				<li><a href="<utils:url url="/alumni.html/#" />">批量添加</a></li>
 			</ul>
@@ -118,8 +118,8 @@
 							<th>性别</th>
 							<th>年级</th>
 							<th>专业</th>
-							<th>联系电话</th>
-							<th>邮箱</th>
+							<th class="hidden-480">联系电话</th>
+							<th class="hidden-480">邮箱</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -142,8 +142,8 @@
 								<td>${user.gender==1?"男":"女"}</td>
 								<td>${user.grade}</td>
 								<td>${user.major}</td>
-								<td>${user.phone}</td>
-								<td>${user.email}</td>
+								<td class="hidden-480">${user.phone}</td>
+								<td class="hidden-480">${user.email}</td>
 								<td>
 									<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
 										<a class="btn btn-xs btn-success" data-rel="tooltip" data-placement="bottom" title="查看" href="<utils:url url="/alumni/${user.id}/view.html" />"> <i class="icon-zoom-in bigger-120"></i></a> 
@@ -185,7 +185,7 @@
 
 					<div class="col-xs-12 col-sm-8">
 						<!-- pager -->
-						<div id="pager" class="pull-right" style="margin-right: 80px;">
+						<div id="pager" class="pull-right">
 							<pagination:paging page="${users.page}" total="${users.total}" size="${users.pageSize}" />
 						</div>
 						<!-- end pager -->

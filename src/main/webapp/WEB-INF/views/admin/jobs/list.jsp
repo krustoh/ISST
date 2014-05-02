@@ -176,7 +176,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-8">
 							<!-- pager -->
-							<div id="pager" class="pull-right" style="margin-right: 80px;">
+							<div id="pager" class="pull-right">
 								<pagination:paging page="${jobs.page}" total="${jobs.total}" size="${jobs.pageSize}" />
 							</div>
 							<!-- end pager -->

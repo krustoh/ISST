@@ -52,7 +52,7 @@
 
 					<div class="clearfix form-actions">
 						<div class="pull-right" style="margin-right: 0%;">
-							<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/alumni/${alumnus.id}.html" />"> 
+							<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/alumni/${alumnus.id}.html" returned="true"/>"> 
 								<i class="icon-edit bigger-120 "></i>编辑 
 							</a>
 							

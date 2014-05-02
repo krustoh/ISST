@@ -82,7 +82,7 @@
 						
 						<div class="col-xs-12 col-sm-8">
 							<!-- pager -->
-							<div id="pager" class="pull-right" style="margin-right: 80px;">
+							<div id="pager" class="pull-right">
 								<pagination:paging page="${comments.page}" total="${comments.total}" size="${comments.pageSize}" />
 							</div>
 							<!-- end pager -->

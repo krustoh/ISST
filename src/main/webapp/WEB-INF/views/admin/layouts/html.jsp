@@ -82,6 +82,7 @@
 <script src="<utils:resourceUrl path="/js/jquery.colorbox-min.js" />"></script>
 <script src="<utils:resourceUrl path="/js/bootstrap-datepicker.min.js" />"></script>
 <script src="<utils:resourceUrl path="/js/bootstrap-timepicker.min.js" />"></script>
+<script src="<utils:resourceUrl path="/js/jquery.dataTables.bootstrap.js" />"></script>
 <script src="<utils:resourceUrl path="/js/common.js" />"></script>
 
 <layout:block name="javascripts"></layout:block>

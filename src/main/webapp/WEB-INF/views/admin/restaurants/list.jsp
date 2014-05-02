@@ -86,7 +86,7 @@
 
 					<div class="col-xs-12 col-sm-8">
 						<!-- pager -->
-						<div id="pager" class="pull-right" style="margin-right: 80px;">
+						<div id="pager" class="pull-right">
 							<pagination:paging page="${restaurants.page}" total="${restaurants.total}" size="${restaurants.pageSize}" />
 						</div>
 						<!-- end pager -->

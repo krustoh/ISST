@@ -10,20 +10,33 @@
 <navigation:setNavigationActiveKey key="${category.alias=='experience' ? 'job_' : 'archive_'}${category.alias}"/>
 
 <layout:override name="page-header">
-	<div class="pull-right" style="margin-right: 5%;">
-		<div class="btn-group">
-			<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-				<i class="icon-plus align-top bigger-125"></i> 
-				添加 
-				<i class="icon-angle-down icon-on-right"></i>
-			</button>
+	<div class="pull-right" style="margin-right: 6%;">
+		<c:choose>
+			<c:when test="${category.alias=='campus'}">
+			<div class="btn-group">
+				<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+					<i class="icon-plus align-top bigger-125"></i> 
+					添加 
+					<i class="icon-angle-down icon-on-right"></i>
+				</button>
 		
-			<ul class="dropdown-menu">
-				<li><a href="<utils:url url="/archives/categories/${category.alias}/add.html" />">单个添加</a></li>
+				<ul class="dropdown-menu">
+					<li><a href="<utils:url url="/archives/categories/${category.alias}/add.html" />">单个添加</a></li>
 
-				<li><a href="<utils:url url="/collectedNews/categories/${category.alias}.html" />">批量采集</a></li>
-			</ul>
-		</div>
+					<li><a href="<utils:url url="/collectedNews/categories/${category.alias}.html" />">批量采集</a></li>
+				</ul>
+			</div>
+			</c:when>
+			
+			<c:otherwise>
+				<div class="pull-right" style="margin-right: 6%;">
+					<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/jobs/categories/${category.alias}/add.html" />">
+						<i class="icon-plus align-top bigger-125"></i>
+						添加
+					</a>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</div>
 	
 </layout:override>
@@ -149,7 +162,7 @@
 					</table>
 					
 					<div class="row">
-						<div class="col-sm-4 col-xs-3 isst-table-form-actions" >
+						<div class="col-sm-4 col-xs-12 isst-table-form-actions" >
 						<div class="btn-group dropup">
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 								批量操作
@@ -165,9 +178,9 @@
 							</ul>
 						</div>				
 						</div>
-						<div class="col-sm-8 col-xs-9">
+						<div class="col-sm-8 col-xs-12">
 							<!-- pager -->
-							<div id="pager" class="pull-right" style="margin-right: 80px;">
+							<div id="pager" class="pull-right">
 								<pagination:paging page="${archives.page}" total="${archives.total}" size="${archives.pageSize}" />
 							</div>
 							<!-- end pager -->

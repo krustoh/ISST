@@ -8,7 +8,7 @@
 <%@ taglib uri="/utils" prefix="utils"%>
 
 <navigation:setNavigationActiveKey key="alumni"/>
-<navigation:setPageTitle label="编辑"/>
+<navigation:setPageTitle label="${studentUserForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
 	<div class="col-xs-12">
@@ -34,6 +34,19 @@
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="name">
 					</form:errors>
 				</field:wrapper>
+				
+				<c:if test="${studentUserForm.id==0}">
+				<field:wrapper class="form-group" path="password">
+					<label for="name" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">密码 </label>
+					
+					<div class="col-xs-12 col-sm-5">
+						<form:input id="password" class="form-control" path="password" />
+					</div>
+					
+					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="password">
+					</form:errors>
+				</field:wrapper>
+				</c:if>
 
 				<field:wrapper class="form-group" path="gender">
 					<label for="gender" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">性别 </label>

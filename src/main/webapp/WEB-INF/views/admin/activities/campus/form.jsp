@@ -43,7 +43,7 @@
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker" id="inputstartTime" path="startTime" type="text" data-date-format="dd-mm-yyyy" />
+								<form:input class="form-control date-picker" id="inputstartTime" path="startTime" type="text" data-date-format="yyyy-mm-dd" />
 								<span class="input-group-addon">
 									<i class="icon-calendar bigger-110"></i>
 								</span>
@@ -59,7 +59,7 @@
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker" id="inputexpireTime" path="expireTime" type="text" data-date-format="dd-mm-yyyy" />
+								<form:input class="form-control date-picker" id="inputexpireTime" path="expireTime" type="text" data-date-format="yyyy-mm-dd" />
 								<span class="input-group-addon">
 									<i class="icon-calendar bigger-110"></i>
 								</span>
