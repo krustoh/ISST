@@ -3,9 +3,11 @@ package cn.edu.zju.isst.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -51,6 +53,15 @@ public class StudentUserDaoImpl implements StudentUserDao {
         }
         
         return list.get(0);
+    }
+    
+    public List<StudentUser> findAll(Set<Integer> idset) {
+        SelectSQLBuilder select = select().where("s.id IN (:idset)");
+        
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("idset", idset);
+        
+        return jdbcTemplate.query(select.toSQL(), parameters, getStudentUserRowMapper());
     }
     
     public StudentUser findAlumnus(int id) {

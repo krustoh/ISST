@@ -131,7 +131,7 @@ public class ArchiveController {
         if (confirm == 0) {
             model.addAttribute("entities", archiveService.findAll(idset));
             model.addAttribute("navigationActiveKey", "archive_" + category.getAlias());
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("archives/categories/" + category.getAlias() + ".html"));
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/archives/categories/" + category.getAlias() + ".html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {

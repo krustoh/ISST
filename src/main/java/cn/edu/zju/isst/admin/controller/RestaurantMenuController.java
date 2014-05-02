@@ -110,7 +110,7 @@ public class RestaurantMenuController {
         if (confirm == 0) {
             model.addAttribute("entities", restaurantMenuService.findAll(idset));
             model.addAttribute("navigationActiveKey", "restaurants");
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("restaurants/"+restaurantId+"/menus.html"));
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/restaurants/"+restaurantId+"/menus.html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {

@@ -1,5 +1,8 @@
 package cn.edu.zju.isst.admin.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +109,7 @@ public class UserController {
         } else {
             userService.save(user);
             WebUtils.addSuccessFlashMessage(String.format("校友 <i>%s</i> 的帐号信息保存成功", form.getName()));
-            return WebUtils.redirectUrl("/alumni.html");
+            return WebUtils.redirectUrl("/alumni/" + user.getId() + "/view.html");
         }
     }
     
@@ -116,5 +119,38 @@ public class UserController {
         model.addAttribute("alumnus", user);
         
         return "users/view";
+    }
+    
+    @RequestMapping(value = "/alumni/delete")
+    public String delete(
+            @RequestParam("id[]") String[] ids,
+            @RequestParam(value = "confirm", required = false, defaultValue = "0") int confirm,
+            Model model) {
+        Set<Integer> idset = new HashSet<Integer>();
+        for (String id : ids) {
+            idset.add(Integer.valueOf(id));
+        }
+        
+        if (confirm == 0) {
+            model.addAttribute("entities", userService.findAll(idset));
+            model.addAttribute("navigationActiveKey", "alumni");
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/alumni.html"));
+            return "confirm/delete";
+        } else {
+            if (idset.size() == 1) {
+                StudentUser user = userService.find(Integer.valueOf(ids[0]).intValue());
+                if (null != user) {
+                    userService.delete(user);
+                    WebUtils.addSuccessFlashMessage(String.format("成功删除：<i>%s</i>", user));
+                } else {
+                    WebUtils.addErrorFlashMessage("记录不存在或已被删除");
+                }
+            } else {
+                int count = userService.delete(idset);
+                WebUtils.addSuccessFlashMessage(String.format("成功删除 <i>%d</i> 条记录", count));
+            }
+            
+            return WebUtils.redirectUrl("/alumni.html");
+        }
     }
 }

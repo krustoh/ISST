@@ -184,7 +184,7 @@ public class CollectedNewsController {
         if (confirm == 0) {
             model.addAttribute("entities", collectedNewsService.findAll(idset));
             model.addAttribute("navigationActiveKey", (category.getAlias().equals("campus") ? "archive_" : "job_") + category.getAlias());
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("collectedNews/categories/" + category.getAlias() + ".html"));
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/collectedNews/categories/" + category.getAlias() + ".html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {

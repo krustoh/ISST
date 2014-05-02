@@ -1,6 +1,7 @@
 package cn.edu.zju.isst.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,7 @@ public interface UserService {
     public List<Klass> findAllClasses();
     public List<Major> findAllMajors();
     public PaginationList<StudentUser> findAll(UserSearchCondition condition, int pageSize, int page);
+    public List<StudentUser> findAll(Set<Integer> idset);
     public PaginationList<StudentUser> findAlumni(UserSearchCondition condition, int pageSize, int page);
     public UserSummary findUserSummary(int id);
     public boolean checkUsername(String username, int id);
@@ -34,4 +36,6 @@ public interface UserService {
     public Major findMajor(int id);
     public String changePassword(int id, String password);
     public int findLike(String word);
+    public int delete(StudentUser user);
+    public int delete(Set<Integer> idset);
 }

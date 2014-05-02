@@ -1,6 +1,7 @@
 package cn.edu.zju.isst.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -128,5 +129,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public int findLike(String word) {
         return studentDao.findLike(word);
+    }
+
+    @Override
+    public List<StudentUser> findAll(Set<Integer> idset) {
+        return studentUserDao.findAll(idset);
+    }
+
+    @Override
+    public int delete(StudentUser user) {
+        userDao.delete(user.toUser());
+        return studentDao.delete(user.toStudent());
+    }
+
+    @Override
+    public int delete(Set<Integer> idset) {
+        userDao.delete(idset);
+        return studentDao.delete(idset);
     }
 }

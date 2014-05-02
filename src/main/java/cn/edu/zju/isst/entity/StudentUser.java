@@ -51,6 +51,7 @@ public class StudentUser implements PrivateProfile {
 
     public User toUser() {
         User user = new User();
+        user.setId(id);
         bind(user);
         
         return user;
@@ -73,6 +74,7 @@ public class StudentUser implements PrivateProfile {
     
     public Student toStudent() {
         Student student = new Student();
+        student.setId(id);
         bind(student);
         
         return student;

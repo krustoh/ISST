@@ -137,7 +137,7 @@ public class JobController {
         if (confirm == 0) {
             model.addAttribute("entities", jobService.findAll(idset));
             model.addAttribute("navigationActiveKey", "job_" + category.getAlias());
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("jobs/categories/" + category.getAlias() + ".html"));
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/jobs/categories/" + category.getAlias() + ".html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {

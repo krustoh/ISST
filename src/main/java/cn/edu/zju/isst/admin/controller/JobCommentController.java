@@ -61,7 +61,7 @@ public class JobCommentController {
         if (confirm == 0) {
             model.addAttribute("entities", jobCommentService.findAll(idset));
             model.addAttribute("navigationActiveKey", "job_" + category.getAlias());
-            model.addAttribute("cancelUrl", WebUtils.createAdminUrl("jobs/" + jobId + "/comments.html"));
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/jobs/" + jobId + "/comments.html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {
