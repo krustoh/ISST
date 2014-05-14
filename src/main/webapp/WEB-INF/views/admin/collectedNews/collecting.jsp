@@ -261,7 +261,7 @@ $(function() {
 											批量操作 <i class="icon-angle-up icon-on-right"></i>
 										</button>
 										<ul class="dropdown-menu">
-											<li><a href="<utils:url url="/collectedNews/categories/${category.alias}/publish" />">批量发布</a></li>
+											<li><a href="<utils:url url="/collectedNews/categories/${category.alias}/publish/archive" />">批量发布</a></li>
 											<li><a href="<utils:url url="/collectedNews/categories/${category.alias}/ignore" />">批量忽略</a></li>
 											<li><a href="<utils:url url="/collectedNews/categories/${category.alias}/delete" />">批量删除</a></li>
 										</ul>
