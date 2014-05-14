@@ -1,5 +1,6 @@
 package cn.edu.zju.isst.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -65,6 +66,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void save(Message message) {
+        message.setCreatedAt(new Date());
         messageDao.save(message);
     }
 }
