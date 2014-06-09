@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.edu.zju.isst.form.RestaurantForm;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.RestaurantService;
 
 @RequireUser
-@Controller
+@Controller("webRestaurantController")
 public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
@@ -23,12 +22,12 @@ public class RestaurantController {
             @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         model.addAttribute("restaurants", restaurantService.findAll(keywords, 20, page));
-        return "restaurants/list";
+        return "restaurants/list"; 
     }
 
     @RequestMapping(value = "/restaurants/{id}.html", method = RequestMethod.GET)
-    public String find(Model model, @PathVariable("id") int id) {
-        model.addAttribute("restaurantForm", new RestaurantForm(restaurantService.find(id)));
-        return "restaurants/form";
+    public String view(Model model, @PathVariable("id") int id) {
+        model.addAttribute("restaurant", restaurantService.find(id));
+        return "restaurants/view";
     }
 }

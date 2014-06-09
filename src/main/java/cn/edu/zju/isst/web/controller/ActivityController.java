@@ -12,25 +12,30 @@ import cn.edu.zju.isst.entity.Activity;
 import cn.edu.zju.isst.entity.ActivitySearchCondition;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.ActivityService;
+import cn.edu.zju.isst.service.CityService;
 
 @RequireUser
-@Controller
+@Controller("webActivityController")
 public class ActivityController {
     @Autowired
     private ActivityService activityService;
+    @Autowired
+    private CityService cityService;
 
     @RequestMapping(value = "/campus/activities.html", method = RequestMethod.GET)
     public String campusList(Model model,
             ActivitySearchCondition condition,
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         condition.setStatus(Activity.STATUS_PUBLISHED);
-        model.addAttribute("campus", activityService.findAll(condition, pageSize, page));
+        condition.setCityId(0);
+        condition.setUserId(0);
+        model.addAttribute("condition", condition);
+        model.addAttribute("activities", activityService.findAll(condition, 10, page));
         return "activities/campus/list";
     }
 
     @RequestMapping(value = "/campus/activities/{id}.html", method = RequestMethod.GET)
-    public String find(Model model, @PathVariable("id") int id) {
+    public String campusView(Model model, @PathVariable("id") int id) {
         model.addAttribute("campus", activityService.find(id));
         return "activities/campus/view";
     }

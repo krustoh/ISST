@@ -32,7 +32,7 @@ public class WebInterceptor extends AbstractMvcInterceptor {
             return true;
         }
         
-        String loginUrl = WebUtils.createWebUrl("login.html") + "?returnUrl=" + URLEncoder.encode(WebUtils.requestUrl(), "utf-8");
+        String loginUrl = WebUtils.createUrl("/login.html") + "?returnUrl=" + URLEncoder.encode(WebUtils.requestUrl(), "utf-8");
         response.sendRedirect(loginUrl);
         
         return false;

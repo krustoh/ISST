@@ -9,7 +9,7 @@ import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 
-@Controller
+@Controller("adminIndexController")
 public class IndexController {
     @RequireAdministrator
     @RequestMapping({"/", "/index.html"})

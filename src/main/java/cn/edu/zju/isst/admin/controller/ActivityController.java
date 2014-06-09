@@ -45,7 +45,6 @@ public class ActivityController {
         condition.setUserId(0);
         model.addAttribute("condition", condition);
         model.addAttribute("activities", activityService.findAll(condition, 10, page));
-        model.addAttribute("cities", cityService.findAllForSelect());
         return "activities/campus/list";
     }
     

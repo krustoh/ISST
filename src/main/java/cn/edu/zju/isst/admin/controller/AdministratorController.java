@@ -101,6 +101,6 @@ public class AdministratorController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         administratorService.logout(request, response);
-        return "redirect:login.html";
+    	return WebUtils.redirectUrl("/login.html");
     }
 }
