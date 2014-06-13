@@ -90,7 +90,7 @@ public class UserController {
     public static void main(String[] args) {
         long timestamp = System.currentTimeMillis() / 1000;
         System.out.println(timestamp);
-        System.out.println(UserIdentity.encryptToken(timestamp, "21351075", "111111"));
+        System.out.println(UserIdentity.encryptToken(timestamp, "21351075", "025359"));
         System.out.println(UserIdentity.encryptToken(timestamp, "679", "$1$AI2oKqG9$Kv8CCo.UzSXQsBPRbKfVq/"));
     }
 }

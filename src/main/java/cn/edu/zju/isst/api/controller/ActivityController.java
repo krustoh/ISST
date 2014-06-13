@@ -31,7 +31,26 @@ public class ActivityController {
     }
     
     @RequestMapping("/campus/activities/{id}")
-    public @ResponseBody ApiResponse find(@PathVariable("id") int id) {
+    public @ResponseBody ApiResponse campusFind(@PathVariable("id") int id) {
+        return new ApiResponse(activityService.find(id));
+    }
+    
+    @RequestMapping("/cities/{cityId}/activities")
+    public @ResponseBody ApiResponse list(
+            ActivitySearchCondition condition,
+            @PathVariable("cityId") int cityId,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "20") int pageSize) {
+        condition.setStatus(Activity.STATUS_PUBLISHED);
+        condition.setCityId(cityId);
+        if (condition.getUserId() == 0) {
+        	condition.setUserId(-1);
+        }
+        return new ApiResponse(activityService.findAll(condition, pageSize, page).getItems());
+    }
+    
+    @RequestMapping("/cities/{cityId}/activities/{id}")
+    public @ResponseBody ApiResponse find(@PathVariable("cityId") int cityId, @PathVariable("id") int id) {
         return new ApiResponse(activityService.find(id));
     }
 }
