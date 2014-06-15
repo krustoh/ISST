@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
+<%@ taglib uri="/field" prefix="field"%>
+<%@ taglib uri="/flash_message" prefix="fm"%>
 
 <c:set var="bodyCssClass" value="login-layout" scope="request" />
 
@@ -13,6 +15,7 @@
                 <div class="login-container">
                     <div class="center">
                         <h1 style=" padding: 5px 0;">
+                            <img src="images/logo.png" />
                             <span class="white">ISST</span>
                         </h1>
                     </div>
@@ -28,24 +31,27 @@
                                     </h4>
 
                                     <div class="space-6"></div>
-                                    <%@ include file="blocks/message.jsp" %>
+                                    <fm:message/>
 									<form:form modelAttribute="userLoginForm" method="POST">
 										
                                         <fieldset>
+                                        <field:wrapper path="username">
                                             <label class="block clearfix">
                                 <span class="block input-icon input-icon-right">
                                     <form:input class="form-control" placeholder="用户名" path="username" value="" />
                                     <i class="icon-user"></i>
                                 </span>
                                             </label>
-
+                                </field:wrapper>
+                                
+                                <field:wrapper path="password">
                                             <label class="block clearfix">
                                 <span class="block input-icon input-icon-right">
                                     <form:password class="form-control" placeholder="密码" path="password" />
                                     <i class="icon-lock"></i>
                                 </span>
                                             </label>
-
+                                </field:wrapper>
                                             <div class="space"></div>
 
                                             <div class="clearfix">

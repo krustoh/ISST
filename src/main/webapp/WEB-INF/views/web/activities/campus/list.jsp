@@ -7,8 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="${category.alias=='experience' ? 'job_' : 'archive_'}${category.alias}"/>
-
+<navigation:setNavigationActiveKey key="activities"/>
 
 <layout:override name="content">
 <div class="col-xs-12">
@@ -16,6 +15,7 @@
 				<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
 					<fieldset>
 						<div class="col-xs-12 col-sm-12">
+							
 							<div class="form-group col-xs-12 col-sm-6">
 								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="keywords">关键字</label> 
 								<div class="col-xs-12 col-sm-9">
@@ -34,7 +34,7 @@
 				</form:form>
 			
 			<c:choose>
-			<c:when test="${archives.total>0}">
+			<c:when test="${activities.total>0}">
 				<form action="" class="isst-table-form">
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
@@ -45,14 +45,13 @@
 						</thead>
 						
 						<tbody>
-							<c:forEach items="${archives.items}" var="archive">
+							<c:forEach items="${activities.items}" var="activity">
 							<tr>
 								<td>
-									<i class="icon-circle bigger-120"></i>
-									<a href="<utils:url url="/archives/${archive.id}.html" />">${archive.title}</a> 
+									<a href="<utils:url url="/campus/activities/${activity.id}.html" />">${activity.title}</a>  
 								</td>
 								<td>
-								<fmt:formatDate value="${archive.updatedAt}" pattern="yyyy-MM-dd"/>								
+								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd"/>
 								</td>
 							</tr>
 							</c:forEach>
@@ -60,11 +59,10 @@
 					</table>
 					
 					<div class="row">
-						
 						<div class="col-sm-8 col-xs-12">
 							<!-- pager -->
 							<div id="pager" class="pull-right">
-								<pagination:paging page="${archives.page}" total="${archives.total}" size="${archives.pageSize}" />
+								<pagination:paging page="${activities.page}" total="${activities.total}" size="${activities.pageSize}" />
 							</div>
 							<!-- end pager -->
 						</div>
@@ -73,18 +71,18 @@
 				</c:when>
 				
 				<c:otherwise>
-				<div class="alert alert-warning">
-					<button type="button" class="close" data-dismiss="alert">
-						<i class="icon-remove"></i>
-					</button>
-					<strong>查询结果不存在，请重新输入查询条件！</strong>
-				<br />
-				<br />
-				</div>
+					<div class="alert alert-warning">
+						<button type="button" class="close" data-dismiss="alert">
+							<i class="icon-remove"></i>
+						</button>
+						<strong>查询结果不存在，请重新输入查询条件！</strong>
+						<br />
+						<br />
+					</div>
 				</c:otherwise>
 				</c:choose>
 				</div>
 			</div>
 </layout:override>
 
-<%@ include file="../layouts/main.jsp"%>
+<%@ include file="../../layouts/main.jsp"%>

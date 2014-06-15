@@ -38,7 +38,7 @@
 										<th>ID</th>
 										<th>标题</th>
 										<th>发布日期</th>
-										<th></th>
+										<th>采集日期</th>
 									</tr>
 								</thead>
 
@@ -54,9 +54,15 @@
 													${item.title}
 												</a>
 											</td>
+											
+											<td>
+												<fmt:formatDate value="${item.postTime}" pattern="yyyy-MM-dd" />
+											</td>
+											
 											<td>
 												<fmt:formatDate value="${item.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" />
 											</td>
+											
 
 											<td>
 												<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
@@ -64,7 +70,7 @@
 														<i class="icon-edit bigger-120"></i> 
 													</a> 
 													<c:if test="${status=='ignored'}">
-													<a class="btn btn-xs btn-success" href="<utils:url url="/collectedNews/categories/${category.alias}/unprocessed?id[]=${item.id}" />" title="撤销忽略"> 
+													<a class="btn btn-xs btn-success" href="<utils:url url="/collectedNews/categories/${category.alias}/unprocess?id[]=${item.id}" />" title="撤销忽略"> 
 														<i class="icon-eye-open bigger-120"></i> 
 													</a>
 													</c:if>
@@ -117,7 +123,7 @@
 										</button>
 										<ul class="dropdown-menu">
 											<c:if test="${status=='ignored'}">
-												<li><a href="<utils:url url="/collectedNews/categories/${category.alias}/unprocessed" />">撤销忽略</a>
+												<li><a href="<utils:url url="/collectedNews/categories/${category.alias}/unprocess" />">撤销忽略</a>
 												</li>
 											</c:if>
 											<li><a href="<utils:url url="/collectedNews/categories/${category.alias}/delete" />">批量删除</a>
