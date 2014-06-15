@@ -127,7 +127,12 @@ public class WebUtils {
         HttpServletRequest request = request();
         String baseUrl = (String) request.getAttribute("_baseUrl");
         if (null == baseUrl) {
-            baseUrl = contextUrl() + request.getServletPath(); 
+            String servletPath = request.getServletPath();
+            if ("/admin".equals(servletPath)) {
+                baseUrl = contextUrl() + servletPath;
+            } else {
+                baseUrl = contextUrl();
+            }
             request.setAttribute("_baseUrl", baseUrl);
         }
         return baseUrl;

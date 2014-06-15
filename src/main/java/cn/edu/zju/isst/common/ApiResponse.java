@@ -23,6 +23,11 @@ public class ApiResponse {
         this.body = body;
     }
     
+    public ApiResponse(Result result) {
+        status = result.getStatus();
+        message = result.getMessage();
+    }
+    
     public ApiResponse(BindingResult result) {
         if (result.hasErrors()) {
             ObjectError error = result.getAllErrors().get(0);

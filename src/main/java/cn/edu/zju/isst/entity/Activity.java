@@ -53,6 +53,8 @@ public class Activity {
     
     private UserSummary user;
     
+    private boolean participated;
+    
     public int getId() {
         return id;
     }
@@ -180,5 +182,13 @@ public class Activity {
 
     public String toString() {
         return title;
+    }
+
+    public boolean isParticipated() {
+        return participated;
+    }
+
+    public void setParticipated(boolean participated) {
+        this.participated = participated;
     }
 }

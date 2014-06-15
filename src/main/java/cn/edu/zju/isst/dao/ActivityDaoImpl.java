@@ -2,6 +2,7 @@ package cn.edu.zju.isst.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +85,40 @@ public class ActivityDaoImpl extends AbstractDao<Activity> implements ActivityDa
         paramSource.addValue("status", status);
         
         return jdbcTemplate.update(sql, paramSource);
+    }
+
+    @Override
+    public boolean participate(int activityId, int userId) {
+        return participate(activityId, userId, new Date());
+    }
+    
+    @Override
+    public boolean unparticipate(int activityId, int userId) {
+        String sql = "DELETE FROM activity_participants WHERE activity_id=? AND user_id=?";
+        return jdbcTemplate.getJdbcOperations().update(sql, activityId, userId) > 0 ? true : false;
+    }
+
+    @Override
+    public boolean hasParticipated(int activityId, int userId) {
+        String sql = "SELECT COUNT(*) FROM activity_participants WHERE activity_id=? AND user_id=?";
+        return jdbcTemplate.getJdbcOperations().queryForObject(sql, Integer.class, activityId, userId).intValue() > 0 ? true : false;
+    }
+
+    @Override
+    public boolean participate(int activityId, int userId, Date createdAt) {
+        if (hasParticipated(activityId, userId)) {
+            return false;
+        }
+        
+        String sql = "INSERT INTO activity_participants (activity_id, user_id, created_at) VALUES (?, ?, ?)";
+        jdbcTemplate.getJdbcOperations().update(sql, activityId, userId, createdAt);
+        
+        return true;
+    }
+
+    @Override
+    public int changeStatus(int id, int status) {
+        String sql = String.format("UPDATE %s SET status=? WHERE %s=?", table, primaryKey);    
+        return jdbcTemplate.getJdbcOperations().update(sql, status, id);
     }
 }

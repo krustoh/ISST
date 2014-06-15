@@ -35,6 +35,8 @@ public class CollectedNewsDaoImpl extends AbstractDao<CollectedNews> implements 
             }
         }
         
+        select.orderBy("createdAt DESC, id DESC");
+        
         return new PaginationList<CollectedNews>(page, pageSize, this, select);
     }
 
