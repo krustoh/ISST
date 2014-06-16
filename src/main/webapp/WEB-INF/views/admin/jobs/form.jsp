@@ -89,7 +89,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="<utils:returnUrl url="/alumni.html" />">
+								<a class="btn" href="<utils:returnUrl url="/jobs/categories/${category.alias}.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>

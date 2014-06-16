@@ -88,6 +88,14 @@
 							<!-- end pager -->
 						</div>
 					</div>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-5 col-md-9">
+								<a class="btn btn-info" href="<utils:url url="/jobs/categories/${category.alias}.html" />">
+									<i class="icon-ok bigger-110"></i> 返回
+								</a>
+							</div>
+						</div>
+					
 				</c:when>
 				
 				<c:otherwise>

@@ -40,11 +40,8 @@
 				<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>标题</th>
-								<th>公司</th>	
-								<th>城市</th>
-								<th>发布者</th>
-								<th>发布日期</th>
+								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						
@@ -55,22 +52,6 @@
 									<i class="icon-circle bigger-120"></i>
 									<a href="<utils:url url="/jobs/${job.id}.html" />">${job.title}</a>  
 								</td>
-								
-								<td>${job.company}</td>
-								
-								<td>${job.cityName}</td>
-								
-								<td>
-								<c:choose>
-									<c:when test="${job.userId>0}">
-										<a href="<utils:url url="/alumni/${job.user.id}/view.html" returned="true"/>">${archive.user.name}</a>
-									</c:when>
-									<c:otherwise>
-										管理员
-									</c:otherwise>
-								</c:choose>
-								</td>
-								
 								<td>
 								<fmt:formatDate value="${job.updatedAt}" pattern="yyyy-MM-dd"/>								
 								</td>

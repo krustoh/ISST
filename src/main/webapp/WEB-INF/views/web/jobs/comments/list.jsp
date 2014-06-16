@@ -5,50 +5,24 @@
 <%@ taglib prefix="pagination" uri="/pagination"%>
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/navigation" prefix="navigation"%>
-<%@ taglib uri="/utils" prefix="utils"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <navigation:setNavigationActiveKey key="job_${category.alias}"/>
+<navigation:setPageTitle label="评论"/>
 
 <layout:override name="content">
 <div class="col-xs-12">
-	<div class="widget-box transparent center">
-		<div class="widget-header">
-			<h3 class="lighter">${job.title}</h4>
-			<div>
-				发布时间：<fmt:formatDate value="${job.updatedAt}" pattern="yyyy-MM-dd"/>
-			</div>
-		</div>
-
-		<div class="widget-body">
-			<div class="widget-main padding-6 no-padding-left no-padding-right">
-				${job.content}
-			</div>
-		</div>
-		<div class="hr hr8"></div>
-	</div>
 		<div class="table-responsive">
 			<form action="" class="isst-table-form">
 			<c:choose>
 				<c:when test="${comments.total>0}">
 				<div class="col-xs-12 col-sm-12">	
-						<div class="widget-box transparent">
-							<div class="widget-header ">
+						<div class="widget-box transparent" id="recent-box">
+							<div class="widget-header">
 								<h4 class="lighter smaller">
 									<i class="icon-comments-alt bigger-150"></i>
-										相关评论
+										${job.title}
 								</h4>
-								<div class="widget-toolbar no-border">
-									<h5 class="lighter smaller">
-										<a href="<utils:url url="/jobs/${job.id}/comments.html" returned="true"/>">
-											参与评论
-										</a>
-									</h5>
-									<h5 class="lighter smaller">
-										<a href="<utils:url url="/jobs/${job.id}/comments.html" returned="true"/>">
-											更多>>
-										</a>
-									</h5>
-								</div>
 							</div>
 						
 							<div class="widget-body col-sm-12">
@@ -57,7 +31,7 @@
 										<div id="comment-tab" class="tab-pane active">
 											<div class="comments">
 											
-											<c:forEach items="${comments.items}" var="comment" begin="0" end="3" >
+											<c:forEach items="${comments.items}" var="comment">
 												<div class="itemdiv commentdiv">
 													<div class="body">
 														<div class="name">
@@ -75,7 +49,7 @@
 															<i class="icon-quote-left"></i>
 																${comment.content} &hellip;
 														</div>
-													</div>
+													</div>													
 													</div>
 												</c:forEach>
 											</div>
@@ -87,15 +61,33 @@
 							
 						</div>
 					</div>
+				
+					<div class="row">
+						<div class="col-xs-12 col-sm-11">
+							<!-- pager -->
+							<div id="pager" class="pull-right">
+								<pagination:paging page="${comments.page}" total="${comments.total}" size="${comments.pageSize}" />
+							</div>
+							<!-- end pager -->
+						</div>
+					</div>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-5 col-md-9">
+								<a class="btn btn-info" href="<utils:url url="/jobs/categories/${category.alias}.html" />">
+									<i class="icon-ok bigger-110"></i> 返回
+								</a>
+							</div>
+						</div>
+					
 				</c:when>
 				
 				<c:otherwise>
-				<div class="col-xs-12 col-sm-12">	
+				<div class="col-xs-12 col-sm-12">						
 					<div class="widget-box transparent" id="recent-box">
 						<div class="widget-header">
 							<h4 class="lighter smaller">
 								<i class="icon-comments-alt bigger-150"></i>
-									相关评论
+									${job.title}
 							</h4>
 						</div>
 						
@@ -117,20 +109,21 @@
 								</div>
 							</div>
 						</div>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+								<a class="btn btn-info" href="<utils:url url="/jobs/categories/${category.alias}.html" />">
+									<i class="icon-ok bigger-110"></i> 返回
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>		
 				</c:otherwise>
 			</c:choose>
 			</form>
 		</div>
-	<div>
-		<div class="col-md-offset-5 col-md-9">
-			<a class="btn" href="<utils:returnUrl url="/jobs/categories/${category.alias}.html" />">
-				<i class="icon-undo bigger-110"></i> 返回
-			</a>
-		</div>
-	</div>		
-</div>
+	</div>
 </layout:override>
 
-<%@ include file="../layouts/main.jsp"%>
+
+<%@ include file="../../layouts/main.jsp"%>
