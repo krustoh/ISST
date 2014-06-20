@@ -21,15 +21,10 @@ public class JobServiceImpl implements JobService {
     public Job find(int id) {
         return jobDao.find(id);
     }
-    
-    @Override
-    public PaginationList<Job> findAll(int categoryId, String keywords, int pageSize, int page) {
-        return jobDao.findAll(categoryId, Job.STATUS_PUBLISHED, keywords, pageSize, page);
-    }
 
     @Override
-    public PaginationList<Job> findAll(int categoryId, JobSearchCondition condition, int pageSize, int page) {
-        return jobDao.findAll(categoryId, condition.getStatus(), condition.getKeywords(), pageSize, page);
+    public PaginationList<Job> findAll(JobSearchCondition condition, int pageSize, int page) {
+        return jobDao.findAll(condition, pageSize, page);
     }
 
     @Override

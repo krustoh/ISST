@@ -13,6 +13,7 @@ import cn.edu.zju.isst.common.PaginationList;
 import cn.edu.zju.isst.common.SelectSQLBuilder;
 import cn.edu.zju.isst.entity.Activity;
 import cn.edu.zju.isst.entity.ActivitySearchCondition;
+import cn.edu.zju.isst.entity.StudentUser;
 
 @Repository
 public class ActivityDaoImpl extends AbstractDao<Activity> implements ActivityDao {
@@ -120,5 +121,21 @@ public class ActivityDaoImpl extends AbstractDao<Activity> implements ActivityDa
     public int changeStatus(int id, int status) {
         String sql = String.format("UPDATE %s SET status=? WHERE %s=?", table, primaryKey);    
         return jdbcTemplate.getJdbcOperations().update(sql, status, id);
+    }
+
+    @Override
+    public PaginationList<Activity> findUserParticipatedList(int userId, int pageSize, int page) {
+        SelectSQLBuilder select = selectFrom("activity_participants", null, "ap")
+                .select("a.id, a.title, a.location, a.city_id, a.user_id, a.status, a.picture_path, a.description, a.start_time, a.expire_time, a.updated_at")
+                .leftJoin("activities a", "a.id=ap.activity_id")
+                .leftJoin("cities c", "c.id=a.city_id", "c.name city_name")
+                .where("ap.user_id=:user_id").addParam("user_id", userId)
+                .orderBy("a.updated_at DESC");
+        
+        if (pageSize > 0) {
+            select.paging(page, pageSize);
+        }
+        
+        return new PaginationList<Activity>(page, pageSize, this, select);
     }
 }

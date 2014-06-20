@@ -25,6 +25,7 @@ import cn.edu.zju.isst.form.CityUserActivityForm;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.ActivityService;
 import cn.edu.zju.isst.service.CityService;
+import cn.edu.zju.isst.service.UserService;
 
 @RequireUser
 @Controller("webActivityController")
@@ -33,6 +34,8 @@ public class ActivityController {
     private ActivityService activityService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/campus/activities.html", method = RequestMethod.GET)
     public String campusList(Model model,
@@ -255,6 +258,19 @@ public class ActivityController {
         activityService.save(activity);
         WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", activity));
         
-        return WebUtils.redirectUrl("/users/activities");
+        return WebUtils.redirectUrl("/users/activities.html");
+    }
+    
+    @RequestMapping("/cities/{cityId}/activities/{activityId}/participants.html")
+    public String participantList(
+            Model model,
+            @PathVariable("cityId") int cityId,
+            @PathVariable("activityId") int activityId,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        model.addAttribute("city", cityService.find(cityId));
+        model.addAttribute("activity", activityService.find(activityId));
+        model.addAttribute("participants", userService.findActivityParticipants(activityId, 20, page));
+        
+        return "activities/participants";
     }
 }

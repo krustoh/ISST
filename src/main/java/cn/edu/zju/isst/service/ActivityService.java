@@ -11,6 +11,7 @@ import cn.edu.zju.isst.entity.ActivitySearchCondition;
 public interface ActivityService {
     public PaginationList<Activity> findAll(ActivitySearchCondition condition, int pageSize, int page);
     public PaginationList<Activity> findUserList(int userId, ActivitySearchCondition condition, int pageSize, int page);
+    public PaginationList<Activity> findUserParticipatedList(int userId, int pageSize, int page);
     public List<Activity> findAll(Set<Integer> idset);
     public Activity find(int id);
     public Activity findForUser(int userId, int id);

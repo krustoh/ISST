@@ -23,18 +23,8 @@ public class ArchiveServiceImpl implements ArchiveService {
     }
     
     @Override
-    public PaginationList<Archive> findAll(int categoryId, int pageSize, int page) {
-        return archiveDao.findAll(categoryId, Archive.STATUS_PUBLISHED, null, pageSize, page);
-    }
-    
-    @Override
-    public PaginationList<Archive> findAll(int categoryId, String keywords, int pageSize, int page) {
-        return archiveDao.findAll(categoryId, Archive.STATUS_PUBLISHED, keywords, pageSize, page);
-    }
-
-    @Override
-    public PaginationList<Archive> findAll(int categoryId, ArchiveSearchCondition condition, int pageSize, int page) {
-        return archiveDao.findAll(categoryId, condition.getStatus(), condition.getKeywords(), pageSize, page);
+    public PaginationList<Archive> findAll(ArchiveSearchCondition condition, int pageSize, int page) {
+        return archiveDao.findAll(condition, pageSize, page);
     }
 
     @Override

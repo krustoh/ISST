@@ -280,4 +280,19 @@ public class StudentUserDaoImpl implements StudentUserDao {
             userDao.insert(user);
         }
     }
+
+    @Override
+    public PaginationList<StudentUser> findActivityParticipants(int activityId, int pageSize, int page) {
+       SelectSQLBuilder select = select().rigntJoin("activity_participants ap", "ap.user_id=s.id")
+               .where("ap.activity_id=:activity_id").addParam("activity_id", activityId)
+               .orderBy("ap.created_at DESC");
+       
+       if (pageSize > 0) {
+           select.paging(page, pageSize);
+       }
+       
+       List<StudentUser> items = jdbcTemplate.query(select.toSQL(), select.getParams(), getAlumniRowMapper());
+       
+        return new PaginationList<StudentUser>(page, pageSize, items, this, select);
+    }
 }

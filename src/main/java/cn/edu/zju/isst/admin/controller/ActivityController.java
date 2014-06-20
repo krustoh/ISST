@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.edu.zju.isst.common.ApiResponse;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.ActivitySearchCondition;
 import cn.edu.zju.isst.entity.Activity;
@@ -286,5 +288,17 @@ public class ActivityController {
         
         WebUtils.addSuccessFlashMessage(String.format("成功隐藏 <i>%d</i> 条记录", count));
         return WebUtils.redirectUrl(redirectUrl);
+    }
+    
+    @RequestMapping("/cities/{cityId}/activities/{activityId}/participants.html")
+    public String participantList(
+            Model model,
+            @PathVariable("cityId") int cityId,
+            @PathVariable("activityId") int activityId,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        model.addAttribute("activity", activityService.find(activityId));
+        model.addAttribute("participants", userService.findActivityParticipants(activityId, 20, page));
+        
+        return "activities/participants";
     }
 }

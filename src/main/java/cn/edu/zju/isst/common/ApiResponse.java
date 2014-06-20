@@ -26,6 +26,7 @@ public class ApiResponse {
     public ApiResponse(Result result) {
         status = result.getStatus();
         message = result.getMessage();
+        body = result.getBody();
     }
     
     public ApiResponse(BindingResult result) {

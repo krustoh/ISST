@@ -22,7 +22,7 @@ public class RestaurantMenuController {
     private RestaurantService restaurantService;
 
     @RequestMapping("/restaurants/{restaurantId}/menus.html")
-    public String list(Model model, @PathVariable("restaurantId") int restaurantId, @RequestParam("page") int page) {
+    public String list(Model model, @PathVariable("restaurantId") int restaurantId, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         model.addAttribute("restaurant", restaurantService.find(restaurantId));
         model.addAttribute("restaurantMenus", restaurantMenuService.findAll(restaurantId, 10, page));
         return "restaurants/menus/list"; 

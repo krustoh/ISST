@@ -113,4 +113,9 @@ public class ActivityServiceImpl implements ActivityService {
     public int publish(int id) {
         return activityDao.changeStatus(id, Activity.STATUS_PUBLISHED);
     }
+
+    @Override
+    public PaginationList<Activity> findUserParticipatedList(int userId, int pageSize, int page) {
+        return activityDao.findUserParticipatedList(userId, pageSize, page);
+    }
 }

@@ -17,4 +17,5 @@ public interface StudentUserDao extends DaoPagingable<StudentUser> {
     public PaginationList<StudentUser> findAlumni(UserSearchCondition condition, int pageSize, int page);
     public PaginationList<StudentUser> findAll(UserSearchCondition condition, int pageSize, int page);
     public void save(StudentUser studentUser);
+    public PaginationList<StudentUser> findActivityParticipants(int activityId, int pageSize, int page);
 }

@@ -147,4 +147,9 @@ public class UserServiceImpl implements UserService {
         userDao.delete(idset);
         return studentDao.delete(idset);
     }
+
+    @Override
+    public PaginationList<StudentUser> findActivityParticipants(int activityId, int pageSize, int page) {
+        return studentUserDao.findActivityParticipants(activityId, pageSize, page);
+    }
 }

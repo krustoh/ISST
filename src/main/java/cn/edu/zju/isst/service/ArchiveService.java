@@ -10,9 +10,7 @@ public interface ArchiveService {
     public Archive save(Archive archive);
     public Archive find(int id);
     public List<Archive> findAll(Set<Integer> ids);
-    public PaginationList<Archive> findAll(int categoryId, String keywords, int pageSize, int page);
-    public PaginationList<Archive> findAll(int categoryId, int pageSize, int page);
-    public PaginationList<Archive> findAll(int categoryId, ArchiveSearchCondition condition, int pageSize, int page);
+    public PaginationList<Archive> findAll(ArchiveSearchCondition condition, int pageSize, int page);
     public int delete(Set<Integer> idset);
     public void delete(Archive archive);
     public int publish(Set<Integer> idset);

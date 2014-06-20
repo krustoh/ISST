@@ -368,6 +368,18 @@ public abstract class AbstractDao<T> implements Dao<T> {
         return select("*");
     }
     
+    public SelectSQLBuilder selectFrom(String table, String field, String alias) {
+        return SelectSQLBuilder.selectTable(table + " " + alias, field);
+    }
+    
+    public SelectSQLBuilder selectFrom(String table, String field) {
+        return SelectSQLBuilder.selectTable(table, field);
+    }
+    
+    public SelectSQLBuilder selectFrom(String table) {
+        return SelectSQLBuilder.selectTable(table, null);
+    }
+    
     public SelectSQLBuilder select(String field) {
         return SelectSQLBuilder.selectTable(table, field);
     }

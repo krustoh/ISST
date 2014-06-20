@@ -38,9 +38,10 @@ public class JobController {
         Category category = categoryService.find(categoryAlias);
         condition.setStatus(Job.STATUS_PUBLISHED);
         if (null != category) {
+            condition.setCategoryId(category.getId());
             model.addAttribute("category", category);
             model.addAttribute("condition", condition);
-            model.addAttribute("jobs", jobService.findAll(category.getId(), condition, 10, page));
+            model.addAttribute("jobs", jobService.findAll(condition, 10, page));
         } else {
             throw new RuntimeException("Category does not exist.");
         }

@@ -33,6 +33,14 @@ public class PaginationList<T> {
         this.total = total;
         this.items = items;
     }
+    
+    public PaginationList(int page, int pageSize, List<T> items,  DaoPagingable<T> dao, SelectSQLBuilder sql) {
+        this.page = page;
+        this.pageSize = pageSize;
+        this.dao = dao;
+        this.sql = sql;
+        this.items = items;
+    }
 
     public int getPage() {
         return page;

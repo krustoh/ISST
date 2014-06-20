@@ -39,9 +39,10 @@ public class ArchiveController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         Category category = categoryService.find(categoryAlias);
         if (null != category) {
+            condition.setCategoryId(category.getId());
             model.addAttribute("category", category);
             model.addAttribute("condition", condition);
-            model.addAttribute("archives", archiveService.findAll(category.getId(), condition, 10, page));
+            model.addAttribute("archives", archiveService.findAll(condition, 10, page));
         } else {
             throw new RuntimeException("Category does not exist.");
         }
