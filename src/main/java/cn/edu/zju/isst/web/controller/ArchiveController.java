@@ -1,5 +1,7 @@
 package cn.edu.zju.isst.web.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.ArchiveSearchCondition;
 import cn.edu.zju.isst.entity.Category;
+import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.ArchiveService;
 import cn.edu.zju.isst.service.CategoryService;
@@ -29,10 +32,30 @@ public class ArchiveController {
             ArchiveSearchCondition condition,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		Category category = categoryService.find(categoryAlias);
-		condition.setStatus(Archive.STATUS_PUBLISHED);
         if (null != category) {
             condition.setCategoryId(category.getId());
             condition.setStatus(Archive.STATUS_PUBLISHED);
+            model.addAttribute("category", category);
+            model.addAttribute("condition", condition);
+            model.addAttribute("archives", archiveService.findAll(condition, 10, page));
+        } else {
+            throw new RuntimeException("Category does not exist.");
+        }
+        return "archives/list";
+    }
+	
+    @RequestMapping(value = "/users/archives/{categoryAlias}.html", method = RequestMethod.GET)
+    public String userList(Model model, 
+            @PathVariable("categoryAlias") String categoryAlias,
+            ArchiveSearchCondition condition,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        Category category = categoryService.find(categoryAlias);
+        condition.setStatus(Archive.STATUS_PUBLISHED);
+        if (null != category) {
+            condition.setUserId(user.getId());
+            condition.setCategoryId(category.getId());
             model.addAttribute("category", category);
             model.addAttribute("condition", condition);
             model.addAttribute("archives", archiveService.findAll(condition, 10, page));

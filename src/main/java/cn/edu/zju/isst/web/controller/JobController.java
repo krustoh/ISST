@@ -1,6 +1,8 @@
 package cn.edu.zju.isst.web.controller;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.edu.zju.isst.entity.Category;
 import cn.edu.zju.isst.entity.Job;
 import cn.edu.zju.isst.entity.JobSearchCondition;
+import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.CategoryService;
 import cn.edu.zju.isst.service.CityService;
@@ -39,6 +42,26 @@ public class JobController {
         condition.setStatus(Job.STATUS_PUBLISHED);
         if (null != category) {
             condition.setCategoryId(category.getId());
+            model.addAttribute("category", category);
+            model.addAttribute("condition", condition);
+            model.addAttribute("jobs", jobService.findAll(condition, 10, page));
+        } else {
+            throw new RuntimeException("Category does not exist.");
+        }
+        return "jobs/list";
+    }
+    
+    @RequestMapping(value = "/users/jobs/{categoryAlias}.html", method = RequestMethod.GET)
+    public String userList(Model model,
+            JobSearchCondition condition,
+            @PathVariable("categoryAlias") String categoryAlias, 
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        Category category = categoryService.find(categoryAlias);
+        if (null != category) {
+            condition.setCategoryId(category.getId());
+            condition.setUserId(user.getId());
             model.addAttribute("category", category);
             model.addAttribute("condition", condition);
             model.addAttribute("jobs", jobService.findAll(condition, 10, page));

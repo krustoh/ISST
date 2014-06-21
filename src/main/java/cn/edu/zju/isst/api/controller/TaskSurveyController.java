@@ -38,7 +38,7 @@ public class TaskSurveyController {
         return new ApiResponse(taskSurveyOptionSerivce.findAll(taskId));
     }
     
-    @RequestMapping(value = "/tasks/{taskId}/survey")
+    @RequestMapping(value = "/tasks/{taskId}/survey", method = RequestMethod.POST)
     public @ResponseBody ApiResponse save(
             @PathVariable("taskId") int taskId,
             @RequestParam("departTime") long departTime,
