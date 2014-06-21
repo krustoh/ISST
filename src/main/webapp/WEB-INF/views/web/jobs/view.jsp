@@ -26,6 +26,8 @@
 		</div>
 		<div class="hr hr8"></div>
 	</div>
+		
+		<c:if test="${category.alias=='recommend'}">
 		<div class="table-responsive">
 			<form action="" class="isst-table-form">
 			<c:choose>
@@ -38,11 +40,6 @@
 										相关评论
 								</h4>
 								<div class="widget-toolbar no-border">
-									<h5 class="lighter smaller">
-										<a href="<utils:url url="/jobs/${job.id}/comments.html" returned="true"/>">
-											参与评论
-										</a>
-									</h5>
 									<h5 class="lighter smaller">
 										<a href="<utils:url url="/jobs/${job.id}/comments.html" returned="true"/>">
 											更多>>
@@ -81,6 +78,14 @@
 											</div>
 										</div>
 										<div class="hr hr8"></div>
+										
+								<div >
+									<h5 class="lighter smaller">
+										<a href="<utils:url url="/jobs/${job.id}/comments.html" returned="true"/>">
+											参与评论>>
+										</a>
+									</h5>
+								</div>
 									</div>
 								</div>
 							</div>
@@ -123,6 +128,7 @@
 			</c:choose>
 			</form>
 		</div>
+		</c:if>
 	<div>
 		<div class="col-md-offset-5 col-md-9">
 			<a class="btn" href="<utils:returnUrl url="/jobs/categories/${category.alias}.html" />">

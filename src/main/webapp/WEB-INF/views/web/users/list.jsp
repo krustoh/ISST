@@ -7,10 +7,8 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="personal" />
+<navigation:setNavigationActiveKey key="alumni" />
 
-<layout:override name="page-header">
-</layout:override>
 
 <layout:override name="content">
 	<div class="col-xs-12">
@@ -101,8 +99,10 @@
 							<th>性别</th>
 							<th>年级</th>
 							<th>专业</th>
-							<th class="hidden-480">联系电话</th>
-							<th class="hidden-480">邮箱</th>
+							<th>QQ</th>
+							<th>联系电话</th>
+							<th>邮箱</th>
+							
 						</tr>
 					</thead>
 
@@ -110,20 +110,21 @@
 						<c:forEach items="${users.items}" var="user">
 							<tr>							
 								<td>
-									<a href="<utils:url url="/alumni/${user.id}/view.html" />">
+									<a href="<utils:url url="/alumni/${user.id}.html" />">
 										${user.username}
 									</a>
 								</td>
 								<td>
-									<a href="<utils:url url="/alumni/${user.id}/view.html" />">
+									<a href="<utils:url url="/alumni/${user.id}.html" />">
 										${user.name}
 									</a>
 								</td>
 								<td>${user.gender==1?"男":"女"}</td>
 								<td>${user.grade}</td>
 								<td>${user.major}</td>
-								<td class="hidden-480">${user.phone}</td>
-								<td class="hidden-480">${user.email}</td>
+								<td><c:if test="${user.privateQQ == false}">${user.qq}</c:if></td>
+								<td><c:if test="${user.privatePhone == false}">${user.phone}</c:if></td>
+								<td><c:if test="${user.privateEmail ==false}">${user.email}</c:if></td>								
 							</tr>
 						</c:forEach>
 					</tbody>

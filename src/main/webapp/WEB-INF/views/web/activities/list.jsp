@@ -10,21 +10,28 @@
 <navigation:setNavigationActiveKey key="city_activity"/>
 <navigation:setPageTitle label="${city.name}活动"/>
 
+<layout:override name="page-header">
+		<div class="pull-right" style="margin-right: 6%;">
+			<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/cities/activities/add.html" />">
+				<i class="icon-plus align-top bigger-125"></i>
+				添加
+			</a>
+		</div>
+</layout:override>
+
 <layout:override name="content">
 <div class="col-xs-12">
-			<div class="table-responsive">
 				<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
 					<fieldset>
-						<div class="col-xs-12 col-sm-12">
-							
-							<div class="form-group col-xs-12 col-sm-5">
+						<div class="col-xs-12 col-sm-12">							
+							<div class="form-group col-xs-12 col-sm-4">
 								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="poster">发起人</label> 
 								<div class="col-xs-12 col-sm-9">
 									<form:input id="poster" path="poster" class="form-control" placeholder="学号或姓名"/>  
 								</div>
 							</div>
 							
-							<div class="form-group col-xs-12 col-sm-5">
+							<div class="form-group col-xs-12 col-sm-4">
 								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="keywords">关键字</label> 
 								<div class="col-xs-12 col-sm-9">
 									<form:input id="keywords" path="keywords" class="form-control"/> 
@@ -40,7 +47,25 @@
 						</div>
 					</fieldset>
 				</form:form>
-				
+		
+
+		<div class="tabbable">
+			<ul class="nav nav-tabs" id="myTab">
+				<li>
+					<a href="<utils:url url="/cities/${user.classId}/activities.html" />">所有活动</a>
+				</li>
+				<li>
+					<a href="<utils:url url="/users/activities.html" />">发起的活动</a>
+				</li>
+				<li>
+					<a href="<utils:url url="/collectedNews/categories/${category.alias}/ignored.html" />">参加的活动</a>
+				</li>
+			</ul>
+			
+		<div class="tab-content">
+			<div class="tab-pane in active">
+			
+			<div class="table-responsive">		
 			<c:choose>
 			<c:when test="${activities.total>0}">
 				<form action="" class="isst-table-form">
@@ -49,7 +74,8 @@
 							<tr>
 								<th>标题</th>
 								<th>发布日期</th>
-								<th>发起人</th>
+								<th>发布者</th>
+								<th></th>
 							</tr>
 						</thead>
 						
@@ -57,10 +83,14 @@
 							<c:forEach items="${activities.items}" var="activity">
 							<tr>
 								<td>
-									<a href="<utils:url url="/cities/${city.id}/activities/${activity.id}.html" />">${activity.title}</a> 
+									<a href="<utils:url url="/cities/${user.cityId}/activities/${activity.id}.html" />">${activity.title}</a>
+									<c:if test="${activity.participated==true}">
+										<span class="label label-sm label-warning">已报名</span>
+									</c:if>  
 								</td>
 								<td>
-								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd"/>								
+								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd"/>
+								
 								</td>
 								<td>
 								<c:choose>
@@ -72,6 +102,8 @@
 									</c:otherwise>
 								</c:choose>
 								</td>
+								
+								<td>我要报名</td>
 							</tr>
 							</c:forEach>
 						</tbody>	
@@ -95,14 +127,17 @@
 					<button type="button" class="close" data-dismiss="alert">
 						<i class="icon-remove"></i>
 					</button>
-					<strong>查询结果不存在，请重新输入查询条件！</strong>
+					<strong>没有记录！</strong>
 				<br />
 				<br />
 				</div>
 				</c:otherwise>
 				</c:choose>
 				</div>
+				</div>
+				</div>
 			</div>
+		</div>
 </layout:override>
 
 <%@ include file="../layouts/main.jsp"%>

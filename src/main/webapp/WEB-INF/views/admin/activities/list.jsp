@@ -21,7 +21,6 @@
 
 <layout:override name="content">
 <div class="col-xs-12">
-			<div class="table-responsive">
 				<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
 					<fieldset>
 						<div class="col-xs-12 col-sm-12">
@@ -60,7 +59,8 @@
 						</div>
 					</fieldset>
 				</form:form>
-				
+			
+			<div class="table-responsive">	
 			<c:choose>
 			<c:when test="${activities.total>0}">
 				<form action="" class="isst-table-form">
@@ -92,7 +92,7 @@
 								<td>
 									<a href="<utils:url url="/cities/${city.id}/activities/${activity.id}.html" />">${activity.title}</a>
 									<c:if test="${activity.status==0}">
-										<span class="label label-sm label-warning">隐藏</span>
+										<span class="label label-sm label-warning">未审核</span>
 									</c:if>  
 								</td>
 								<td>
