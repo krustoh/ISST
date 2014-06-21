@@ -52,7 +52,7 @@ public class TaskController {
         return "tasks/view";
     }
     
-    @RequestMapping(value = "/tasks/{id}/survey.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/{id}/survey.html", method = RequestMethod.POST)
     public String saveSurvey(
             @Valid TaskSurveyForm form, 
             BindingResult result, 

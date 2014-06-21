@@ -39,4 +39,8 @@ public class TaskSurveyOption {
     public void setLabel(String label) {
         this.label = label;
     }
+    
+    public String toString() {
+        return label;
+    }
 }

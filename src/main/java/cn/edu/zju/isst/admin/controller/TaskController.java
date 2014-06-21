@@ -18,10 +18,12 @@ import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Task;
 import cn.edu.zju.isst.entity.TaskSearchCondition;
 import cn.edu.zju.isst.form.TaskForm;
+import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.TaskService;
 import cn.edu.zju.isst.service.TaskSurveyOptionService;
 import cn.edu.zju.isst.service.TaskSurveyService;
 
+@RequireAdministrator
 @Controller("adminTaskController")
 public class TaskController {
     @Autowired
@@ -68,18 +70,19 @@ public class TaskController {
         return "tasks/form";
     }
     
-    @RequestMapping(value = "/tasks/{id}.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/{id}.html", method = RequestMethod.POST)
     public String saveEdit(@Valid TaskForm form, BindingResult result, @PathVariable("id") int id, Model model) {
         if (result.hasErrors()) {
             return edit(id, model);
         }
         
+        form.setId(id);
         return save(form);
     }
     
     private String save(TaskForm form) {
         taskService.save(form);
-        WebUtils.addSuccessFlashMessage(String.format("成功保存：%s", form.getName()));
+        WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", form.getName()));
         
         return WebUtils.redirectUrl("/tasks.html");
     }

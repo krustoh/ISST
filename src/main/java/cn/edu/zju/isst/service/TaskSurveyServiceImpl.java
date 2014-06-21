@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.edu.zju.isst.common.PaginationList;
 import cn.edu.zju.isst.common.Result;
 import cn.edu.zju.isst.dao.TaskDao;
 import cn.edu.zju.isst.dao.TaskSurveyDao;
@@ -54,5 +55,10 @@ public class TaskSurveyServiceImpl implements TaskSurveyService {
         result.setBody(taskSurvey);
         
         return result;
+    }
+
+    @Override
+    public PaginationList<TaskSurvey> findAll(int taskId, int pageSize, int page) {
+        return taskSurveyDao.findAll(taskId, pageSize, page);
     }
 }
