@@ -186,6 +186,22 @@
 							</navigation:item>
 						<!--</ul>-->
 					</navigation:item>
+					
+					<navigation:item>
+						<navigation:link key="messages" href="/messages.html" label="消息推送" class="dropdown-toggle">
+							<i class="icon-comments" ></i>
+							<span class="menu-text">消息推送</span>
+						</navigation:link>
+					</navigation:item>
+					
+					<c:if test="${administrator.roles == SUPER}">
+					<navigation:item>
+						<navigation:link key="admin_management" href="/administrators.html" label="管理员设置" class="dropdown-toggle">
+							<i class="icon-user" ></i>
+							<span class="menu-text">管理员设置</span>
+						</navigation:link>
+					</navigation:item>
+					</c:if>
 				</ul>
 			
 				<!-- /.nav-list -->

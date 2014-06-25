@@ -7,35 +7,35 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="${category.alias=='experience'?'job_':'archive_'}${category.alias}"/>
-<navigation:setPageTitle label="${archiveForm.id>0?'编辑':'添加'}"/>
+<navigation:setNavigationActiveKey key="messages"/>
+<navigation:setPageTitle label="${messageForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
 			<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="archiveForm" method="POST">
-					<form:hidden path="categoryId"/>
+				<form:form class="form-horizontal isst-form" modelAttribute="messageForm" method="POST">
+					
 					<fieldset>
 						<field:wrapper class="form-group" path="title">
-							<label for="inputtitle" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							<label for="title" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							标题
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input id="inputtitle" class="width-100" path="title" />
+								<form:input class="width-100" path="title" />
 							</div>
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
 							</form:errors>
 						</field:wrapper>
-						
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
-						<div class="col-sm-9">
-							<form:select  id="status" path="status">
-								<form:option value="0" label="隐藏"/>
-								<form:option value="3" label="发布"/>
-							</form:select>
+
+					<div class="space-4"></div>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<h4 class="header green clearfix">
+								内容
+							</h4>
+							<form:textarea path="content" id="content"></form:textarea>
 						</div>
 					</div>
-
 
 						<div class="clearfix form-actions">
 							<div class="col-md-offset-3 col-md-9">
@@ -44,7 +44,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="<utils:returnUrl url="/archives/categories/${category.alias}.html" />">
+								<a class="btn" href="<utils:returnUrl url="/messages.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>
@@ -56,6 +56,17 @@
 	
 </layout:override>
 
+<layout:override name="javascripts">
+<script type="text/javascript">
+jQuery(function($){
+	$("#content").isst_wysiwyg();
+	
+	$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+		$(this).prev().focus();
+	});
+});
+</script>
+</layout:override>
 
 
 

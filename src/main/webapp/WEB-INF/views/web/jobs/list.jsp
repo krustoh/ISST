@@ -9,6 +9,15 @@
 
 <navigation:setNavigationActiveKey key="job_${category.alias}"/>
 
+<layout:override name="page-header">
+			<div class="pull-right" style="margin-right: 6%;">
+				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="#" />">
+					<i class="icon-plus align-top bigger-125"></i>
+						发布
+				</a>
+			</div>
+</layout:override>
+
 <layout:override name="content">
 <div class="col-xs-12">
 		<div class="table-responsive">	
@@ -40,8 +49,8 @@
 				<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
-								<th></th>
-								<th></th>
+								<th>标题</th>
+								<th>发布时间</th>
 							</tr>
 						</thead>
 						
@@ -77,7 +86,7 @@
 						<button type="button" class="close" data-dismiss="alert">
 						<i class="icon-remove"></i>
 						</button>
-						<strong>查询结果不存在，请重新输入查询条件！</strong>
+						<strong>没有记录！</strong>
 						<br />
 						<br />
 					</div>

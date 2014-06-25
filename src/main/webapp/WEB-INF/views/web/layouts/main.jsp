@@ -179,29 +179,38 @@
 						</navigation:link>
 
 						<ul class="submenu">
+							
 							<navigation:item>
-								<navigation:link href="/cities/${user.classId}/activities.html" key="city_change" label="切换城市">
-											切换城市
+								<navigation:link href="/activities.html" key="city_activity" label="同城活动">
+											同城活动
+								</navigation:link>
+							</navigation:item>
+							
+							<c:if test="${user.cityPrincipal == true}">
+							<navigation:item>
+								<navigation:link href="#" key="city_activity_waiting" label="待审核活动">
+											待审核活动
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item>
-								<navigation:link href="/cities/${user.classId}/activities.html" key="city_activity" label="同城活动">
-											同城活动
+								<navigation:link href="#" key="city_activity_publish" label="已审核活动">
+											已审核活动
 								</navigation:link>
 							</navigation:item>
+							</c:if>
 						</ul>
 					</navigation:item>
 					
 					<navigation:item>
-						<navigation:link key="personal" href="/alumni.html" label="个人中心" class="dropdown-toggle">
+						<navigation:link key="personal" href="#" label="个人中心" class="dropdown-toggle">
 							<i class="icon-globe" ></i>
 							<span class="menu-text">个人中心</span>
 						</navigation:link>
 
 						<!--<ul class="submenu">-->
 							<navigation:item hidden="true">
-								<navigation:link href="" key="city_activity" label="同城活动">
+								<navigation:link href="#" key="personal" label="同城活动">
 											同城活动
 								</navigation:link>
 							</navigation:item>

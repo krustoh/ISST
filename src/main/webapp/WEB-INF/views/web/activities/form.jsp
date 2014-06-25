@@ -25,17 +25,6 @@
 							</form:errors>
 						</field:wrapper>
 						
-						<field:wrapper class="form-group" path="poster">
-							<label for="poster" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
-							发布者
-							</label>
-							<div class="col-xs-12 col-sm-5">
-								<form:input class="width-100" path="poster" placeholder="学号" />
-							</div>
-							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="poster">
-							</form:errors>
-						</field:wrapper>
-						
 						<field:wrapper class="form-group" path="cityId">
 							<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							城市
@@ -110,7 +99,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="<utils:returnUrl url="/users/activities" />">
+								<a class="btn" href="<utils:returnUrl url="/cities/${user.cityId }/activities.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>

@@ -12,7 +12,7 @@
 
 <layout:override name="page-header">
 		<div class="pull-right" style="margin-right: 6%;">
-			<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/cities/activities/add.html" />">
+			<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="#" />">
 				<i class="icon-plus align-top bigger-125"></i>
 				添加
 			</a>
@@ -48,22 +48,6 @@
 					</fieldset>
 				</form:form>
 		
-
-		<div class="tabbable">
-			<ul class="nav nav-tabs" id="myTab">
-				<li>
-					<a href="<utils:url url="/cities/${user.classId}/activities.html" />">所有活动</a>
-				</li>
-				<li>
-					<a href="<utils:url url="/users/activities.html" />">发起的活动</a>
-				</li>
-				<li>
-					<a href="<utils:url url="/collectedNews/categories/${category.alias}/ignored.html" />">参加的活动</a>
-				</li>
-			</ul>
-			
-		<div class="tab-content">
-			<div class="tab-pane in active">
 			
 			<div class="table-responsive">		
 			<c:choose>
@@ -134,9 +118,6 @@
 				</c:otherwise>
 				</c:choose>
 				</div>
-				</div>
-				</div>
-			</div>
 		</div>
 </layout:override>
 

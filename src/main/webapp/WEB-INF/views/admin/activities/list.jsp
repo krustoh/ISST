@@ -10,31 +10,11 @@
 <navigation:setNavigationActiveKey key="city_activity"/>
 <navigation:setPageTitle label="${city.name}活动"/>
 
-<layout:override name="page-header">
-		<div class="pull-right" style="margin-right: 6%;">
-			<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/cities/${city.id}/activities/add.html" />">
-				<i class="icon-plus align-top bigger-125"></i>
-				添加
-			</a>
-		</div>
-</layout:override>
-
 <layout:override name="content">
 <div class="col-xs-12">
 				<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
 					<fieldset>
-						<div class="col-xs-12 col-sm-12">
-							
-							<div class="form-group col-xs-12 col-sm-3">
-								<label class="col-xs-12 col-sm-4 col-md-4 control-label no-padding-right" for="status">状态</label> 
-								<div class="col-xs-12 col-sm-8">
-									<form:select  id="status" path="status">
-										<form:option value="-1" label="所有"/>
-										<form:option value="0" label="隐藏"/>
-										<form:option value="1" label="发布"/>
-									</form:select> 
-								</div>
-							</div>
+						<div class="col-xs-12 col-sm-12">						
 							
 							<div class="form-group col-xs-12 col-sm-3">
 								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="poster">发起人</label> 
@@ -90,10 +70,7 @@
 								</td>
 								<td>${activity.id}</td>
 								<td>
-									<a href="<utils:url url="/cities/${city.id}/activities/${activity.id}.html" />">${activity.title}</a>
-									<c:if test="${activity.status==0}">
-										<span class="label label-sm label-warning">未审核</span>
-									</c:if>  
+									<a href="<utils:url url="/cities/${city.id}/activities/${activity.id}.html" />">${activity.title}</a> 
 								</td>
 								<td>
 								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -117,7 +94,7 @@
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/cities/${city.id}/activities/delete?id[]=${activity.id}" />">
+										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/users/activities/delete?id[]=${activity.id}" />">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -135,7 +112,7 @@
 													data-rel="tooltip" title="编辑"> <span class="blue">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 
-												<li><a href="<utils:url url="/cities/${city.id}/activities/delete?id[]=${activity.id}" />" class="tooltip-error"
+												<li><a href="<utils:url url="/cities/${city.id}/activities/delet?id[]=${activity.id}" />" class="tooltip-error"
 													data-rel="tooltip" title="删除"> <span class="red">
 															<i class="icon-trash bigger-120"></i> </span> </a></li>
 											</ul>
@@ -156,12 +133,11 @@
 								<i class="icon-angle-up icon-on-right"></i>
 							</button>
 							<ul class="dropdown-menu">
+								<li><a href="<utils:url url="/cities/${city.id}/activities/publish" />">批量发布</a></li>
+								<li><a href="<utils:url url="/cities/${city.id}/activities/hide" />">批量隐藏</a></li>
 								<li><a href="<utils:url url="/cities/${city.id}/activities/delete" />">批量删除</a></li>
 
-								<li><a href="<utils:url url="/cities/${city.id}/activities/publish" />">批量发布</a></li>
-
-								<li><a href="<utils:url url="/cities/${city.id}/activities/hide" />">批量隐藏</a></li>
-
+								
 							</ul>
 						</div>				
 						</div>
@@ -182,7 +158,7 @@
 					<button type="button" class="close" data-dismiss="alert">
 						<i class="icon-remove"></i>
 					</button>
-					<strong>查询结果不存在，请重新输入查询条件！</strong>
+					<strong>没有记录！</strong>
 				<br />
 				<br />
 				</div>
