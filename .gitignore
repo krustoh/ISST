@@ -2,7 +2,9 @@
 .myeclipse/
 .mymetadata
 .project
+*.iml
 .settings/
+.idea/
 /target/
 /bin/
 /src/main/webapp/WEB-INF/classes/

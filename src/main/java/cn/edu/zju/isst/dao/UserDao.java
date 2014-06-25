@@ -8,6 +8,7 @@ import cn.edu.zju.isst.entity.User;
 
 public interface UserDao extends Dao<User> {
     public void updateLoginLocation(int id, double longitude, double latitude);
+    public int updateCityPrincipal(int userId, boolean isCityPrincipal);
     public List<Klass> findAllClasses();
     public Klass findClass(int id);
     public List<Major> findAllMajors();

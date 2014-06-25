@@ -69,6 +69,14 @@ public class Administrator {
     public void setRoles(int roles) {
         this.roles = roles;
     }
+
+    public boolean isAlumni() {
+        return (roles & ADMIN_ALUMNI) == ADMIN_ALUMNI;
+    }
+
+    public boolean isSuper() {
+        return roles == SUPER;
+    }
     
     public static String encryptPassword(String password) {
         return Md5Crypt.md5Crypt(password.getBytes());
@@ -79,5 +87,19 @@ public class Administrator {
             return false;
         }
         return storedPassword.equals(Md5Crypt.md5Crypt(password.getBytes(), storedPassword));
+    }
+
+    public String getRoleLabel() {
+        if (isAlumni()) {
+            return "校友管理员";
+        } else if (isSuper()) {
+            return "超级管理员";
+        } else {
+            return "管理员";
+        }
+    }
+
+    public String toString() {
+        return username;
     }
 }

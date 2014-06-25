@@ -3,6 +3,9 @@ package cn.edu.zju.isst.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.edu.zju.isst.common.PaginationList;
+import cn.edu.zju.isst.common.Result;
+import cn.edu.zju.isst.form.AdministratorForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -11,6 +14,8 @@ import cn.edu.zju.isst.dao.AdministratorDao;
 import cn.edu.zju.isst.entity.Administrator;
 import cn.edu.zju.isst.form.AdministratorLoginForm;
 import cn.edu.zju.isst.identity.AdministratorIdentity;
+
+import java.util.Set;
 
 @Service
 public class AdministratorServiceImpl implements AdministratorService {
@@ -39,5 +44,38 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public void changePassword(int id, String password) {
         administratorDao.changePassword(id, password);
+    }
+
+    @Override
+    public PaginationList<Administrator> findAll(int pageSize, int page) {
+        return null;
+    }
+
+    @Override
+    public Administrator find(int id) {
+        return administratorDao.find(id);
+    }
+
+    @Override
+    public Result save(AdministratorForm form) {
+        if (form.getId() > 0) {
+            Administrator administrator = administratorDao.find(form.getId());
+            form.bind(administrator);
+            administratorDao.update(administrator);
+        } else {
+            administratorDao.insert(form.build());
+        }
+
+        return new Result();
+    }
+
+    @Override
+    public int delete(Administrator administrator) {
+        return administratorDao.delete(administrator);
+    }
+
+    @Override
+    public int delete(Set<Integer> idset) {
+        return administratorDao.delete(idset);
     }
 }

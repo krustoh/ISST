@@ -1,5 +1,6 @@
 package cn.edu.zju.isst.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cn.edu.zju.isst.common.PaginationList;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Activity;
 import cn.edu.zju.isst.entity.ActivitySearchCondition;
@@ -55,23 +57,29 @@ public class ActivityController {
         return "activities/campus/view";
     }
     
-    @RequestMapping("/cities/{cityId}/activities.html")
+    @RequestMapping("/activities.html")
     public String list(Model model,
             ActivitySearchCondition condition,
-            @PathVariable("cityId") int cityId,
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            HttpSession session) {
         condition.setStatus(Activity.STATUS_PUBLISHED);
-        condition.setCityId(cityId);
-        if (condition.getUserId() == 0) {
-            condition.setUserId(-1);
+        if (condition.getCityId() <= 0) {
+            StudentUser user = (StudentUser) session.getAttribute("user");
+            if (user.getCityId() > 0) {
+                condition.setCityId(user.getCityId());
+                if (condition.getUserId() == 0) {
+                    condition.setUserId(-1);
+                }
+                model.addAttribute("activities", activityService.findAll(condition, 10, page));
+            } else {
+                model.addAttribute("activities", new PaginationList<Activity>(page, 10, 0, new ArrayList<Activity>()));
+            }
         }
         model.addAttribute("condition", condition);
-        model.addAttribute("activities", activityService.findAll(condition, 10, page));
-        
         return "activities/list";
     }
     
-    @RequestMapping("/cities/activities/auditing.html")
+    @RequestMapping("/activities/auditing.html")
     public String auditingList(Model model,
             ActivitySearchCondition condition,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -93,7 +101,7 @@ public class ActivityController {
         return WebUtils.redirectUrl("/users/activities.html");
     }
     
-    @RequestMapping(value = "/cities/activities/audit")
+    @RequestMapping(value = "/activities/audit")
     public String audit(@RequestParam("id[]") String[] ids, HttpSession session) {
         Set<Integer> idset = new HashSet<Integer>();
         for (String id : ids) {
@@ -126,7 +134,7 @@ public class ActivityController {
 
         int count = activityService.publish(idset);
         WebUtils.addSuccessFlashMessage(String.format("成功审核 <i>%d</i> 个活动", count));
-        return WebUtils.redirectUrl("/cities/activities/auditing.html");
+        return WebUtils.redirectUrl("/activities/auditing.html");
     }
     
     @RequestMapping("/users/activities.html")
@@ -191,14 +199,14 @@ public class ActivityController {
         return WebUtils.redirectUrl("/users/activities.html");
     }
     
-    @RequestMapping("/cities/activities/add.html")
+    @RequestMapping("/activities/add.html")
     public String add(Model model) {
         model.addAttribute("cities", cityService.findAllForSelect());
         model.addAttribute("cityUserActivityForm", new CityUserActivityForm());
         return "activities/form";
     }
     
-    @RequestMapping(value = "/cities/activities/add.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/activities/add.html", method = RequestMethod.POST)
     public String addSave(
             @Valid CityUserActivityForm form, BindingResult result,
             Model model,
@@ -219,14 +227,14 @@ public class ActivityController {
         return save(form);
     }
     
-    @RequestMapping("/cities/{cityId}/activities/{id}.html")
+    @RequestMapping("/activities/{id}.html")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("cities", cityService.findAllForSelect());
         model.addAttribute("cityUserActivityForm", new CityUserActivityForm(activityService.find(id)));
         return "activities/form";
     }
     
-    @RequestMapping(value = "/cities/activities/{id}.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/activities/{id}.html", method = RequestMethod.POST)
     public String editSave(
             @Valid CityUserActivityForm form, BindingResult result,
             Model model, 
@@ -261,14 +269,14 @@ public class ActivityController {
         return WebUtils.redirectUrl("/users/activities.html");
     }
     
-    @RequestMapping("/cities/{cityId}/activities/{activityId}/participants.html")
+    @RequestMapping("/activities/{activityId}/participants.html")
     public String participantList(
             Model model,
-            @PathVariable("cityId") int cityId,
             @PathVariable("activityId") int activityId,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
-        model.addAttribute("city", cityService.find(cityId));
-        model.addAttribute("activity", activityService.find(activityId));
+        Activity activity = activityService.find(activityId);
+        model.addAttribute("activity", activity);
+        model.addAttribute("city", cityService.find(activity.getCityId()));
         model.addAttribute("participants", userService.findActivityParticipants(activityId, 20, page));
         
         return "activities/participants";

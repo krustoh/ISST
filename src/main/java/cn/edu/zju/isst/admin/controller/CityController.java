@@ -103,9 +103,16 @@ public class CityController {
         
         if (form.getId() > 0) {
             city = cityService.find(form.getId());
+            if (city.getUserId() != form.getUserId()) {
+                if (city.getUserId() > 0) {
+                    userService.updateCityPrincipal(city.getUserId(), false);
+                }
+                userService.updateCityPrincipal(form.getUserId(), true);
+            }
             form.bind(city);
         } else {
             city = form.build();
+            userService.updateCityPrincipal(city.getUserId(), true);
         }
         
         cityService.save(city);
@@ -131,12 +138,20 @@ public class CityController {
             if (idset.size() == 1) {
                 City city = cityService.find(Integer.valueOf(ids[0]).intValue());
                 if (null != city) {
+                    if (city.getUserId() > 0) {
+                        userService.updateCityPrincipal(city.getUserId(), false);
+                    }
                     cityService.delete(city);
                     WebUtils.addSuccessFlashMessage(String.format("成功删除：<i>%s</i>", city));
                 } else {
                     WebUtils.addErrorFlashMessage("记录不存在或已被删除");
                 }
             } else {
+                for (City city : cityService.findAll(idset)) {
+                    if (city.getUserId() > 0) {
+                        userService.updateCityPrincipal(city.getUserId(), false);
+                    }
+                }
                 int count = cityService.delete(idset);
                 WebUtils.addSuccessFlashMessage(String.format("成功删除<i>%d</i>条记录", count));
             }

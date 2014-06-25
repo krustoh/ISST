@@ -120,7 +120,7 @@ public abstract class AbstractDao<T> implements Dao<T> {
         jdbcTemplate.update(sql.toString(), paramSource, keyHolder, new String[] { primaryKey });
         
         Number keyValue = keyHolder.getKey();
-        if (null != keyValue) {
+        if (null != keyValue && keyValue.intValue() > 0) {
             setFieldValue(entity, primaryKey, keyValue.intValue());
         }
     }

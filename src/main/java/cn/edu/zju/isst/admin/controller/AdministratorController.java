@@ -5,10 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import cn.edu.zju.isst.form.AdministratorForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,6 +20,10 @@ import cn.edu.zju.isst.form.AdministratorLoginForm;
 import cn.edu.zju.isst.form.AdministratorPasswordForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.AdministratorService;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class AdministratorController {
@@ -102,5 +108,93 @@ public class AdministratorController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         administratorService.logout(request, response);
     	return WebUtils.redirectUrl("/login.html");
+    }
+
+    @RequireAdministrator(Administrator.SUPER)
+    @RequestMapping(value = "/administrators.html", method = RequestMethod.GET)
+    public String list(Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        model.addAttribute("administrators", administratorService.findAll(20, page));
+
+        return "administrators/list";
+    }
+
+    @RequireAdministrator(Administrator.SUPER)
+    @RequestMapping(value = "/administrators/add.html", method = RequestMethod.GET)
+    public String add(Model model) {
+        model.addAttribute("administratorForm", new AdministratorForm());
+
+        return "administrators/form";
+    }
+
+    @RequireAdministrator(Administrator.SUPER)
+    @RequestMapping(value = "/administrators/add.html", method = RequestMethod.POST)
+    public String saveAdd(@Valid AdministratorForm form, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return add(model);
+        } else if (null == form.getPassword() || form.getPassword().length() == 0) {
+            result.rejectValue("password", "password.blank", "密码不能为空");
+            return add(model);
+        }
+
+        return save(form);
+    }
+
+    @RequireAdministrator(Administrator.SUPER)
+    @RequestMapping(value = "/administrators/{id}.html", method = RequestMethod.GET)
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("administratorForm", new AdministratorForm(administratorService.find(id)));
+
+        return "administrators/form";
+    }
+
+    @RequireAdministrator(Administrator.SUPER)
+    @RequestMapping(value = "/administrators/{id}.html", method = RequestMethod.POST)
+    public String saveEdit(@Valid AdministratorForm form, BindingResult result, Model model, @PathVariable("id") int id) {
+        if (result.hasErrors()) {
+            return edit(model, id);
+        }
+
+        form.setId(id);
+        return save(form);
+    }
+
+    private String save(AdministratorForm form) {
+        administratorService.save(form);
+        WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", form.getUsername()));
+
+        return WebUtils.redirectUrl("/administrators.html");
+    }
+
+    @RequireAdministrator(Administrator.SUPER)
+    @RequestMapping(value = "/administrators/delete")
+     public String delete(
+            @RequestParam("id[]") String[] ids,
+            @RequestParam(value = "confirm", required = false, defaultValue = "0") int confirm,
+            Model model) {
+        Set<Integer> idset = new HashSet<Integer>();
+        for (String id : ids) {
+            idset.add(Integer.valueOf(id));
+        }
+
+        if (confirm == 0) {
+            model.addAttribute("administrators", "tasks");
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/tasks.html"));
+            return "confirm/delete";
+        } else {
+            if (idset.size() == 1) {
+                Administrator administrator = administratorService.find(Integer.valueOf(ids[0]).intValue());
+                if (null != administrator) {
+                    administratorService.delete(administrator);
+                    WebUtils.addSuccessFlashMessage(String.format("成功删除：<i>%s</i>", administrator.getUsername()));
+                } else {
+                    WebUtils.addErrorFlashMessage("管理员不存在或已被删除");
+                }
+            } else {
+                int count = administratorService.delete(idset);
+                WebUtils.addSuccessFlashMessage(String.format("成功删除 <i>%d</i> 个管理员", count));
+            }
+
+            return WebUtils.redirectUrl("/administrators.html");
+        }
     }
 }

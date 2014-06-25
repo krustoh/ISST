@@ -38,4 +38,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public Major findMajor(int id) {
         return query("SELECT id, name FROM class_major_fields WHERE id=?", ParameterizedBeanPropertyRowMapper.newInstance(Major.class), id);
     }
+
+    @Override
+    public int updateCityPrincipal(int userId, boolean isCityPrincipal) {
+        String sql = "UPDATE users SET city_principal=? WHERE id=?";
+        return jdbcTemplate.getJdbcOperations().update(sql, isCityPrincipal ? 1 : 0, userId);
+    }
 }

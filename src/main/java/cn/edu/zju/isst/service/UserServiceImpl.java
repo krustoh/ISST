@@ -152,4 +152,9 @@ public class UserServiceImpl implements UserService {
     public PaginationList<StudentUser> findActivityParticipants(int activityId, int pageSize, int page) {
         return studentUserDao.findActivityParticipants(activityId, pageSize, page);
     }
+
+    @Override
+    public int updateCityPrincipal(int userId, boolean isCityPrincipal) {
+        return userDao.updateCityPrincipal(userId, isCityPrincipal);
+    }
 }

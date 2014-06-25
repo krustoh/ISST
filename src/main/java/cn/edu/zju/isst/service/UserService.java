@@ -39,4 +39,5 @@ public interface UserService {
     public int delete(StudentUser user);
     public int delete(Set<Integer> idset);
     public PaginationList<StudentUser> findActivityParticipants(int activityId, int pageSize, int page);
+    public int updateCityPrincipal(int userId, boolean isCityPrincipal);
 }

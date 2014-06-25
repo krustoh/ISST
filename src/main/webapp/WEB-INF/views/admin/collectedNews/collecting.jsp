@@ -38,7 +38,8 @@ $(function() {
 				$template.find("input.data-news-id").attr("name", "id[]");
 				$template.find("td.data-news-id").html(data.id);
 				$template.find("td.data-news-title").html(data.title);
-				$template.find("td.data-news-time").html(new Date(data.postTime).format("yyyy-MM-dd hh:mm:ss"));
+				$template.find("td.data-news-post-time").html(new Date(data.postTime).format("yyyy-MM-dd"));
+				$template.find("td.data-news-created-at").html(new Date(data.createdAt).format("yyyy-MM-dd hh:mm:ss"));
 				$template.find("a.data-news-edit").attr("href", '<utils:url url="/collectedNews/" />' + data.id + ".html");
 				$template.find("a.data-news-publish").attr("href", '<utils:url url="/collectedNews/categories/${category.alias}/publish/archive?id[]=" />' + data.id);
 				$template.find("a.data-news-ignore").attr("href", '<utils:url url="/collectedNews/categories/${category.alias}/ignore?id[]=" />' + data.id);
@@ -125,6 +126,7 @@ $(function() {
 										<th>ID</th>
 										<th>标题</th>
 										<th>发布日期</th>
+										<th>采集日期</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -138,7 +140,8 @@ $(function() {
 										</td>
 										<td class="data-news-id"></td>
 										<td class="data-news-title"></td>
-										<td class="data-news-time"></td>
+										<td class="data-news-post-time"></td>
+										<td class="data-news-created-at"></td>
 										<td>
 											<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
 												<a class="btn btn-xs btn-info data-news-edit" href="" title="编辑"> 
@@ -197,6 +200,8 @@ $(function() {
 											<c:if test="${item.status==0}">
 											<a href="javascript:;" class="newsReCollect" data-news-id="${item.id}">重试</a>
 											</c:if>
+											</td>
+											<td><fmt:formatDate value="${item.postTime}" pattern="yyyy-MM-dd" />
 											</td>
 											<td><fmt:formatDate value="${item.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" />
 											</td>
