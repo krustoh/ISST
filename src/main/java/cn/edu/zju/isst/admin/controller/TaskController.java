@@ -56,7 +56,8 @@ public class TaskController {
     @RequestMapping(value = "/tasks/add.html", method = RequestMethod.POST)
     public String saveAdd(@Valid TaskForm form, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return add(model);
+            model.addAttribute("taskForm", form);
+            return "tasks/form";
         }
 
         return save(form);
@@ -72,11 +73,13 @@ public class TaskController {
     
     @RequestMapping(value = "/tasks/{id}.html", method = RequestMethod.POST)
     public String saveEdit(@Valid TaskForm form, BindingResult result, @PathVariable("id") int id, Model model) {
+        form.setId(id);
+        
         if (result.hasErrors()) {
-            return edit(id, model);
+            model.addAttribute("taskForm", form);
+            return "tasks/form";
         }
         
-        form.setId(id);
         return save(form);
     }
     

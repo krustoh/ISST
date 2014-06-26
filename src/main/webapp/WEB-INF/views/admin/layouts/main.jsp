@@ -86,6 +86,7 @@
 
 			
 				<ul class="nav nav-list">
+				<c:if test="${administrator.roles!=3}">
 					<navigation:item>
 						<navigation:link key="campus_life" href="/archives/categories/campus.html" label="软院生活" class="dropdown-toggle">
 							<i class="icon-apple" ></i>
@@ -132,7 +133,9 @@
 							</navigation:item>	
 						</ul>
 					</navigation:item>
+					</c:if>
 					
+				    <c:if test="${administrator.roles!=3}">
 					<navigation:item>
 						<navigation:link key="job" href="/jobs/categories/internship.html" label="职场生活" class="dropdown-toggle">
 							<i class="icon-suitcase" ></i>
@@ -164,6 +167,7 @@
 							</navigation:item>	
 						</ul>
 					</navigation:item>
+					</c:if>
 					
 					<navigation:item>
 						<navigation:link key="alumni" href="/alumni.html" label="通讯录" class="dropdown-toggle">
@@ -172,6 +176,7 @@
 						</navigation:link>
 					</navigation:item>
 					
+				    <c:if test="${administrator.roles!=3}">
 					<navigation:item>
 						<navigation:link key="cities" href="/cities.html" label="同城" class="dropdown-toggle">
 							<i class="icon-globe" ></i>
@@ -186,19 +191,22 @@
 							</navigation:item>
 						<!--</ul>-->
 					</navigation:item>
+					</c:if>
 					
+					<c:if test="${administrator.roles==-1}">
 					<navigation:item>
 						<navigation:link key="messages" href="/messages.html" label="消息推送" class="dropdown-toggle">
 							<i class="icon-comments" ></i>
 							<span class="menu-text">消息推送</span>
 						</navigation:link>
 					</navigation:item>
+					</c:if>
 					
-					<c:if test="${administrator.roles == SUPER}">
+					<c:if test="${administrator.roles==-1}">
 					<navigation:item>
-						<navigation:link key="admin_management" href="/administrators.html" label="管理员设置" class="dropdown-toggle">
+						<navigation:link key="administrators" href="/administrators.html" label="管理员" class="dropdown-toggle">
 							<i class="icon-user" ></i>
-							<span class="menu-text">管理员设置</span>
+							<span class="menu-text">管理员</span>
 						</navigation:link>
 					</navigation:item>
 					</c:if>

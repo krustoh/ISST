@@ -11,12 +11,12 @@ import cn.edu.zju.isst.entity.AppRelease;
 public class AppReleaseDaoImpl extends AbstractDao<AppRelease> implements AppReleaseDao {
     
     public List<AppRelease> findAll() {
-        String sql = "SELECT * FROM app_release ORDER BY build DESC";
+        String sql = "SELECT * FROM app_releases ORDER BY build DESC";
         return jdbcTemplate.query(sql, ParameterizedBeanPropertyRowMapper.newInstance(AppRelease.class));
     }
 
     public AppRelease getLatestVersion() {
-        String sql = "SELECT * FROM app_release ORDER BY build DESC LIMIT 1";
+        String sql = "SELECT * FROM app_releases ORDER BY build DESC LIMIT 1";
         List<AppRelease> apps = jdbcTemplate.query(sql, ParameterizedBeanPropertyRowMapper.newInstance(AppRelease.class));
         if (apps.isEmpty()) {
             return null;

@@ -48,7 +48,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public PaginationList<Administrator> findAll(int pageSize, int page) {
-        return null;
+        return administratorDao.findAll(pageSize, page);
     }
 
     @Override

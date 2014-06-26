@@ -33,7 +33,7 @@
 							<h4 class="header green clearfix">
 								内容
 							</h4>
-							<form:textarea path="content" id="content"></form:textarea>
+							<form:textarea path="content" id="content" class="form-control"></form:textarea>
 						</div>
 					</div>
 
@@ -59,7 +59,6 @@
 <layout:override name="javascripts">
 <script type="text/javascript">
 jQuery(function($){
-	$("#content").isst_wysiwyg();
 	
 	$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
 		$(this).prev().focus();

@@ -92,7 +92,7 @@ public class MessageController {
         }
     }
     
-    @RequestMapping(value = "/message/push")
+    @RequestMapping(value = "/messages/push")
     public String push(
             @RequestParam("id[]") String[] ids) {
         Set<Integer> idset = new HashSet<Integer>();

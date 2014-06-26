@@ -40,4 +40,9 @@ public class BccsApi {
         request.setMessage("{\"title\":\"" + title + "\",\"description\":\"" + description + "\"}");
         return pushBroadcastMessage(request);
     }
+    
+    public static void main(String[] args) {
+        int status = pushAndroidBroadcastMessage("message1", "hello world", "hhhhhhhhhello wwwwwwworld.");
+        System.out.println("status: " + status);
+    }
 }

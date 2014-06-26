@@ -129,13 +129,17 @@ public class AdministratorController {
     @RequireAdministrator(Administrator.SUPER)
     @RequestMapping(value = "/administrators/add.html", method = RequestMethod.POST)
     public String saveAdd(@Valid AdministratorForm form, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return add(model);
-        } else if (null == form.getPassword() || form.getPassword().length() == 0) {
-            result.rejectValue("password", "password.blank", "密码不能为空");
-            return add(model);
+        if (!result.hasErrors()) {
+            if (null == form.getPassword() || form.getPassword().length() == 0) {
+                result.rejectValue("password", "password.blank", "密码不能为空");
+            }
         }
 
+        if (result.hasErrors()) {
+            model.addAttribute("administratorForm", form);
+            return "administrators/form";
+        }
+        
         return save(form);
     }
 
@@ -150,11 +154,12 @@ public class AdministratorController {
     @RequireAdministrator(Administrator.SUPER)
     @RequestMapping(value = "/administrators/{id}.html", method = RequestMethod.POST)
     public String saveEdit(@Valid AdministratorForm form, BindingResult result, Model model, @PathVariable("id") int id) {
+        form.setId(id);
         if (result.hasErrors()) {
-            return edit(model, id);
+            model.addAttribute("administratorForm", form);
+            return "administrators/form";
         }
 
-        form.setId(id);
         return save(form);
     }
 
@@ -173,12 +178,14 @@ public class AdministratorController {
             Model model) {
         Set<Integer> idset = new HashSet<Integer>();
         for (String id : ids) {
-            idset.add(Integer.valueOf(id));
+            if (!"1".equals(id)) {
+                idset.add(Integer.valueOf(id));
+            }
         }
 
         if (confirm == 0) {
-            model.addAttribute("administrators", "tasks");
-            model.addAttribute("cancelUrl", WebUtils.createUrl("/tasks.html"));
+            model.addAttribute("navigationActiveKey", "administrators");
+            model.addAttribute("cancelUrl", WebUtils.createUrl("/administrators.html"));
             return "confirm/delete";
         } else {
             if (idset.size() == 1) {

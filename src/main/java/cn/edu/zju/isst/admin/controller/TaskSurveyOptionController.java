@@ -54,7 +54,9 @@ public class TaskSurveyOptionController {
             @Valid TaskSurveyOptionForm form,
             BindingResult result) {
         if (result.hasErrors()) {
-            return surveyOptionAdd(model, taskId);
+            model.addAttribute("taskSurveyOptionForm", form);
+            model.addAttribute("task", taskService.find(taskId));
+            return "tasks/form";
         }
         
         return saveSurveyOption(form);
@@ -79,11 +81,12 @@ public class TaskSurveyOptionController {
             @PathVariable("id") int id,
             @Valid TaskSurveyOptionForm form,
             BindingResult result) {
+        form.setId(id);
         if (result.hasErrors()) {
-            return surveyOptionEdit(model, taskId, id);
+            model.addAttribute("taskSurveyOptionForm", form);
+            model.addAttribute("task", taskService.find(taskId));
         }
         
-        form.setId(id);
         return saveSurveyOption(form);
     }
     

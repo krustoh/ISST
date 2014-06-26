@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib prefix="utils" uri="/utils"%>
 
-<navigation:setNavigationActiveKey key="admin_management" />
+<navigation:setNavigationActiveKey key="administrators" />
 
 <layout:override name="page-header">
 	<div class="pull-right" style="margin-right: 6%;">
@@ -27,7 +27,6 @@
 							<th>ID</th>
 							<th>姓名</th>
 							<th>角色</th>
-							<th>密码</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -38,12 +37,13 @@
 								<td class="center"><label> <input type="checkbox" class="ace" name="id[]" value="${administrator.id}" /> <span class="lbl"></span> </label></td>
 								<td>${administrator.id}</td>								
 								<td>${administrator.username}</td>
-								<td>${administrator.roles}</td>
-								<td>${administrator.password}</td>
+								<td>${administrator.roleLabel}</td>
 								<td>
 									<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
 										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/administrators/${administrator.id}.html" />"> <i class="icon-edit bigger-120"></i> </a> 
+										<c:if test="${administrator.id!=1}">
 										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/administrators/delete?id[]=${administrator.id}" />"> <i class="icon-trash bigger-120"></i> </a>
+										</c:if>
 									</div>
 									<div class="visible-xs visible-sm hidden-md hidden-lg">
 										<div class="inline position-relative">
@@ -55,10 +55,11 @@
 												<li><a href="<utils:url url="/administrators/${administrator.id}.html" />" class="tooltip-success" data-rel="tooltip" title="编辑"> <span class="blue"> <i class="icon-edit bigger-120"></i>
 													</span> </a>
 												</li>
-
+												<c:if test="${administrator.id!=1}">
 												<li><a href="<utils:url url="/administrators/delete?id[]=${administrator.id}" />" class="tooltip-error" data-rel="tooltip" title="删除"> <span class="red"> <i
 															class="icon-trash bigger-120"></i> </span> </a>
 												</li>
+												</c:if>
 											</ul>
 										</div>
 									</div></td>

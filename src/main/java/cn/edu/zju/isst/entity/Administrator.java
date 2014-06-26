@@ -90,9 +90,9 @@ public class Administrator {
     }
 
     public String getRoleLabel() {
-        if (isAlumni()) {
+        if (roles == ADMIN_ALUMNI) {
             return "校友管理员";
-        } else if (isSuper()) {
+        } else if (roles== SUPER) {
             return "超级管理员";
         } else {
             return "管理员";

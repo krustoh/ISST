@@ -7,11 +7,12 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib prefix="utils" uri="/utils"%>
 
-<navigation:setNavigationActiveKey key="admin_management"/>
+<navigation:setNavigationActiveKey key="administrators"/>
+<navigation:setPageTitle label="${administratorForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
 	<div class="col-xs-12">
-		<form:form class="form-horizontal isst-form" modelAttribute="administratorForm" enctype="multipart/form-data">
+		<form:form class="form-horizontal isst-form" modelAttribute="administratorForm">
 			<fieldset>
 				<field:wrapper class="form-group" path="username">
 					<label for="username" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 用户名 </label>
@@ -25,7 +26,7 @@
 				<field:wrapper class="form-group" path="password">
 					<label for="password" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 密码 </label>
 					<div class="col-xs-12 col-sm-5">
-						<form:password id="password" class="form-control" path="password" />
+						<form:input id="password" class="form-control" path="password"  placeholder="${administratorForm.id>0?'留空表示不修改密码':''}" />
 					</div>
 					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="password">
 					</form:errors>
@@ -35,9 +36,9 @@
 						<label class="col-sm-3 control-label no-padding-right" for="roles">角色</label>
 						<div class="col-sm-9">
 							<form:select  id="roles" path="roles">
-								<form:option value="-1" label="超级管理员"/>
-								<form:option value="1" label="校友管理员"/>
 								<form:option value="7" label="管理员"/>
+								<form:option value="3" label="校友管理员"/>
+								<form:option value="-1" label="超级管理员"/>
 							</form:select>
 						</div>
 					</div>

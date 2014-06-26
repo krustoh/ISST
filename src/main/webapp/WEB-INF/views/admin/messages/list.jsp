@@ -53,7 +53,7 @@
 								<td>
 									${message.title}
 									<c:if test="${message.status==0}">
-										<span class="label label-sm label-warning">未推送</span>
+										<a href="<utils:url url="/messages/push?id[]=${message.id}" />"><span class="label label-sm label-warning">重发</span></a>
 									</c:if>  
 								</td>
 								<td>

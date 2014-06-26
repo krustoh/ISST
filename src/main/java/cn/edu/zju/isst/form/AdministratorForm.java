@@ -9,7 +9,6 @@ public class AdministratorForm {
     @NotBlank(message = "用户名不能为空")
     private String username;
 
-    @NotBlank(message = "密码不能为空")
     private String password;
 
     private int roles;
@@ -35,7 +34,7 @@ public class AdministratorForm {
         if (null != password && password.length() > 0) {
             administrator.setPassword(Administrator.encryptPassword(password));
         } else {
-            administrator.setPassword(null);
+            administrator.setPassword(administrator.getPassword());
         }
 
         administrator.setRoles(roles);

@@ -21,7 +21,8 @@ public class JobForm {
     
     @NotBlank(message = "职位不能为空")
     private String position;
-    
+
+    @NotBlank(message = "内容不能为空")
     private String content;
     
     private int status = Job.STATUS_PUBLISHED;
