@@ -44,7 +44,7 @@ public class TaskSurveyOptionController {
         model.addAttribute("taskSurveyOptionForm", form);
         model.addAttribute("task", taskService.find(taskId));
         
-        return "tasks/form";
+        return "tasks/survey/options/form";
     }
     
     @RequestMapping(value = "/tasks/{taskId}/surveys/options/add.html", method = RequestMethod.POST)
@@ -70,8 +70,8 @@ public class TaskSurveyOptionController {
         TaskSurveyOptionForm form = new TaskSurveyOptionForm(taskSurveyOptionService.find(id));
         model.addAttribute("taskSurveyOptionForm", form);
         model.addAttribute("task", taskService.find(taskId));
-        
-        return "tasks/form";
+
+        return "tasks/survey/options/form";
     }
 
     @RequestMapping(value = "/tasks/{taskId}/surveys/options/{id}.html", method = RequestMethod.POST)

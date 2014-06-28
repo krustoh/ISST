@@ -52,6 +52,10 @@ public class WebUtils {
         request().getSession().setAttribute(AppConfig.FLASH_MESSAGE_KEY, FlashMessage.error(message));
     }
     
+    public static void addErrorFlashMessage(Result result) {
+        request().getSession().setAttribute(AppConfig.FLASH_MESSAGE_KEY, FlashMessage.error(result));
+    }
+    
     public static void addErrorFlashMessage(BindingResult result) {
         request().getSession().setAttribute(AppConfig.FLASH_MESSAGE_KEY, FlashMessage.error(result));
     }

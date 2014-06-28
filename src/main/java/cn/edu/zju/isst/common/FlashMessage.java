@@ -28,6 +28,10 @@ public class FlashMessage {
         return new FlashMessage("error", message);
     }
     
+    public static FlashMessage error(Result result) {
+        return error(result.getMessage());
+    }
+    
     public static FlashMessage error(BindingResult result) {
         StringBuilder sb = new StringBuilder();
         for (ObjectError error : result.getAllErrors()) {
