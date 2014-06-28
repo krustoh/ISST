@@ -18,7 +18,6 @@ import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.CategoryService;
 import cn.edu.zju.isst.service.JobCommentService;
 import cn.edu.zju.isst.service.JobService;
-import cn.edu.zju.isst.service.UserService;
 
 @RequireUser
 @Controller("webJobCommentController")
@@ -29,8 +28,6 @@ public class JobCommentController {
     private CategoryService categoryService;
     @Autowired
     private JobCommentService jobCommentService;
-    @Autowired
-    private UserService userService;
     
     @RequestMapping(value = "/jobs/{jobId}/comments.html", method = RequestMethod.GET)
     public String list(
