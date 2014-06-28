@@ -11,6 +11,7 @@ import cn.edu.zju.isst.dao.TaskDao;
 import cn.edu.zju.isst.dao.TaskSurveyDao;
 import cn.edu.zju.isst.entity.Task;
 import cn.edu.zju.isst.entity.TaskSurvey;
+import cn.edu.zju.isst.entity.TaskSurveySearchCondition;
 import cn.edu.zju.isst.form.TaskSurveyForm;
 
 @Service
@@ -58,7 +59,7 @@ public class TaskSurveyServiceImpl implements TaskSurveyService {
     }
 
     @Override
-    public PaginationList<TaskSurvey> findAll(int taskId, int pageSize, int page) {
-        return taskSurveyDao.findAll(taskId, pageSize, page);
+    public PaginationList<TaskSurvey> findAll(int taskId, TaskSurveySearchCondition condition, int pageSize, int page) {
+        return taskSurveyDao.findAll(taskId, condition, pageSize, page);
     }
 }

@@ -29,7 +29,7 @@ public class StudentUserForm extends AlumniForm {
         classId = user.getClassId();
     }
     
-    public void bind(StudentUser user) {
+    public StudentUser bind(StudentUser user) {
         super.bind(user);
         user.setUsername(username);
         if (null != password && password.length() > 0) {
@@ -40,6 +40,8 @@ public class StudentUserForm extends AlumniForm {
         user.setMajor(major);
         user.setGender(gender);
         user.setName(name);
+        
+        return user;
     }
     
     public String getUsername() {

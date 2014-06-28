@@ -55,14 +55,16 @@ public class TaskController {
     public String saveSurvey(@Valid TaskSurveyForm form, BindingResult result, @PathVariable("id") int id, Model model) {
         boolean error = result.hasErrors();
 
-        Task task = taskService.find(form.getTaskId());
-        Result res = taskSurveyService.save(form);
-
-        if (!res.valid()) {
-            WebUtils.addErrorFlashMessage(res);
-            error = true;
+        if (!error) {
+            Result res = taskSurveyService.save(form);
+            if (!res.valid()) {
+                WebUtils.addErrorFlashMessage(res);
+                error = true;
+            }
         }
-
+        
+        Task task = taskService.find(form.getTaskId());
+        
         if (error) {
             model.addAttribute("task", task);
             model.addAttribute("options", taskSurveyOptionService.findAll(id));

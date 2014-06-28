@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Task;
 import cn.edu.zju.isst.entity.TaskSearchCondition;
+import cn.edu.zju.isst.entity.TaskSurveySearchCondition;
 import cn.edu.zju.isst.form.TaskForm;
 import cn.edu.zju.isst.identity.RequireAdministrator;
 import cn.edu.zju.isst.service.TaskService;
@@ -156,11 +157,13 @@ public class TaskController {
     
     @RequestMapping("/tasks/{taskId}/surveys.html")
     public String surveyList(
+            TaskSurveySearchCondition condition,
             Model model,
             @PathVariable("taskId") int taskId, 
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         model.addAttribute("task", taskService.find(taskId));
-        model.addAttribute("surveys", taskSurveyService.findAll(taskId, 20, page));
+        model.addAttribute("taskSurveySearchCondition", condition);
+        model.addAttribute("surveys", taskSurveyService.findAll(taskId, condition, 20, page));
         model.addAttribute("options", taskSurveyOptionService.findAll(taskId));
         
         return "tasks/survey";
