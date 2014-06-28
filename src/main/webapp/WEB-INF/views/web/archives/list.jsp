@@ -12,7 +12,7 @@
 <c:if test="${category.alias== 'experience'}">
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
-				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="#" />">
+				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/users/archives/${category.alias}/add.html" />">
 					<i class="icon-plus align-top bigger-125"></i>
 						发布
 				</a>
@@ -87,7 +87,7 @@
 					<button type="button" class="close" data-dismiss="alert">
 						<i class="icon-remove"></i>
 					</button>
-					<strong>查询结果不存在，请重新输入查询条件！</strong>
+					<strong>没有记录！</strong>
 				<br />
 				<br />
 				</div>

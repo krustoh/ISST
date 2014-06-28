@@ -7,45 +7,22 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="users_activities"/>
-<navigation:setPageTitle label="${cityUserActivityForm.id>0?'编辑':'添加'}"/>
+<navigation:setNavigationActiveKey key="tasks"/>
+<navigation:setPageTitle label="${taskForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
 			<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="cityUserActivityForm" method="POST">
+				<form:form class="form-horizontal isst-form" modelAttribute="taskForm" method="POST">
+					
 					<fieldset>
-						<field:wrapper class="form-group" path="title">
-							<label for="title" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
-							标题
+						<field:wrapper class="form-group" path="name">
+							<label for="name" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							任务名称
 							</label>
 							<div class="col-xs-12 col-sm-5">
-								<form:input class="width-100" path="title" />
+								<form:input class="width-100" path="name" />
 							</div>
-							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
-							</form:errors>
-						</field:wrapper>
-						
-						<field:wrapper class="form-group" path="cityId">
-							<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
-							城市
-							</label>
-							<div class="col-xs-12 col-sm-5">
-								<form:select  path="cityId">
-									<form:options items="${cities}" itemValue="id" itemLabel="name"/>
-								</form:select>
-							</div>
-							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="cityId">
-							</form:errors>
-						</field:wrapper>
-						
-						<field:wrapper class="form-group" path="location">
-							<label for="location" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
-							地点
-							</label>
-							<div class="col-xs-12 col-sm-5">
-								<form:input class="width-100" path="location" />
-							</div>
-							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="location">
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="name">
 							</form:errors>
 						</field:wrapper>
 						
@@ -55,7 +32,7 @@
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker" path="startTime" type="text" data-date-format="yyyy-mm-dd" />
+								<form:input class="form-control date-picker"  path="startTime" type="text" data-date-format="yyyy-mm-dd" />
 								<span class="input-group-addon">
 									<i class="icon-calendar bigger-110"></i>
 								</span>
@@ -80,17 +57,35 @@
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="expireTime">
 							</form:errors>
 						</field:wrapper>
-
-					<div class="space-4"></div>
-					
-					<div class="row">
-						<div class="col-sm-12">
-							<h4 class="header green clearfix">
-								内容
-							</h4>
-							<form:textarea path="content" id="content"></form:textarea>
+						
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="type">任务类型</label>
+						<div class="col-sm-9">
+							<form:select  id="type" path="type">
+								<form:option value="0" label="去向调查"/>
+								<form:option value="-1" label="其他"/>
+							</form:select>
 						</div>
 					</div>
+						
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
+						<div class="col-sm-9">
+							<form:select  id="status" path="status">
+								<form:option value="0" label="隐藏"/>
+								<form:option value="1" label="发布"/>
+							</form:select>
+						</div>
+					</div>
+
+				<field:wrapper class="form-group" path="description">
+					<label for="description" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right"> 任务描述 </label>
+					<div class="col-xs-12 col-sm-5">
+						<form:textarea path="description" id="description" class="form-control"></form:textarea>
+					</div>
+					<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="description">
+					</form:errors>
+				</field:wrapper>
 
 						<div class="clearfix form-actions">
 							<div class="col-md-offset-3 col-md-9">
@@ -99,7 +94,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="<utils:returnUrl url="/activities.html" />">
+								<a class="btn" href="<utils:returnUrl url="/tasks.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>
@@ -110,6 +105,7 @@
 					<!-- /.col -->
 	
 </layout:override>
+
 
 <layout:override name="javascripts">
 <script type="text/javascript">
@@ -123,7 +119,6 @@ jQuery(function($){
 });
 </script>
 </layout:override>
-
 
 
 <%@ include file="../layouts/main.jsp"%>

@@ -8,11 +8,11 @@
 <%@ taglib uri="/utils" prefix="utils"%>
 
 <navigation:setNavigationActiveKey key="city_activity"/>
-<navigation:setPageTitle label="${city.name}活动"/>
+<navigation:setPageTitle label="${cities.name}活动"/>
 
 <layout:override name="page-header">
 		<div class="pull-right" style="margin-right: 6%;">
-			<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="#" />">
+			<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/activities/add.html" />">
 				<i class="icon-plus align-top bigger-125"></i>
 				添加
 			</a>
@@ -67,7 +67,7 @@
 							<c:forEach items="${activities.items}" var="activity">
 							<tr>
 								<td>
-									<a href="<utils:url url="/cities/${user.cityId}/activities/${activity.id}.html" />">${activity.title}</a>
+									<a href="<utils:url url="#" />">${activity.title}</a>
 									<c:if test="${activity.participated==true}">
 										<span class="label label-sm label-warning">已报名</span>
 									</c:if>  

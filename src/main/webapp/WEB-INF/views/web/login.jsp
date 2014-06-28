@@ -4,6 +4,7 @@
 <%@ taglib uri="/jsp_layout" prefix="layout"%>
 <%@ taglib uri="/field" prefix="field"%>
 <%@ taglib uri="/flash_message" prefix="fm"%>
+<%@ taglib prefix="utils" uri="/utils"%>
 
 <c:set var="bodyCssClass" value="login-layout" scope="request" />
 
@@ -15,7 +16,7 @@
                 <div class="login-container">
                     <div class="center">
                         <h1 style=" padding: 5px 0;">
-                            <img src="images/logo.png" />
+                            <img class="nav-user-photo" src="<utils:resourceUrl path="/avatars/logo.jpg" />" />
                             <span class="white">ISST</span>
                         </h1>
                     </div>

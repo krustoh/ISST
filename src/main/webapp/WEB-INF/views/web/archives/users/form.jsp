@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="${category.alias=='experience' ? 'job_' : 'archive_'}${category.alias}"/>
+<navigation:setNavigationActiveKey key="users_archive_experience"/>
 <navigation:setPageTitle label="${archiveForm.id>0?'编辑':'添加'}"/>
 
 <layout:override name="content">
@@ -25,16 +25,6 @@
 							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="title">
 							</form:errors>
 						</field:wrapper>
-						
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="status">状态</label>
-						<div class="col-sm-9">
-							<form:select  id="status" path="status">
-								<form:option value="0" label="隐藏"/>
-								<form:option value="3" label="发布"/>
-							</form:select>
-						</div>
-					</div>
 
 					<div class="space-4"></div>
 					
@@ -55,7 +45,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="<utils:returnUrl url="/archives/categories/${category.alias}.html" />">
+								<a class="btn" href="<utils:returnUrl url="/users/archives/${category.alias}.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>
@@ -80,4 +70,4 @@ jQuery(function($){
 </layout:override>
 
 
-<%@ include file="../layouts/main.jsp"%>
+<%@ include file="../../layouts/main.jsp"%>

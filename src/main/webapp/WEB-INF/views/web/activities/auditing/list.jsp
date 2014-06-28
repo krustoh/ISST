@@ -7,8 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="city_activity"/>
-<navigation:setPageTitle label="city_activity_waiting"/>
+<navigation:setNavigationActiveKey key="city_activity_waiting"/>
 
 <layout:override name="content">
 <div class="col-xs-12">
@@ -63,6 +62,7 @@
 						
 						<tbody>
 							<c:forEach items="${activities.items}" var="activity">
+							<c:if test="${activity.status == 0}">
 							<tr>
 								<td class="center">
 								<label>
@@ -70,27 +70,21 @@
 								</td>
 								<td>${activity.id}</td>
 								<td>
-									<a href="<utils:url url="/cities/${city.id}/activities/${activity.id}.html" />">${activity.title}</a> 
+									<a href="<utils:url url="#" />">${activity.title}</a> 
 								</td>
 								<td>
 								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
 								
 								</td>
 								<td>
-								<c:choose>
-									<c:when test="${activity.userId>0}">
-										<a href="<utils:url url="/alumni/${activity.user.id}/view.html" returned="true"/>">${activity.user.name}</a>
-									</c:when>
-									<c:otherwise>
-										管理员
-									</c:otherwise>
-								</c:choose>
+										<a href="<utils:url url="/alumni/${activity.user.id}/view.html" returned="true"/>">${activity.user.name}</a>		
+			
 								</td>
 								
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/cities/${user.cityId }/activities/{id}.html" />">
+										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="审核" href="<utils:url url="/activities/audit?id[]=${activity.id }" />">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
@@ -108,8 +102,8 @@
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												
-												<li><a href="<utils:url url="/activities/${activity.id}.html" />" class="tooltip-success"
-													data-rel="tooltip" title="编辑"> <span class="blue">
+												<li><a href="<utils:url url="/activities/audit?id[]=${activity.id }" />" class="tooltip-success"
+													data-rel="tooltip" title="审核"> <span class="blue">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 
 												<li><a href="<utils:url url="/users/activities/delete?id[]=${activity.id}" />" class="tooltip-error"
@@ -121,6 +115,7 @@
 								</td>
 
 							</tr>
+							</c:if>
 							</c:forEach>
 						</tbody>	
 					</table>
@@ -133,9 +128,8 @@
 								<i class="icon-angle-up icon-on-right"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="<utils:url url="/users/activities/delete" />">批量删除</a></li>
-
-								<li><a href="<utils:url url="/cities/activities/audit" />">批量审核</a></li>
+								<li><a href="<utils:url url="/activities/audit" />">批量审核</a></li>
+								<li><a href="<utils:url url="/users/activities/delete" />">批量删除</a></li>						
 							</ul>
 						</div>				
 						</div>

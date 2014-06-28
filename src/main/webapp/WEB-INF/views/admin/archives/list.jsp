@@ -30,7 +30,7 @@
 			
 			<c:otherwise>
 				<div class="pull-right" style="margin-right: 6%;">
-					<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/jobs/categories/${category.alias}/add.html" />">
+					<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/archives/categories/${category.alias}/add.html" />">
 						<i class="icon-plus align-top bigger-125"></i>
 						添加
 					</a>

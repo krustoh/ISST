@@ -79,14 +79,14 @@ public class JobController {
     }
     
     @RequestMapping(value = "/users/jobs/{categoryAlias}/add.html", method = RequestMethod.GET)
-    public String edit(@PathVariable("categoryAlias") String categoryAlias, Model model) {
+    public String add(@PathVariable("categoryAlias") String categoryAlias, Model model) {
         model.addAttribute("category", categoryService.find(categoryAlias));
         JobForm form = new JobForm();
         model.addAttribute("jobForm", form);
         return "jobs/users/form";
     }
     
-    @RequestMapping(value = "/users/jobs/{id}.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/jobs/{categoryAlias}/{id}.html", method = RequestMethod.GET)
     public String edit(@PathVariable("id") int id, Model model) {
         Job job = jobService.find(id);
         model.addAttribute("category", categoryService.find(job.getCategoryId()));

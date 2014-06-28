@@ -182,21 +182,22 @@
 							<i class="icon-globe" ></i>
 							<span class="menu-text">同城</span>
 						</navigation:link>
-
-						<!--<ul class="submenu">-->
-							<navigation:item hidden="true">
-								<navigation:link href="/cities/${cityId}/activities.html" key="city_activity" label="同城活动">
-											同城活动
-								</navigation:link>
-							</navigation:item>
-						<!--</ul>-->
+					</navigation:item>
+					</c:if>
+					
+					<c:if test="${administrator.roles !=-3}">
+					<navigation:item>
+						<navigation:link key="tasks" href="/tasks.html" label="学生事务" class="dropdown-toggle">
+							<i class="icon-list-alt" ></i>
+							<span class="menu-text">学生事务</span>
+						</navigation:link>
 					</navigation:item>
 					</c:if>
 					
 					<c:if test="${administrator.roles==-1}">
 					<navigation:item>
 						<navigation:link key="messages" href="/messages.html" label="消息推送" class="dropdown-toggle">
-							<i class="icon-comments" ></i>
+							<i class="icon-envelope" ></i>
 							<span class="menu-text">消息推送</span>
 						</navigation:link>
 					</navigation:item>

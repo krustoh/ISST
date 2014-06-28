@@ -47,7 +47,7 @@
 
 						<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
-							<li><a href="<utils:url url="/password.html" />"> <i class="icon-key"></i> 修改密码 </a>
+							<li><a href="<utils:url url="/users/password.html" />"> <i class="icon-key"></i> 修改密码 </a>
 							</li>
 
 							<li class="divider">&nbsp;</li>
@@ -188,14 +188,8 @@
 							
 							<c:if test="${user.cityPrincipal == true}">
 							<navigation:item>
-								<navigation:link href="#" key="city_activity_waiting" label="待审核活动">
+								<navigation:link href="/activities/auditing.html" key="city_activity_waiting" label="待审核活动">
 											待审核活动
-								</navigation:link>
-							</navigation:item>
-							
-							<navigation:item>
-								<navigation:link href="#" key="city_activity_publish" label="已审核活动">
-											已审核活动
 								</navigation:link>
 							</navigation:item>
 							</c:if>
@@ -203,18 +197,55 @@
 					</navigation:item>
 					
 					<navigation:item>
-						<navigation:link key="personal" href="#" label="个人中心" class="dropdown-toggle">
-							<i class="icon-globe" ></i>
+						<navigation:link key="personal" href="/tasks.html" label="个人中心" class="dropdown-toggle">
+							<i class="icon-cogs" ></i>
 							<span class="menu-text">个人中心</span>
 						</navigation:link>
 
-						<!--<ul class="submenu">-->
-							<navigation:item hidden="true">
-								<navigation:link href="#" key="personal" label="同城活动">
-											同城活动
+						<ul class="submenu">
+							<navigation:item >
+								<navigation:link href="/tasks.html" key="personal_tasks" label="学生事务">
+											学生事务
 								</navigation:link>
 							</navigation:item>
-						<!--</ul>-->
+							
+							<navigation:item >
+								<navigation:link href="/alumni/${user.id}.html" key="personal_info" label="个人信息">
+											个人信息
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item >
+								<navigation:link href="/users/archives/experience.html" key="users_archive_experience" label="发布的经验">
+											发布的经验
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item >
+								<navigation:link href="/users/jobs/recommend.html" key="users_job_recommend" label="发布的内推">
+											发布的内推
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item >
+								<navigation:link href="/users/activities.html" key="users_activities" label="发布的活动">
+											发布的活动
+								</navigation:link>
+							</navigation:item>
+							
+							<navigation:item >
+								<navigation:link href="#" key="personal_activities_participant" label="参加的活动">
+											参加的活动
+								</navigation:link>
+							</navigation:item>
+					
+							<navigation:item>
+								<navigation:link key="nearby" href="#" label="附近的人" class="dropdown-toggle">
+									<i class="icon-phone" ></i>
+									<span class="menu-text">附近的人</span>
+								</navigation:link>
+							</navigation:item>
+						</ul>
 					</navigation:item>
 				</ul>
 			

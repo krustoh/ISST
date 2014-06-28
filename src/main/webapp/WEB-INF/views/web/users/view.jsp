@@ -7,8 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="alumni"/>
-<navigation:setPageTitle label="查看"/>
+<navigation:setNavigationActiveKey key="personal_info"/>
 
 <layout:override name="content">
 	<div class="col-xs-12">
@@ -51,7 +50,11 @@
 					</table>
 
 					<div class="clearfix form-actions">
-						<div class="pull-right" style="margin-right: 0%;">						
+						<div class="pull-right" style="margin-right: 0%;">
+							<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/users/edit.html" returned="true"/>"> 
+								<i class="icon-edit bigger-120 "></i>编辑 
+							</a>
+												
 							<a style="color:white" class="btn btn-sm btn-grey" href="<utils:returnUrl url="/alumni.html" />"> 
 								<i class="icon-undo bigger-120 "></i>返回 
 							</a>

@@ -74,14 +74,14 @@ public class ArchiveController {
     }
     
     @RequestMapping(value = "/users/archives/{categoryAlias}/add.html", method = RequestMethod.GET)
-    public String edit(@PathVariable("categoryAlias") String categoryAlias, Model model) {
+    public String add(@PathVariable("categoryAlias") String categoryAlias, Model model) {
         model.addAttribute("category", categoryService.find(categoryAlias));
         ArchiveForm form = new ArchiveForm();
         model.addAttribute("archiveForm", form);
         return "archives/users/form";
     }
     
-    @RequestMapping(value = "/users/archives/{id}.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/archives/{categoryAlias}/{id}.html", method = RequestMethod.GET)
     public String edit(@PathVariable("id") int id, Model model) {
         Archive archive = archiveService.find(id);
         model.addAttribute("category", categoryService.find(archive.getCategoryId()));
