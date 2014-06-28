@@ -43,11 +43,10 @@ public class AlumniForm {
     
     public StudentUser build() {
         StudentUser user = new StudentUser();
-        bind(user);
-        return user;
+        return bind(user);
     }
     
-    public void bind(StudentUser user) {
+    public StudentUser bind(StudentUser user) {
         user.setCityId(cityId);
         user.setEmail(email);
         user.setPhone(phone);
@@ -60,6 +59,8 @@ public class AlumniForm {
         user.setPrivatePhone(privatePhone);
         user.setPrivatePosition(privatePosition);
         user.setPrivateQQ(privateQQ);
+        
+        return user;
     }
     
     public int getId() {
