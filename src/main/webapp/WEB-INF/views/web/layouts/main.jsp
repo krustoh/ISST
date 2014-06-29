@@ -241,7 +241,6 @@
 					
 							<navigation:item>
 								<navigation:link key="nearby" href="#" label="附近的人" class="dropdown-toggle">
-									<i class="icon-phone" ></i>
 									<span class="menu-text">附近的人</span>
 								</navigation:link>
 							</navigation:item>

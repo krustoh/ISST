@@ -99,7 +99,7 @@
 								</button>
 
 								&nbsp; &nbsp; &nbsp;
-								<a class="btn" href="<utils:returnUrl url="/activities.html" />">
+								<a class="btn" href="<utils:returnUrl url="/users/activities.html" />">
 									<i class="icon-undo bigger-110"></i> 返回
 								</a>
 							</div>

@@ -75,12 +75,13 @@ public class JobController {
         } else {
             throw new RuntimeException("Category does not exist.");
         }
-        return "jobs/list";
+        return "jobs/users/list";
     }
     
     @RequestMapping(value = "/users/jobs/{categoryAlias}/add.html", method = RequestMethod.GET)
     public String add(@PathVariable("categoryAlias") String categoryAlias, Model model) {
         model.addAttribute("category", categoryService.find(categoryAlias));
+        model.addAttribute("cities", cityService.findAllForSelect());
         JobForm form = new JobForm();
         model.addAttribute("jobForm", form);
         return "jobs/users/form";
@@ -90,6 +91,7 @@ public class JobController {
     public String edit(@PathVariable("id") int id, Model model) {
         Job job = jobService.find(id);
         model.addAttribute("category", categoryService.find(job.getCategoryId()));
+        model.addAttribute("cities", cityService.findAllForSelect());
         model.addAttribute("jobForm", new JobForm(job));
         return "jobs/users/form";
     }
@@ -120,6 +122,7 @@ public class JobController {
         StudentUser user = (StudentUser) session.getAttribute("user");
         if (result.hasErrors()) {
             model.addAttribute("category", category);
+            model.addAttribute("cities", cityService.findAllForSelect());
             model.addAttribute("jobForm", form);
             return "jobs/users/form";
         } else {

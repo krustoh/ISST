@@ -70,7 +70,7 @@ public class ArchiveController {
         } else {
             throw new RuntimeException("Category does not exist.");
         }
-        return "archives/list";
+        return "archives/users/list";
     }
     
     @RequestMapping(value = "/users/archives/{categoryAlias}/add.html", method = RequestMethod.GET)
@@ -120,7 +120,6 @@ public class ArchiveController {
         } else {
             form.setCategoryId(category.getId());
             form.setUserId(user.getId());
-            form.setStatus(Archive.STATUS_HIDDEN);
 
             Archive archive = null;
             if (form.getId() > 0) {

@@ -7,12 +7,12 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="users_activities"/>
+<navigation:setNavigationActiveKey key="users_archive_experience"/>
 
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
-				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/activities/add.html" />">
+				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/users/archives/${category.alias}/add.html" />">
 					<i class="icon-plus align-top bigger-125"></i>
 						发布
 				</a>
@@ -21,18 +21,30 @@
 
 <layout:override name="content">
 <div class="col-xs-12">
+			<div class="table-responsive">
 				<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
 					<fieldset>
 						<div class="col-xs-12 col-sm-12">
 							
-							<div class="form-group col-xs-12 col-sm-3">
+							<div class="form-group col-xs-12 col-sm-4">
+								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="status">状态</label> 
+								<div class="col-xs-12 col-sm-9">
+									<form:select  id="status" path="status" class="form-control">
+										<form:option value="-1" label="所有"/>
+										<form:option value="0" label="未审核"/>
+										<form:option value="1" label="已审核"/>
+									</form:select> 
+								</div>
+							</div>
+							
+							<div class="form-group col-xs-12 col-sm-4">
 								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="keywords">关键字</label> 
 								<div class="col-xs-12 col-sm-9">
 									<form:input id="keywords" path="keywords" class="form-control"/> 
 								</div>
 							</div>
 							
-							<div class="form-group col-xs-12 col-sm-2">
+							<div class="form-group col-xs-12 col-sm-4">
 								<button type="submit" class="btn btn-purple btn-sm">
 									<i class="icon-search icon-on-right bigger-110"></i>
 									查找
@@ -42,9 +54,8 @@
 					</fieldset>
 				</form:form>
 			
-			<div class="table-responsive">	
 			<c:choose>
-			<c:when test="${activities.total>0}">
+			<c:when test="${archives.total>0}">
 				<form action="" class="isst-table-form">
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
@@ -63,32 +74,32 @@
 						</thead>
 						
 						<tbody>
-							<c:forEach items="${activities.items}" var="activity">
+							<c:forEach items="${archives.items}" var="archive">
 							<tr>
 								<td class="center">
 								<label>
-								<input type="checkbox" class="ace" name="id[]" value="${activity.id}"/> <span class="lbl"></span> </label>
+								<input type="checkbox" class="ace" name="id[]" value="${archive.id}"/> <span class="lbl"></span> </label>
 								</td>
-								<td>${activity.id}</td>
+								<td>${archive.id}</td>
 								<td>
-									<a href="<utils:url url="/activities/${activity.id}.html" />">${activity.title}</a> 
-									<c:if test="${activity.status==0}">
+									<a href="<utils:url url="/archives/${archive.id}.html" />">${archive.title}</a>
+									<c:if test="${archive.status==0}">
 										<span class="label label-sm label-warning">未审核</span>
-									</c:if>
+									</c:if>  
 								</td>
 								<td>
-								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:formatDate value="${archive.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
 								
 								</td>
 								
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/activities/${activity.id}.html" />">
+										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/users/archives/${category.alias}/${archive.id}.html" />">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/users/activities/delete?id[]=${activity.id}" />">
+										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/users/archives/categories/${category.alias}/delete?id[]=${archive.id}" />">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -102,11 +113,11 @@
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												
-												<li><a href="<utils:url url="/activities/${activity.id}.html" />" class="tooltip-success"
+												<li><a href="<utils:url url="/users/archives/${category.alias}/${archive.id}.html" />" class="tooltip-success"
 													data-rel="tooltip" title="编辑"> <span class="blue">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 
-												<li><a href="<utils:url url="/users/activities/delete?id[]=${activity.id}" />" class="tooltip-error"
+												<li><a href="<utils:url url="/users/archives/categories/${category.alias}/delete?id[]=${archive.id}" />" class="tooltip-error"
 													data-rel="tooltip" title="删除"> <span class="red">
 															<i class="icon-trash bigger-120"></i> </span> </a></li>
 											</ul>
@@ -122,20 +133,19 @@
 					<div class="row">
 					
 					<div class="col-xs-12 col-sm-4 isst-table-form-actions">
-						<a href="<utils:url url="/users/activities/delete" />" class="btn btn-primary">批量删除</a>
+						<a href="<utils:url url="/users/archives/categories/${category.alias}/delete" />" class="btn btn-primary">批量删除</a>
 					</div>
 					
 						<div class="col-sm-8 col-xs-12">
 							<!-- pager -->
 							<div id="pager" class="pull-right">
-								<pagination:paging page="${activities.page}" total="${activities.total}" size="${activities.pageSize}" />
+								<pagination:paging page="${archives.page}" total="${archives.total}" size="${archives.pageSize}" />
 							</div>
 							<!-- end pager -->
 						</div>
 					</div>
 					</form>
 				</c:when>
-				
 				
 				<c:otherwise>
 				<div class="alert alert-warning">
