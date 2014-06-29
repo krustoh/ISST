@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.edu.zju.isst.common.ApiResponse;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Archive;
 import cn.edu.zju.isst.entity.ArchiveSearchCondition;
@@ -52,7 +51,7 @@ public class ArchiveController {
         return "archives/list";
     }
 	
-    @RequestMapping(value = "/users/archives/{categoryAlias}.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/archives/categories/{categoryAlias}.html", method = RequestMethod.GET)
     public String userList(Model model, 
             @PathVariable("categoryAlias") String categoryAlias,
             ArchiveSearchCondition condition,
@@ -60,7 +59,6 @@ public class ArchiveController {
             HttpSession session) {
         StudentUser user = (StudentUser) session.getAttribute("user");
         Category category = categoryService.find(categoryAlias);
-        condition.setStatus(Archive.STATUS_PUBLISHED);
         if (null != category) {
             condition.setUserId(user.getId());
             condition.setCategoryId(category.getId());
@@ -73,60 +71,68 @@ public class ArchiveController {
         return "archives/users/list";
     }
     
-    @RequestMapping(value = "/users/archives/{categoryAlias}/add.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/archives/categories/{categoryAlias}/add.html", method = RequestMethod.GET)
     public String add(@PathVariable("categoryAlias") String categoryAlias, Model model) {
+        if (!categoryAlias.equals("experience")) {
+            WebUtils.addErrorFlashMessage("您无权限");
+            return WebUtils.redirectUrl("/users/archives/categories/experience.html");
+        }
         model.addAttribute("category", categoryService.find(categoryAlias));
         ArchiveForm form = new ArchiveForm();
         model.addAttribute("archiveForm", form);
         return "archives/users/form";
     }
     
-    @RequestMapping(value = "/users/archives/{categoryAlias}/{id}.html", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") int id, Model model) {
+    @RequestMapping(value = "/users/archives/{id}.html", method = RequestMethod.GET)
+    public String edit(@PathVariable("id") int id, Model model, HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
         Archive archive = archiveService.find(id);
-        model.addAttribute("category", categoryService.find(archive.getCategoryId()));
+        Category category = categoryService.find(archive.getCategoryId());
+        if (null != archive && archive.getUserId() != user.getId()) {
+            WebUtils.addErrorFlashMessage("您无权限");
+            return WebUtils.redirectUrl("/users/archives/categories/" + category.getAlias() + ".html");
+        }
+        model.addAttribute("category", category);
         model.addAttribute("archiveForm", new ArchiveForm(archive));
         return "archives/users/form";
     }
     
-    @RequestMapping(value = "/users/archives/{categoryAlias}/add.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/archives/categories/{categoryAlias}/add.html", method = RequestMethod.POST)
     public String saveAdd(
             @PathVariable("categoryAlias") String categoryAlias, 
             Model model, 
             @Valid ArchiveForm form, 
             BindingResult result, 
             HttpSession session) {
-        return save(form, result, categoryService.find(categoryAlias), model, session);
+        return save(form, result, null, categoryService.find(categoryAlias), model, session);
     }
     
-    @RequestMapping(value = "/users/archives/{categoryAlias}/{id}.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/archives/{id}.html", method = RequestMethod.POST)
     public String saveEdit(
             @PathVariable("id") int id, 
-            @PathVariable("categoryAlias") String categoryAlias, 
             Model model, 
             @Valid ArchiveForm form, 
             BindingResult result, 
             HttpSession session) {
         form.setId(id);
-        return save(form, result, categoryService.find(categoryAlias), model, session);
+        Archive archive = archiveService.find(form.getId());
+        return save(form, result, archive, categoryService.find(archive.getCategoryId()), model, session);
     }
         
-    private String save(ArchiveForm form, BindingResult result, Category category, Model model, HttpSession session) {
+    private String save(ArchiveForm form, BindingResult result, Archive archive, Category category, Model model, HttpSession session) {
         StudentUser user = (StudentUser) session.getAttribute("user");
         if (result.hasErrors()) {
             model.addAttribute("category", category);
             model.addAttribute("archiveForm", form);
             return "archives/users/form";
         } else {
+            form.setStatus(Archive.STATUS_HIDDEN);
             form.setCategoryId(category.getId());
             form.setUserId(user.getId());
-
-            Archive archive = null;
             if (form.getId() > 0) {
-                archive = archiveService.find(form.getId());
                 if (null != archive && archive.getUserId() != user.getId()) {
                     WebUtils.addErrorFlashMessage("您无权限");
-                    return WebUtils.redirectUrl("/users/archives/" + category.getAlias() + ".html");
+                    return WebUtils.redirectUrl("/users/archives/categories/" + category.getAlias() + ".html");
                 }
             }
 
@@ -138,7 +144,7 @@ public class ArchiveController {
 
             archiveService.save(archive);
             WebUtils.addSuccessFlashMessage(String.format("成功保存 <i>%s</i>", archive.getTitle()));
-            return WebUtils.redirectUrl("/users/archives/" + category.getAlias() + ".html");
+            return WebUtils.redirectUrl("/users/archives/categories/" + category.getAlias() + ".html");
         }
     }
     

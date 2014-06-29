@@ -58,7 +58,7 @@ public class JobController {
         return "jobs/list";
     }
     
-    @RequestMapping(value = "/users/jobs/{categoryAlias}.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/jobs/categories/{categoryAlias}.html", method = RequestMethod.GET)
     public String userList(Model model,
             JobSearchCondition condition,
             @PathVariable("categoryAlias") String categoryAlias, 
@@ -78,8 +78,12 @@ public class JobController {
         return "jobs/users/list";
     }
     
-    @RequestMapping(value = "/users/jobs/{categoryAlias}/add.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/jobs/categories/{categoryAlias}/add.html", method = RequestMethod.GET)
     public String add(@PathVariable("categoryAlias") String categoryAlias, Model model) {
+        if (!categoryAlias.equals("recommend")) {
+            WebUtils.addErrorFlashMessage("您无权限");
+            return WebUtils.redirectUrl("/users/jobs/categories/recommend.html");
+        }
         model.addAttribute("category", categoryService.find(categoryAlias));
         model.addAttribute("cities", cityService.findAllForSelect());
         JobForm form = new JobForm();
@@ -87,38 +91,45 @@ public class JobController {
         return "jobs/users/form";
     }
     
-    @RequestMapping(value = "/users/jobs/{categoryAlias}/{id}.html", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") int id, Model model) {
+    @RequestMapping(value = "/users/jobs/{id}.html", method = RequestMethod.GET)
+    public String edit(@PathVariable("id") int id, Model model, HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
         Job job = jobService.find(id);
-        model.addAttribute("category", categoryService.find(job.getCategoryId()));
+        Category category = categoryService.find(job.getCategoryId());
+        if (null != job && job.getUserId() != user.getId()) {
+            WebUtils.addErrorFlashMessage("您无权限");
+            return WebUtils.redirectUrl("/users/jobs/categories/" + category.getAlias() + ".html");
+        }
+        
+        model.addAttribute("category", category);
         model.addAttribute("cities", cityService.findAllForSelect());
         model.addAttribute("jobForm", new JobForm(job));
         return "jobs/users/form";
     }
     
-    @RequestMapping(value = "/users/jobs/{categoryAlias}/add.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/jobs/categories/{categoryAlias}/add.html", method = RequestMethod.POST)
     public String saveAdd(
             @PathVariable("categoryAlias") String categoryAlias, 
             Model model, 
             @Valid JobForm form, 
             BindingResult result, 
             HttpSession session) {
-        return save(form, result, categoryService.find(categoryAlias), model, session);
+        return save(form, result, null, categoryService.find(categoryAlias), model, session);
     }
     
-    @RequestMapping(value = "/users/jobs/{categoryAlias}/{id}.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/jobs/{id}.html", method = RequestMethod.POST)
     public String saveEdit(
             @PathVariable("id") int id, 
-            @PathVariable("categoryAlias") String categoryAlias, 
             Model model, 
             @Valid JobForm form, 
             BindingResult result, 
             HttpSession session) {
         form.setId(id);
-        return save(form, result, categoryService.find(categoryAlias), model, session);
+        Job job = jobService.find(form.getId());
+        return save(form, result, job, categoryService.find(job.getCategoryId()), model, session);
     }
         
-    private String save(JobForm form, BindingResult result, Category category, Model model, HttpSession session) {
+    private String save(JobForm form, BindingResult result, Job job, Category category, Model model, HttpSession session) {
         StudentUser user = (StudentUser) session.getAttribute("user");
         if (result.hasErrors()) {
             model.addAttribute("category", category);
@@ -126,16 +137,13 @@ public class JobController {
             model.addAttribute("jobForm", form);
             return "jobs/users/form";
         } else {
+            form.setStatus(Job.STATUS_HIDDEN);
             form.setCategoryId(category.getId());
             form.setUserId(user.getId());
-            form.setStatus(Job.STATUS_HIDDEN);
-
-            Job job = null;
             if (form.getId() > 0) {
-                job = jobService.find(form.getId());
                 if (null != job && job.getUserId() != user.getId()) {
                     WebUtils.addErrorFlashMessage("您无权限");
-                    return WebUtils.redirectUrl("/users/jobs/" + category.getAlias() + ".html");
+                    return WebUtils.redirectUrl("/users/jobs/categories/" + category.getAlias() + ".html");
                 }
             }
 
@@ -147,11 +155,11 @@ public class JobController {
 
             jobService.save(job);
             WebUtils.addSuccessFlashMessage(String.format("成功保存 <i>%s</i>", job.getTitle()));
-            return WebUtils.redirectUrl("/users/jobs/" + category.getAlias() + ".html");
+            return WebUtils.redirectUrl("/users/jobs/categories/" + category.getAlias() + ".html");
         }
     }
     
-    @RequestMapping(value = "/users/jobss/categories/{categoryAlias}/delete")
+    @RequestMapping(value = "/users/jobs/categories/{categoryAlias}/delete")
     public String delete(
             @RequestParam("id[]") String[] ids,
             @RequestParam(value = "confirm", required = false, defaultValue = "0") int confirm,

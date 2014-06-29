@@ -12,7 +12,7 @@
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
-				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/users/archives/${category.alias}/add.html" />">
+				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/users/archives/categories/${category.alias}/add.html" />">
 					<i class="icon-plus align-top bigger-125"></i>
 						发布
 				</a>
@@ -95,7 +95,7 @@
 								<td>
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/users/archives/${category.alias}/${archive.id}.html" />">
+										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/users/archives/${archive.id}.html" />">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
@@ -113,7 +113,7 @@
 											<ul
 												class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
 												
-												<li><a href="<utils:url url="/users/archives/${category.alias}/${archive.id}.html" />" class="tooltip-success"
+												<li><a href="<utils:url url="/users/archives/${archive.id}.html" />" class="tooltip-success"
 													data-rel="tooltip" title="编辑"> <span class="blue">
 															<i class="icon-edit bigger-120"></i> </span> </a></li>
 

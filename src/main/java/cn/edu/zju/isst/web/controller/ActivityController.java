@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.zju.isst.common.PaginationList;
+import cn.edu.zju.isst.common.Result;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.Activity;
 import cn.edu.zju.isst.entity.ActivitySearchCondition;
@@ -199,6 +200,15 @@ public class ActivityController {
         return WebUtils.redirectUrl("/users/activities.html");
     }
     
+    @RequestMapping("/activities/{id}/view.html")
+    public String view(Model model, @PathVariable("id") int id, HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        model.addAttribute("cities", cityService.findAllForSelect());
+        model.addAttribute("activity", activityService.find(id));
+        model.addAttribute("participants",  activityService.findUserParticipatedList(user.getId(), 0, 0));
+        return "activities/view";
+    }
+    
     @RequestMapping("/activities/add.html")
     public String add(Model model) {
         model.addAttribute("cities", cityService.findAllForSelect());
@@ -280,5 +290,31 @@ public class ActivityController {
         model.addAttribute("participants", userService.findActivityParticipants(activityId, 20, page));
         
         return "activities/participants";
+    }
+
+    @RequestMapping("/activities/{id}/participate")
+    public String  participate(@PathVariable("id") int id, HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        Result result = activityService.participate(id, user.getId());
+        if (result.valid()) {
+            WebUtils.addSuccessFlashMessage("报名成功");
+        } else {
+            WebUtils.addErrorFlashMessage(result);
+        }
+       
+        return WebUtils.redirectUrl("/users/activities.html");
+    }
+    
+    @RequestMapping("/activities/{id}/unparticipate")
+    public String unparticipate(@PathVariable("id") int id, HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        Result result = activityService.unparticipate(id, user.getId());
+        if (result.valid()) {
+            WebUtils.addSuccessFlashMessage("取消报名成功");
+        } else {
+            WebUtils.addErrorFlashMessage(result);
+        }
+       
+        return WebUtils.redirectUrl("/users/activities.html");
     }
 }

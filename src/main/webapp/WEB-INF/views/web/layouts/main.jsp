@@ -216,13 +216,13 @@
 							</navigation:item>
 							
 							<navigation:item >
-								<navigation:link href="/users/archives/experience.html" key="users_archive_experience" label="发布的经验">
+								<navigation:link href="/users/archives/categories/experience.html" key="users_archive_experience" label="发布的经验">
 											发布的经验
 								</navigation:link>
 							</navigation:item>
 							
 							<navigation:item >
-								<navigation:link href="/users/jobs/recommend.html" key="users_job_recommend" label="发布的内推">
+								<navigation:link href="/users/jobs/categories/recommend.html" key="users_job_recommend" label="发布的内推">
 											发布的内推
 								</navigation:link>
 							</navigation:item>

@@ -20,7 +20,10 @@ public class TaskDaoImpl extends AbstractDao<Task> implements TaskDao {
     
     @Override
     public PaginationList<Task> findListForUser(int userId, int pageSize, int page) {
-        SelectSQLBuilder select = select().paging(page, pageSize).where("status=:status").addParam("status", Task.STATUS_PUBLISHED);
+        SelectSQLBuilder select = select()
+                .paging(page, pageSize)
+                .where("status=:status").addParam("status", Task.STATUS_PUBLISHED)
+                .where("start_time<=now() AND expire_time>=now()");
         List<Task> items = queryAll(select);
         for (Task task : items) {
             if (task.getType() == Task.TYPE_SURVEY) {
@@ -41,6 +44,8 @@ public class TaskDaoImpl extends AbstractDao<Task> implements TaskDao {
         if (condition.getStatus() >=0) {
             select.where("status=:status").addParam("status", condition.getStatus());
         }
+        
+        select.where("start_time<=now() AND expire_time>=now()");
         
         if (null != condition.getKeywords()) {
             String keywords = condition.getKeywords().trim();

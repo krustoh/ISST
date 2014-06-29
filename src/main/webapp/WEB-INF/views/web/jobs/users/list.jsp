@@ -11,7 +11,7 @@
 
 <layout:override name="page-header">
 			<div class="pull-right" style="margin-right: 6%;">
-				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/users/jobs/${category.alias}/add.html" />">
+				<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/users/jobs/categories/${category.alias}/add.html" />">
 					<i class="icon-plus align-top bigger-125"></i>
 						发布
 				</a>
@@ -103,11 +103,11 @@
 										<a class="btn btn-xs btn-success tooltip-danger" data-rel="tooltip" data-placement="bottom" title="评论" href="<utils:url url="/jobs/${job.id}/comments.html" returned="true"/>">
 											<i class="icon-comments bigger-120"></i>
 										</a>
-										<a class="btn btn-xs btn-info tooltip-danger" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/users/jobs/${category.alias}/${job.id}.html" />">
+										<a class="btn btn-xs btn-info tooltip-danger" data-rel="tooltip" data-placement="bottom" title="编辑" href="<utils:url url="/users/jobs/${job.id}.html" />">
 											<i class="icon-edit bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger tooltip-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/users/jobss/categories/${category.alias}/delete?id[]=${job.id}" />">
+										<a class="btn btn-xs btn-danger tooltip-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/users/jobs/categories/${category.alias}/delete?id[]=${job.id}" />">
 											<i class="icon-trash bigger-120"></i>
 										</a>
 									</div>
@@ -128,7 +128,7 @@
 													</a>
 												</li>
 												
-												<li><a href="<utils:url url="/users/jobs/${category.alias}/${job.id}.html" />" class="tooltip-success"
+												<li><a href="<utils:url url="/users/jobs/${job.id}.html" />" class="tooltip-success"
 													data-rel="tooltip" title="编辑"> <span class="blue">
 												<i class="icon-edit bigger-120"></i> </span> </a></li>
 
