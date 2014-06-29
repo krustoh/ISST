@@ -1,7 +1,5 @@
 package cn.edu.zju.isst.form;
 
-import java.util.Date;
-
 import cn.edu.zju.isst.common.Result;
 import cn.edu.zju.isst.entity.TaskSurvey;
 
@@ -12,11 +10,11 @@ public class TaskSurveyForm {
 
     private int taskId;
 
-    private Date departTime;
-
-    private Date returnTime;
-
     private int optionId;
+
+    private String optionOther;
+
+    private String remarks;
 
     public TaskSurveyForm() {
     }
@@ -25,9 +23,9 @@ public class TaskSurveyForm {
         id = taskSurvey.getId();
         taskId = taskSurvey.getTaskId();
         userId = taskSurvey.getUserId();
-        departTime = taskSurvey.getDepartTime();
-        returnTime = taskSurvey.getReturnTime();
         optionId = taskSurvey.getOptionId();
+        optionOther = taskSurvey.getOptionOther();
+        remarks = taskSurvey.getRemarks();
     }
 
     public TaskSurvey build() {
@@ -41,13 +39,13 @@ public class TaskSurveyForm {
         taskSurvey.setUserId(userId);
         taskSurvey.setTaskId(taskId);
         taskSurvey.setOptionId(optionId);
-        taskSurvey.setDepartTime(departTime);
-        taskSurvey.setReturnTime(returnTime);
+        taskSurvey.setOptionOther(optionOther);
+        taskSurvey.setRemarks(remarks);
     }
 
     public Result validate() {
-        if (null != returnTime && null != departTime && returnTime.getTime() < departTime.getTime()) {
-            return new Result(42, "出发时间不能大于返回时间");
+        if (optionId == 0 && (null == optionOther || "".equals(optionOther) || optionOther.trim().equals(""))) {
+            return new Result(42, "请输入其他选项");
         }
 
         return new Result();
@@ -76,21 +74,21 @@ public class TaskSurveyForm {
     public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
-
-    public Date getDepartTime() {
-        return departTime;
+    
+    public String getOptionOther() {
+        return optionOther;
     }
 
-    public void setDepartTime(Date departTime) {
-        this.departTime = departTime;
+    public void setOptionOther(String optionOther) {
+        this.optionOther = optionOther;
     }
 
-    public Date getReturnTime() {
-        return returnTime;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setReturnTime(Date returnTime) {
-        this.returnTime = returnTime;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public int getOptionId() {

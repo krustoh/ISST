@@ -48,7 +48,7 @@ public class TaskController {
         model.addAttribute("task", taskService.find(id));
         model.addAttribute("options", taskSurveyOptionService.findAll(id));
         model.addAttribute("taskSurveyForm", new TaskSurveyForm());
-        return "tasks/view";
+        return "tasks/survey";
     }
 
     @RequestMapping(value = "/tasks/{id}/survey.html", method = RequestMethod.POST)
@@ -69,7 +69,7 @@ public class TaskController {
             model.addAttribute("task", task);
             model.addAttribute("options", taskSurveyOptionService.findAll(id));
             model.addAttribute("taskSurveyForm", form);
-            return "tasks/view";
+            return "tasks/survey";
         }
 
         WebUtils.addSuccessFlashMessage(String.format("成功提交任务：<i>%s</i>", task.getName()));

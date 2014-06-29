@@ -18,14 +18,14 @@ public class TaskSurvey {
     @Column("user_id")
     private int userId;
     
-    @Column("depart_time")
-    private Date departTime;
-    
-    @Column("return_time")
-    private Date returnTime;
-    
     @Column("option_id")
     private int optionId;
+
+    @Column("option_other")
+    private String optionOther;
+
+    @Column
+    private String remarks;
     
     @Column("created_at")
     private Date createdAt;
@@ -53,21 +53,21 @@ public class TaskSurvey {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
-    public Date getDepartTime() {
-        return departTime;
+    
+    public String getOptionOther() {
+        return optionOther;
     }
 
-    public void setDepartTime(Date departTime) {
-        this.departTime = departTime;
+    public void setOptionOther(String optionOther) {
+        this.optionOther = optionOther;
     }
 
-    public Date getReturnTime() {
-        return returnTime;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setReturnTime(Date returnTime) {
-        this.returnTime = returnTime;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public int getOptionId() {
