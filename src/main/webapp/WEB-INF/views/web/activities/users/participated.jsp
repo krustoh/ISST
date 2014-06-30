@@ -7,48 +7,10 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="city_activity"/>
-<navigation:setPageTitle label="${cities.name}活动"/>
-
-<layout:override name="page-header">
-		<div class="pull-right" style="margin-right: 6%;">
-			<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/activities/add.html" />">
-				<i class="icon-plus align-top bigger-125"></i>
-				添加
-			</a>
-		</div>
-</layout:override>
+<navigation:setNavigationActiveKey key="personal_activities_participant"/>
 
 <layout:override name="content">
-<div class="col-xs-12">
-				<form:form class="form-horizontal isst-form" modelAttribute="condition" method="GET">
-					<fieldset>
-						<div class="col-xs-12 col-sm-12">							
-							<div class="form-group col-xs-12 col-sm-4">
-								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="poster">发起人</label> 
-								<div class="col-xs-12 col-sm-9">
-									<form:input id="poster" path="poster" class="form-control" placeholder="学号或姓名"/>  
-								</div>
-							</div>
-							
-							<div class="form-group col-xs-12 col-sm-4">
-								<label class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right" for="keywords">关键字</label> 
-								<div class="col-xs-12 col-sm-9">
-									<form:input id="keywords" path="keywords" class="form-control"/> 
-								</div>
-							</div>
-							
-							<div class="form-group col-xs-12 col-sm-2">
-								<button type="submit" class="btn btn-purple btn-sm">
-									<i class="icon-search icon-on-right bigger-110"></i>
-									查找
-								</button>
-							</div>	
-						</div>
-					</fieldset>
-				</form:form>
-		
-			
+<div class="col-xs-12">		
 			<div class="table-responsive">		
 			<c:choose>
 			<c:when test="${activities.total>0}">
@@ -61,7 +23,6 @@
 								<th>截止日期</th>
 								<th>发布日期</th>
 								<th>发布者</th>
-								<th>参与情况</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -71,9 +32,7 @@
 							<tr>
 								<td>
 									<a href="<utils:url url="/activities/${activity.id}/view.html" />">${activity.title}</a>
-									<c:if test="${activity.participated==true}">
-										<span class="label label-sm label-warning">已报名</span>
-									</c:if>  
+  
 								</td>
 								<td>
 								<fmt:formatDate value="${activity.startTime}" pattern="yyyy-MM-dd"/>
@@ -97,27 +56,13 @@
 									</c:otherwise>
 								</c:choose>
 								</td>
-								<td>
-									<a href="<utils:url url="/activities/${activity.id}/participants.html" />">详情>></a> 
-								</td>
 								
 								<td>
-									<c:if test="${activity.valid}">
-									<c:choose>
-										<c:when test="${activity.participated==true}">
-										<a style="color:white" class="btn btn-sm btn-danger" href="<utils:url url="/activities/${activity.id}/unparticipate?id[]=${activity.id}" />">
-											取消报名
-										</a>
-										</c:when>
-										
-										<c:otherwise>
-										<a style="color:white" class="btn btn-sm btn-primary" href="<utils:url url="/activities/${activity.id}/participate?id[]=${activity.id}" />">
-											报名
-										</a>
-										</c:otherwise>
-									</c:choose>	
-									</c:if>	
-																
+								<c:if test="${activity.valid}">									
+									<a style="color:white" class="btn btn-sm btn-danger" href="<utils:url url="/activities/${activity.id}/unparticipate?id[]=${activity.id}" />">
+										取消报名
+									</a>
+								</c:if>									
 								</td>
 							</tr>
 							</c:forEach>
@@ -152,4 +97,4 @@
 		</div>
 </layout:override>
 
-<%@ include file="../layouts/main.jsp"%>
+<%@ include file="../../layouts/main.jsp"%>

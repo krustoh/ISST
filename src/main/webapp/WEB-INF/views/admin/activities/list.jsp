@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="city_activity"/>
+<navigation:setNavigationActiveKey key="cities"/>
 <navigation:setPageTitle label="${city.name}活动"/>
 
 

@@ -187,10 +187,17 @@
 					
 					<c:if test="${administrator.roles !=-3}">
 					<navigation:item>
-						<navigation:link key="tasks" href="/tasks.html" label="学生事务" class="dropdown-toggle">
+						<navigation:link key="student_tasks" href="/tasks.html" label="学生事务" class="dropdown-toggle">
 							<i class="icon-list-alt" ></i>
 							<span class="menu-text">学生事务</span>
 						</navigation:link>
+								<ul class="submenu">
+									<navigation:item>
+										<navigation:link href="/tasks.html" key="tasks" label="任务中心">
+											任务中心
+										</navigation:link>
+									</navigation:item>
+								</ul>
 					</navigation:item>
 					</c:if>
 					

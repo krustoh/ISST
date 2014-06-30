@@ -7,34 +7,37 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="activities"/>
+<navigation:setNavigationActiveKey key="city_activity"/>
 
 
 <layout:override name="content">
 <div class="col-xs-12">
 	<div class="widget-box transparent center">
 		<div class="widget-header">
-			<h3 class="lighter">${campus.title}</h4>
+			<h3 class="lighter">${activity.title}</h4>
 			<div>
-				发布者：${archives.user.name}
+				发布者：${activity.user.name}
 				&nbsp;&nbsp;
-				发布时间：<fmt:formatDate value="${campus.updatedAt}" pattern="yyyy-MM-dd"/>
+				发布时间：<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd"/>
 			</div>
 		</div>
 
 		<div class="widget-body">
+
+		<div class="widget-body">
 			<div class="widget-main padding-6 no-padding-left no-padding-right">
-				<div>开始时间：<fmt:formatDate value="${campus.startTime}" pattern="yyyy-MM-dd"/></div>
-			  	<div>结束时间：<fmt:formatDate value="${campus.expireTime}" pattern="yyyy-MM-dd"/></div>
-				<div>地点：${campus.location}</div>
-				<div>内容：${campus.content}</div>
+				<div>开始时间：<fmt:formatDate value="${activity.startTime}" pattern="yyyy-MM-dd"/></div>
+			  	<div>结束时间：<fmt:formatDate value="${activity.expireTime}" pattern="yyyy-MM-dd"/></div>
+				<div>地点：${activity.location}</div>
+				<div>内容：${activity.content}</div>
 			</div>
+		</div>
 		</div>
 	</div>
 
 	<div class="clearfix form-actions">
 		<div class="col-md-offset-5 col-md-9">
-			<a class="btn" href="<utils:returnUrl url="/campus/activities.html" />">
+			<a class="btn" href="<utils:returnUrl url="/activities.html" />">
 				<i class="icon-undo bigger-110"></i> 返回
 			</a>
 		</div>
@@ -42,4 +45,4 @@
 </div>
 </layout:override>
 
-<%@ include file="../../layouts/main.jsp"%>
+<%@ include file="../layouts/main.jsp"%>

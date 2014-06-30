@@ -184,7 +184,7 @@ public class Activity {
         return title;
     }
 
-    public boolean isParticipated() {
+    public boolean getParticipated() {
         return participated;
     }
 

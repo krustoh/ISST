@@ -57,6 +57,8 @@
 								</th>
 								<th>ID</th>
 								<th>标题</th>
+								<th>开始日期</th>
+								<th>截止日期</th>
 								<th>发布日期</th>	
 								<th></th>
 							</tr>
@@ -75,6 +77,14 @@
 									<c:if test="${activity.status==0}">
 										<span class="label label-sm label-warning">未审核</span>
 									</c:if>
+								</td>
+								<td>
+								<fmt:formatDate value="${activity.startTime}" pattern="yyyy-MM-dd"/>
+								
+								</td>
+								<td>
+								<fmt:formatDate value="${activity.expireTime}" pattern="yyyy-MM-dd"/>
+								
 								</td>
 								<td>
 								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>

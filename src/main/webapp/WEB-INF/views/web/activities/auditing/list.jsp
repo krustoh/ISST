@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="city_activity_waiting"/>
+<navigation:setNavigationActiveKey key="city_activity_auditing"/>
 
 <layout:override name="content">
 <div class="col-xs-12">
@@ -54,6 +54,8 @@
 								</th>
 								<th>ID</th>
 								<th>标题</th>
+								<th>开始日期</th>
+								<th>截止日期</th>
 								<th>发布日期</th>
 								<th>发布者</th>	
 								<th></th>
@@ -71,6 +73,14 @@
 								<td>${activity.id}</td>
 								<td>
 									<a href="<utils:url url="#" />">${activity.title}</a> 
+								</td>
+								<td>
+								<fmt:formatDate value="${activity.startTime}" pattern="yyyy-MM-dd"/>
+								
+								</td>
+								<td>
+								<fmt:formatDate value="${activity.expireTime}" pattern="yyyy-MM-dd"/>
+								
 								</td>
 								<td>
 								<fmt:formatDate value="${activity.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>

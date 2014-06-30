@@ -188,7 +188,7 @@
 							
 							<c:if test="${user.cityPrincipal == true}">
 							<navigation:item>
-								<navigation:link href="/activities/auditing.html" key="city_activity_waiting" label="待审核活动">
+								<navigation:link href="/activities/auditing.html" key="city_activity_auditing" label="待审核活动">
 											待审核活动
 								</navigation:link>
 							</navigation:item>
@@ -234,7 +234,7 @@
 							</navigation:item>
 							
 							<navigation:item >
-								<navigation:link href="#" key="personal_activities_participant" label="参加的活动">
+								<navigation:link href="/users/activities/participated.html" key="personal_activities_participant" label="参加的活动">
 											参加的活动
 								</navigation:link>
 							</navigation:item>

@@ -8,6 +8,7 @@
 <%@ taglib uri="/utils" prefix="utils"%>
 
 <navigation:setNavigationActiveKey key="city_activity" />
+<navigation:setPageTitle label="参与情况"/>
 
 
 <layout:override name="content">
