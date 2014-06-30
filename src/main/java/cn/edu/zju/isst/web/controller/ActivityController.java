@@ -71,7 +71,7 @@ public class ActivityController {
                 if (condition.getUserId() == 0) {
                     condition.setUserId(-1);
                 }
-                model.addAttribute("activities", activityService.findAll(condition, 10, page));
+                model.addAttribute("activities", activityService.findUserList(user.getId(), condition, 10, page));
             } else {
                 model.addAttribute("activities", new PaginationList<Activity>(page, 10, 0, new ArrayList<Activity>()));
             }
