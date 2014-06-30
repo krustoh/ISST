@@ -191,4 +191,13 @@ public class Activity {
     public void setParticipated(boolean participated) {
         this.participated = participated;
     }
+    
+    public boolean isValid() {
+         long now = System.currentTimeMillis();
+         if (status == STATUS_PUBLISHED && null != startTime && null != expireTime && startTime.getTime() <= now && expireTime.getTime() >= now - 86400000) {
+             return true;
+         }
+         
+         return false;
+    }
 }

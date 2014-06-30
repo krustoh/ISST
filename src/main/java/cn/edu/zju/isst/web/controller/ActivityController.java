@@ -278,6 +278,17 @@ public class ActivityController {
         
         return WebUtils.redirectUrl("/users/activities.html");
     }
+
+    @RequestMapping("/users/activities/participated.html")
+    public  String userParticipatedList(
+            Model model,
+            HttpSession session, 
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        model.addAttribute("activities", activityService.findUserParticipatedList(user.getId(), 10, page));
+        
+        return "activities/users/participated";
+    }
     
     @RequestMapping("/activities/{activityId}/participants.html")
     public String participantList(
@@ -302,7 +313,7 @@ public class ActivityController {
             WebUtils.addErrorFlashMessage(result);
         }
        
-        return WebUtils.redirectUrl("/users/activities.html");
+        return WebUtils.redirectUrl("/users/activities/participated.html");
     }
     
     @RequestMapping("/activities/{id}/unparticipate")
@@ -315,6 +326,6 @@ public class ActivityController {
             WebUtils.addErrorFlashMessage(result);
         }
        
-        return WebUtils.redirectUrl("/users/activities.html");
+        return WebUtils.redirectUrl("/users/activities/participated.html");
     }
 }

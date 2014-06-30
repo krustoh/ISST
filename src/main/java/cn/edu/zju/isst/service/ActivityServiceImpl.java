@@ -83,13 +83,13 @@ public class ActivityServiceImpl implements ActivityService {
     public Result participate(int activityId, int userId) {
         Date createdAt = new Date();
         Activity activity = activityDao.find(activityId);
-        if (null == activity) {
+        if (null == activity || activity.getStatus() != Activity.STATUS_PUBLISHED) {
             return new Result(30, "活动不存在");
         }
         
         if (activity.getStartTime().getTime() > createdAt.getTime()) {
             return new Result(31, "活动尚未开始，不能报名");
-        } else if (activity.getExpireTime().getTime() < createdAt.getTime()) {
+        } else if (activity.getExpireTime().getTime() < createdAt.getTime() - 86400000) {
             return new Result(32, "活动已结束");
         }
         
