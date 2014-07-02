@@ -3,9 +3,11 @@ package cn.edu.zju.isst.api.controller;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.zju.isst.common.ApiResponse;
+import cn.edu.zju.isst.common.Result;
 import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.form.TaskSurveyForm;
 import cn.edu.zju.isst.identity.RequireUser;
@@ -41,19 +44,25 @@ public class TaskSurveyController {
     @RequestMapping(value = "/tasks/{taskId}/survey", method = RequestMethod.POST)
     public @ResponseBody ApiResponse save(
             @PathVariable("taskId") int taskId,
-            @RequestParam("departTime") long departTime,
-            @RequestParam("returnTime") long returnTime,
-            @RequestParam("optionId") int optionId,
+            @Valid TaskSurveyForm form,
+            BindingResult result,
             HttpSession session) {
         StudentUser user = (StudentUser) session.getAttribute("user");
-        
-        TaskSurveyForm form = new TaskSurveyForm();
         form.setTaskId(taskId);
         form.setUserId(user.getId());
-        form.setDepartTime(new Date(departTime));
-        form.setReturnTime(new Date(returnTime));
-        form.setOptionId(optionId);
         
-        return new ApiResponse(taskSurveyService.save(form));
+        if (result.hasErrors()) {
+            return new ApiResponse(result);
+        }
+        
+        Result res = form.validate();
+        if (res.valid()) {
+            res = taskSurveyService.save(form);
+            if (res.valid()) {
+                return new ApiResponse(res.getBody());
+            }
+        }
+        
+        return new ApiResponse(res);
     }
 }
