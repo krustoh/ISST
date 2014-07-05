@@ -92,7 +92,7 @@ public class TaskSurveyOptionController {
     
     private String saveSurveyOption(TaskSurveyOptionForm form) {
         taskSurveyOptionService.save(form);
-        WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%</i>", form.getLabel()));
+        WebUtils.addSuccessFlashMessage(String.format("成功保存：<i>%s</i>", form.getLabel()));
         
         return WebUtils.redirectUrl("/tasks/"+form.getTaskId()+"/surveys/options.html");
     }

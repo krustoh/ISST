@@ -39,6 +39,7 @@
 										<th>标题</th>
 										<th>发布日期</th>
 										<th>采集日期</th>
+										<th></th>
 									</tr>
 								</thead>
 

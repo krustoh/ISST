@@ -227,7 +227,13 @@ public class ActivityController {
             form.validate(result);
         }
         
-        if (result.hasErrors()) {
+        boolean hasErrors = result.hasErrors();
+        if (!hasErrors && user.getCityId() == 0) {
+            WebUtils.addErrorFlashMessage("您所在的城市为<i>其他</i>，不能发布活动");
+            hasErrors = true;
+        }
+        
+        if (hasErrors) {
             model.addAttribute("cities", cityService.findAllForSelect());
             model.addAttribute("cityUserActivityForm", form);
             return "activities/form";
@@ -235,6 +241,7 @@ public class ActivityController {
         
         form.setStatus(Activity.STATUS_HIDDEN);
         form.setUserId(user.getId());
+        form.setCityId(user.getCityId());
         
         return save(form);
     }
@@ -270,6 +277,7 @@ public class ActivityController {
             return "activities/form";
         }
 
+        form.setStatus(Activity.STATUS_HIDDEN);
         form.setUserId(user.getId());
         form.setCityId(user.getCityId());
         

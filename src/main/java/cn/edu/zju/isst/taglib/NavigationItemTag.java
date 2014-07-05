@@ -10,6 +10,8 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.DynamicAttributes;
 import javax.servlet.jsp.tagext.Tag;
 
+import org.apache.taglibs.standard.tag.rt.core.IfTag;
+
 public class NavigationItemTag extends BodyTagSupport implements DynamicAttributes {
     private static final long serialVersionUID = 1L;
     
@@ -39,6 +41,10 @@ public class NavigationItemTag extends BodyTagSupport implements DynamicAttribut
         }
 
         Tag parent = this.getParent();
+        while (null != parent && parent instanceof IfTag) {
+            parent = parent.getParent();
+        }
+        
         if (null != parent && parent instanceof NavigationItemTag) {
             NavigationItemTag parentItem = (NavigationItemTag) parent;
             if (active) {

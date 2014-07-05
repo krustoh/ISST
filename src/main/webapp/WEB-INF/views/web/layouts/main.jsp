@@ -204,16 +204,25 @@
 
 						<ul class="submenu">
 							<navigation:item >
-								<navigation:link href="/tasks.html" key="personal_tasks" label="学生事务">
-											学生事务
-								</navigation:link>
-							</navigation:item>
-							
-							<navigation:item >
 								<navigation:link href="/alumni/${user.id}.html" key="personal_info" label="个人信息">
 											个人信息
 								</navigation:link>
 							</navigation:item>
+							
+							<navigation:item>
+								<navigation:link href="/tasks.html" key="student_affairs" label="学生事务" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+									学生事务
+									<b class="arrow icon-angle-down"></b>
+								</navigation:link>
+								<ul class="submenu">
+									<navigation:item>
+										<navigation:link href="/tasks.html" key="tasks" label="任务中心">
+											任务中心
+										</navigation:link>
+									</navigation:item>
+								</ul>
+							</navigation:item>	
 							
 							<navigation:item >
 								<navigation:link href="/users/archives/categories/experience.html" key="users_archive_experience" label="发布的经验">

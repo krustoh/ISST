@@ -96,7 +96,7 @@
 								<td>
 								<c:choose>
 									<c:when test="${job.userId>0}">
-										<a href="<utils:url url="/alumni/${job.user.id}/view.html" returned="true"/>">${archive.user.name}</a>
+										<a href="<utils:url url="/alumni/${job.user.id}/view.html" returned="true"/>">${job.user.name}</a>
 									</c:when>
 									<c:otherwise>
 										管理员

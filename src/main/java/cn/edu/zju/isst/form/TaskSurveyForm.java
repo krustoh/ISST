@@ -10,7 +10,7 @@ public class TaskSurveyForm {
 
     private int taskId;
 
-    private int optionId;
+    private int optionId = -1;
 
     private String optionOther;
 
@@ -44,7 +44,7 @@ public class TaskSurveyForm {
     }
 
     public Result validate() {
-        if (optionId == 0 && (null == optionOther || "".equals(optionOther) || optionOther.trim().equals(""))) {
+        if (optionId <= 0 && (null == optionOther || "".equals(optionOther) || optionOther.trim().equals(""))) {
             return new Result(42, "请输入其他选项");
         }
 

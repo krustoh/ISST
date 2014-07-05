@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="personal_tasks"/>
+<navigation:setNavigationActiveKey key="tasks"/>
 
 <layout:override name="content">
 <div class="col-xs-12">
@@ -31,10 +31,13 @@
 							<c:forEach items="${tasks.items}" var="task">
 							<tr>
 								<td>
-									<a href="<utils:url url="/tasks/${task.id}.html" />">${task.name}</a>
+									<a href="<utils:url url="/tasks/${task.id}/survey.html" />">${task.name}</a>
 									<c:if test="${task.finishId==0}">
 										<span class="label label-sm label-warning">未完成</span>
-									</c:if>  
+									</c:if> 
+									<c:if test="${task.finishId>0}">
+										<span class="label label-sm label-success">已完成</span>
+									</c:if> 
 								</td>
 								<td>
 								<c:if test="${task.type == 0}">去向调查</c:if>

@@ -45,12 +45,17 @@ public class TaskSurveyServiceImpl implements TaskSurveyService {
         } else {
             taskSurvey = taskSurveyDao.find(form.getTaskId(), form.getUserId());
             if (null != taskSurvey) {
-                return new Result(45, "请勿重复提交");
+                form.bind(taskSurvey);
+            } else {
+                taskSurvey = form.build();
             }
-            taskSurvey = form.build();
         }
         
         taskSurvey.setCreatedAt(new Date());
+        if (taskSurvey.getOptionId() > 0) {
+            taskSurvey.setOptionOther("");
+        }
+        
         taskSurveyDao.save(taskSurvey);
         
         result.setBody(taskSurvey);
@@ -61,5 +66,10 @@ public class TaskSurveyServiceImpl implements TaskSurveyService {
     @Override
     public PaginationList<TaskSurvey> findAll(int taskId, TaskSurveySearchCondition condition, int pageSize, int page) {
         return taskSurveyDao.findAll(taskId, condition, pageSize, page);
+    }
+
+    @Override
+    public TaskSurvey find(int taskId, int userId) {
+        return taskSurveyDao.find(taskId, userId);
     }
 }

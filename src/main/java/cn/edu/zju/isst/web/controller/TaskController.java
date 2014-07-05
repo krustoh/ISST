@@ -16,6 +16,7 @@ import cn.edu.zju.isst.common.Result;
 import cn.edu.zju.isst.common.WebUtils;
 import cn.edu.zju.isst.entity.StudentUser;
 import cn.edu.zju.isst.entity.Task;
+import cn.edu.zju.isst.entity.TaskSurvey;
 import cn.edu.zju.isst.form.TaskSurveyForm;
 import cn.edu.zju.isst.identity.RequireUser;
 import cn.edu.zju.isst.service.TaskService;
@@ -44,17 +45,39 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/tasks/{id}/survey.html", method = RequestMethod.GET)
-    public String view(@PathVariable("id") int id, Model model) {
+    public String view(@PathVariable("id") int id, Model model, HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
         model.addAttribute("task", taskService.find(id));
         model.addAttribute("options", taskSurveyOptionService.findAll(id));
-        model.addAttribute("taskSurveyForm", new TaskSurveyForm());
+        
+        TaskSurvey taskSurvey = taskSurveyService.find(id, user.getId());
+        TaskSurveyForm form = null;
+        if (null != taskSurvey) {
+            form = new TaskSurveyForm(taskSurvey);
+        } else {
+            form = new TaskSurveyForm();
+        }
+        model.addAttribute("taskSurveyForm", form);
+        
         return "tasks/survey";
     }
 
-    @RequestMapping(value = "/tasks/{id}/survey.html", method = RequestMethod.POST)
-    public String saveSurvey(@Valid TaskSurveyForm form, BindingResult result, @PathVariable("id") int id, Model model) {
+    @RequestMapping(value = "/tasks/{taskId}/survey.html", method = RequestMethod.POST)
+    public String saveSurvey(
+            @Valid TaskSurveyForm form, 
+            BindingResult result, 
+            @PathVariable("taskId") int taskId, 
+            Model model,
+            HttpSession session) {
+        StudentUser user = (StudentUser) session.getAttribute("user");
+        
+        form.setTaskId(taskId);
+        form.setUserId(user.getId());
+
         boolean error = result.hasErrors();
 
+        Task task = taskService.find(form.getTaskId());
+        
         if (!error) {
             Result res = taskSurveyService.save(form);
             if (!res.valid()) {
@@ -63,11 +86,10 @@ public class TaskController {
             }
         }
         
-        Task task = taskService.find(form.getTaskId());
         
         if (error) {
             model.addAttribute("task", task);
-            model.addAttribute("options", taskSurveyOptionService.findAll(id));
+            model.addAttribute("options", taskSurveyOptionService.findAll(taskId));
             model.addAttribute("taskSurveyForm", form);
             return "tasks/survey";
         }

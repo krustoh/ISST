@@ -66,6 +66,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public void save(Activity activity) {
         activity.setUpdatedAt(new Date());
+        activity.setDescriptionFromContent(activity.getContent());
         activityDao.save(activity);
     }
 

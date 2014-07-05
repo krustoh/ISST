@@ -7,7 +7,7 @@
 <%@ taglib uri="/navigation" prefix="navigation"%>
 <%@ taglib uri="/utils" prefix="utils"%>
 
-<navigation:setNavigationActiveKey key="personal_tasks"/>
+<navigation:setNavigationActiveKey key="tasks"/>
 <navigation:setPageTitle label="完成任务"/>
 
 <layout:override name="content">
@@ -20,41 +20,35 @@
 						<label class="col-sm-3 control-label no-padding-right" for="optionId">选项</label>
 						<div class="col-sm-9">
 							<form:select  id="optionId" path="optionId">
-								<form:option value="1" label="留校"/>
-								<form:option value="2" label="回家"/>
+								<form:options items="${options}" itemValue="id" itemLabel="label"/>
+								<form:option value="0" label="其他" />
 							</form:select>
 						</div>
 					</div>
 						
-						<field:wrapper class="form-group " path="departTime">
-							<label for="departTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
-							离校时间
+						<field:wrapper class="form-group optionOtherDiv" path="optionOther" style="display:none;">
+							<label for="optionOther" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+							其他
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker"  path="departTime" type="text" data-date-format="yyyy-mm-dd" />
-								<span class="input-group-addon">
-									<i class="icon-calendar bigger-110"></i>
-								</span>
+								<form:input class="form-control"  path="optionOther" type="text" />
 								</div>
 							</div>
-							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="departTime">
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="optionOther">
 							</form:errors>
 						</field:wrapper>
 						
-						<field:wrapper class="form-group " path="returnTime">
-							<label for="returnTime" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
-							返校时间
+						<field:wrapper class="form-group " path="remarks">
+							<label for="remarks" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
+						    说明
 							</label>
 							<div class="col-xs-12 col-sm-5 input-group">
 								<div class="input-group">
-								<form:input class="form-control date-picker" path="returnTime" type="text" data-date-format="yyyy-mm-dd" />
-								<span class="input-group-addon">
-									<i class="icon-calendar bigger-110"></i>
-								</span>
+								<form:textarea path="remarks" id="remarks" class="form-control"></form:textarea>
 								</div>
 							</div>
-							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="returnTime">
+							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="remarks">
 							</form:errors>
 						</field:wrapper>
 
@@ -83,10 +77,19 @@
 jQuery(function($){
 	$("#content").isst_wysiwyg();
 	
-	$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-		$(this).prev().focus();
+	var $optionIdSelect = $("#optionId");
+	var $optionOther = $("#optionOther");
+	var $optionOtherDiv = $(".optionOtherDiv");
+	if ($optionIdSelect.val() == 0) {
+		$optionOtherDiv.show();
+	}
+	$optionIdSelect.change(function() {
+		if ($(this).val() == 0) {
+		    $optionOtherDiv.show();
+	    } else {
+	    	$optionOtherDiv.hide();
+	    }
 	});
-	
 });
 </script>
 </layout:override>

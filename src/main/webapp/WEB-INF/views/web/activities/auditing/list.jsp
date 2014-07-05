@@ -95,12 +95,9 @@
 									<div
 										class="visible-md visible-lg hidden-sm hidden-xs btn-group">
 										<a class="btn btn-xs btn-info" data-rel="tooltip" data-placement="bottom" title="审核" href="<utils:url url="/activities/audit?id[]=${activity.id }" />">
-											<i class="icon-edit bigger-120"></i>
+											<i class="icon-share-alt  bigger-120"></i>
 										</a>
 
-										<a class="btn btn-xs btn-danger" data-rel="tooltip" data-placement="bottom" title="删除" href="<utils:url url="/users/activities/delete?id[]=${activity.id}" />">
-											<i class="icon-trash bigger-120"></i>
-										</a>
 									</div>
 									<div class="visible-xs visible-sm hidden-md hidden-lg">
 										<div class="inline position-relative">
@@ -114,11 +111,7 @@
 												
 												<li><a href="<utils:url url="/activities/audit?id[]=${activity.id }" />" class="tooltip-success"
 													data-rel="tooltip" title="审核"> <span class="blue">
-															<i class="icon-edit bigger-120"></i> </span> </a></li>
-
-												<li><a href="<utils:url url="/users/activities/delete?id[]=${activity.id}" />" class="tooltip-error"
-													data-rel="tooltip" title="删除"> <span class="red">
-															<i class="icon-trash bigger-120"></i> </span> </a></li>
+															<i class="icon-share-alt bigger-120"></i> </span> </a></li>
 											</ul>
 										</div>
 									</div>
@@ -138,8 +131,7 @@
 								<i class="icon-angle-up icon-on-right"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="<utils:url url="/activities/audit" />">批量审核</a></li>
-								<li><a href="<utils:url url="/users/activities/delete" />">批量删除</a></li>						
+								<li><a href="<utils:url url="/activities/audit" />">批量审核</a></li>					
 							</ul>
 						</div>				
 						</div>
