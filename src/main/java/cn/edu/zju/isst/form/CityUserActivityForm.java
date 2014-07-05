@@ -12,6 +12,8 @@ public class CityUserActivityForm extends ActivityForm {
     
     public CityUserActivityForm(Activity activity) {
         super(activity);
+        cityId = activity.getCityId();
+        userId = activity.getUserId();
     }
     
     public void bind(Activity activity) {

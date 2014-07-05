@@ -25,19 +25,6 @@
 							</form:errors>
 						</field:wrapper>
 						
-						<field:wrapper class="form-group" path="cityId">
-							<label for="cityId" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
-							城市
-							</label>
-							<div class="col-xs-12 col-sm-5">
-								<form:select  path="cityId">
-									<form:options items="${cities}" itemValue="id" itemLabel="name"/>
-								</form:select>
-							</div>
-							<form:errors cssClass="help-block col-xs-12 col-sm-reset inline" path="cityId">
-							</form:errors>
-						</field:wrapper>
-						
 						<field:wrapper class="form-group" path="location">
 							<label for="location" class="col-xs-12 col-sm-3 col-md-3 control-label no-padding-right">
 							地点

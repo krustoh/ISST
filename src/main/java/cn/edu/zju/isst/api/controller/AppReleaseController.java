@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.zju.isst.service.AppReleaseService;
 
-@RequireUser
 @Controller("apiAppReleaseController")
 public class AppReleaseController {
     @Autowired

@@ -228,7 +228,9 @@ public class ActivityController {
         }
         
         if (result.hasErrors()) {
-            return add(model);
+            model.addAttribute("cities", cityService.findAllForSelect());
+            model.addAttribute("cityUserActivityForm", form);
+            return "activities/form";
         }
         
         form.setStatus(Activity.STATUS_HIDDEN);
@@ -256,11 +258,21 @@ public class ActivityController {
             form.validate(result);
         }
         
-        if (result.hasErrors()) {
-            return edit(model, id);
+        boolean hasErrors = result.hasErrors();
+        if (!hasErrors && user.getCityId() == 0) {
+            WebUtils.addErrorFlashMessage("您所在的城市为<i>其他</i>，不能发布活动");
+            hasErrors = true;
+        }
+        
+        if (hasErrors) {
+            model.addAttribute("cities", cityService.findAllForSelect());
+            model.addAttribute("cityUserActivityForm", form);
+            return "activities/form";
         }
 
         form.setUserId(user.getId());
+        form.setCityId(user.getCityId());
+        
         return save(form);
     }
     
