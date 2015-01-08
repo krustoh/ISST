@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import cn.edu.zju.isst.dao.MessagePushBindDao;
+import cn.edu.zju.isst.entity.MessagePushBind;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +18,17 @@ import cn.edu.zju.isst.entity.Message;
 public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageDao messageDao;
+    @Autowired
+    private MessagePushBindDao messagePushBindDao;
 
     @Override
     public int push(Set<Integer> idset) {
         int success = 0;
-        
+
         for (Message message : findAll(idset)) {
             success += push(message);
         }
-        
+
         return success;
     }
 
@@ -35,8 +39,29 @@ public class MessageServiceImpl implements MessageService {
             message.setStatus(Message.STATUS_PUSHED);
             messageDao.save(message);
         }
-        
+
         return success;
+    }
+
+    @Override
+    public int push(Message message, String studentId) {
+        List<MessagePushBind> binds =  messagePushBindDao.findByStudentId(studentId);
+        int success = 0;
+        for (MessagePushBind bind: binds)
+        {
+            success += BccsApi.pushAndroidUnitcastMessage("message." + message.getId(), message.getTitle(), message.getContent(),bind.getUserId());
+
+        }
+        if (success > 0) {
+            message.setStatus(Message.STATUS_PUSHED);
+            messageDao.save(message);
+        }
+        return success;
+    }
+
+    @Override
+    public int push(Message message, Set<String> studentIdSet) {
+        return 0;
     }
 
     @Override

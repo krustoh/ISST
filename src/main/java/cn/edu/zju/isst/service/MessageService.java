@@ -9,6 +9,10 @@ import cn.edu.zju.isst.entity.Message;
 public interface MessageService {
     public int push(Set<Integer> idset);
     public int push(Message message);
+
+    public int push(Message message,String studentId);
+    public int push(Message message,Set<String> studentIdSet);
+
     public List<Message> findAll(Set<Integer> idset);
     public PaginationList<Message> findAll(int status, int pageSize, int page);
     public Message find(int id);

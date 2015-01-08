@@ -209,6 +209,15 @@
 						</navigation:link>
 					</navigation:item>
 					</c:if>
+
+					<c:if test="${administrator.roles==-1}">
+						<navigation:item>
+							<navigation:link key="qiandao" href="/qiandao.html" label="活动签到" class="dropdown-toggle">
+								<i class="icon-signin" ></i>
+								<span class="menu-text">活动签到</span>
+							</navigation:link>
+						</navigation:item>
+					</c:if>
 					
 					<c:if test="${administrator.roles==-1}">
 					<navigation:item>
