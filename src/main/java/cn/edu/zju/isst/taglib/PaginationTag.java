@@ -38,7 +38,7 @@ public class PaginationTag extends TagSupport  {
             }
             
             JspWriter out = pageContext.getOut();
-            int lastPage = (int) Math.ceil(total / size);
+            int lastPage = (int) Math.ceil(1.0*total / size);
             
             page = Math.min(lastPage, page);
             page = page < 0 ? 1 : page;
